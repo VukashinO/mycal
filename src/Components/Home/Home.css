@@ -1,0 +1,64 @@
+.homeContainer {
+   margin-top: 0px;
+   width: 100%;
+  
+align-content: center;
+background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+background-size: cover;
+background-repeat: no-repeat;
+height: 605px;
+font-family: 'Numans', sans-serif;
+
+}
+
+.formStyle {
+    box-sizing: border-box;
+    width: 600px;
+    margin: auto;
+    border: 2px solid lightblue;
+    padding: 8px;
+   
+}
+
+
+h1 {
+    
+    color: orange;
+    font-style: italic;
+}
+h3 {
+    color: lightblue;
+}
+.span1 {
+    font-size: 14px;
+    vertical-align: middle;
+    color: orange;
+}
+
+.radioStyle {
+
+    color: lightblue;
+    font-size: 20px;
+}
+
+.activity {
+    /* color: #05051d; */
+    color: whitesmoke;
+    /* color: #f3e9e9; */
+    font-size: 20px;
+    font-style: italic;
+  
+}
+
+.kgsWidth {
+    width: 200px;
+    margin: auto;
+}
+
+.inputColor {
+    background-color: lightblue;
+}
+
+.labelText {
+    color: whitesmoke;
+}

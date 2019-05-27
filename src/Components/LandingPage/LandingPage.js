@@ -1,12 +1,13 @@
-
-
 import React from 'react';
+import fitnesImg from '../../Components/Assets/images/bg2.jpg';
+import './LandingPage.css';
 
 
 const landingPage = () => {
     return ( 
-        <div>
-            <h1>Hello from landingPage</h1>
+        <div className="landing">
+           <img src={fitnesImg} alt="fitnessImg"/>
+           <h2>welcome to my fitnes App do you have acc?</h2>
         </div>
      );
 }

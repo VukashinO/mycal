@@ -1,0 +1,54 @@
+.dietTableTh {
+    font-weight: bold;
+    border-bottom: 2px solid blanchedalmond;
+    font-weight: bold;
+}
+
+.dailyGoalContainer {
+    width: 200px;
+
+}
+.dailyGoalContainer p {
+    font-size: 15px;
+    font-style: italic;
+    color: blanchedalmond;
+}
+.dailyGoal {
+    font-size: 40px;
+    font-weight: bold;
+    color: blanchedalmond;
+}
+
+.dinamicTableTd {
+    font-size:20px;
+    font-weight: bold;
+    color: blanchedalmond;
+    text-transform: capitalize;
+}
+
+.mealTable {
+    width: 20%;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    border: 1px solid #eee;
+    box-shadow: #ccc;
+    padding: 10px;
+    margin: 10px auto;
+    box-sizing: border-box;
+}
+
+.dangerZone {
+    font-size: 40px;
+    font-weight: bold;
+    color: red;
+}
+
+.errorStyleDiv {
+    width: 60%;
+    margin: auto;
+}
+
+.errorStyleDiv h3 {
+    color: red;
+}

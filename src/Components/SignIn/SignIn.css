@@ -1,15 +1,12 @@
 
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
-html,body{
-
+.wrapper {
+   height: 601px;
 }
 
-.cont{
-/* height: 100%; */
+.cont{ 
 align-content: center;
-
-
 background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
 background-size: cover;
 background-repeat: no-repeat;

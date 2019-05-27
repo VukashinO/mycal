@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import './SignUp.css';
 import {  withRouter } from 'react-router-dom';

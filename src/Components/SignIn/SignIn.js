@@ -1,20 +1,18 @@
-
 import React, { Component } from 'react';
 import './SignIn.css';
 import { Link, withRouter } from 'react-router-dom';
-
 import * as ROUTES from '../../Constants/Routes';
-
+import User from '../../Components/User/User';
 // passing firebase instance to the SignUpForm
 import { withFirebase } from '../Firebase';
 
 
 const SignIn = () => {
     return ( 
-        <div>
-            <SignInForm />
-        </div>
-     );
+       <div className="wrapper">
+          <SignInForm />
+       </div>
+ );
 }
  
 
@@ -35,6 +33,8 @@ class SignInBase extends Component {
         .then(() => {
         this.setState({ ...this.state });
         this.props.history.push(ROUTES.HOME);
+       
+        localStorage.setItem('userEmail',this.state.email)
         })
         .catch(error => {
         this.setState({ error });
@@ -53,22 +53,18 @@ class SignInBase extends Component {
 
 
     render() { 
-
+        console.log(this.state.email)
             const { email, password, error } = this.state;
             const visible = password === '' ||
             email === '';
 
         return ( 
-            <div className="cont">
-         <div className="d-flex justify-content-center h-100 m-5">
+          <div className="cont">
+         <div className="d-flex justify-content-center h-100 m-7">
            <div className="card">
              <div className="card-header">
                <h3>Sign In</h3>
-               <div className="d-flex justify-content-end social_icon">
-                 <span><i className="fab fa-facebook-square"></i></span>
-                 <span><i className="fab fa-google-plus-square"></i></span>
-                 <span><i className="fab fa-twitter-square"></i></span>
-               </div>
+
              </div>
              <div className="card-body">
                <form onSubmit={this.onSubmit}>
@@ -97,9 +93,7 @@ class SignInBase extends Component {
                    className="form-control"
                    placeholder="password"/>
                  </div>
-                 <div className="row align-items-center remember">
-                   <input type="checkbox"/>Remember Me
-                 </div>
+
                  <div className="form-group">
                    <button disabled={visible} type="submit" className="btn float-right login_btn">Sign In</button>
                  </div>
@@ -114,11 +108,11 @@ class SignInBase extends Component {
                     </p>
                   
 				</div>
-				
+				</div>
 			</div>
            </div>
-         </div>
-         </div>
+        
+        </div>
 
          );
     }

@@ -1,5 +1,3 @@
-
-
 import Firebase from './Firebase';
 
 import FirebaseContext, { withFirebase } from './Context';
