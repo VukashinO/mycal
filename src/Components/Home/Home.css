@@ -8,7 +8,7 @@ background-size: cover;
 background-repeat: no-repeat;
 height: 605px;
 font-family: 'Numans', sans-serif;
-
+height: auto;
 }
 
 .formStyle {
@@ -43,10 +43,10 @@ h3 {
 
 .activity {
     /* color: #05051d; */
-    color: whitesmoke;
-    /* color: #f3e9e9; */
-    font-size: 20px;
-    font-style: italic;
+    /* color: whitesmoke; */
+    color:#fffa10;
+    font-size: 25px;
+    /* font-style: italic; */
   
 }
 
@@ -60,5 +60,6 @@ h3 {
 }
 
 .labelText {
-    color: whitesmoke;
+     color: whitesmoke; 
+   
 }

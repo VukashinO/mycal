@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './SignIn.css';
 import { Link, withRouter } from 'react-router-dom';
 import * as ROUTES from '../../Constants/Routes';
-import User from '../../Components/User/User';
+
 // passing firebase instance to the SignUpForm
 import { withFirebase } from '../Firebase';
 

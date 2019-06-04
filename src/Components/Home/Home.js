@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { WithAuthorization } from '../Hoc/Hoc';
 import './Home.css';
 import * as ROUTES from '../../Constants/Routes';
+import Modal from '../../Components/UI/Modal/Modal';
+import MyCustomError from '../../Components/myCustomError/MyCustomError';
 
  class HomePage extends Component {
 
@@ -12,12 +14,15 @@ import * as ROUTES from '../../Constants/Routes';
     life: "",
     result: "",
     calories: "",
+    gender: "",
+   
     formErrors: {
       age: "",
       heightcm: "",
       weightkl: ""
     },
-    isSubmited: false
+    isSubmited: false,
+    isFormValid: false
   };
 
   formValidation = formErrors => {
@@ -65,7 +70,7 @@ import * as ROUTES from '../../Constants/Routes';
     let heightcm = this.state.heightcm;
     let weightkl = this.state.weightkl;
     let life = this.state.life;
-    if(this.formValidation(this.state.formErrors))
+    if(this.formValidation(this.state.formErrors) && this.state.gender)
     {
       if (gender && weightkl && heightcm && age && life) {
         if (gender === "male") {
@@ -76,7 +81,9 @@ import * as ROUTES from '../../Constants/Routes';
       }
     }
   else {
-      return window.alert("Please fill in everything correctly");
+        this.setState({ isFormValid: true })
+        return;
+     // return window.alert("Please fill in everything correctly");
     }
 
     let calories = this.state.calories;
@@ -117,17 +124,25 @@ import * as ROUTES from '../../Constants/Routes';
       result: ""
     });
   };
+
+  handleCorrectly = () => {
+    this.setState({ isFormValid: false })
+  }
+
    render() { 
     const { formErrors } = this.state;
-    console.log(this.state.result)
-    console.log(this.state.age)
-    console.log(this.state.isSubmited)
-    console.log(this.state.calories)
+    let fillCorrect = null;
+    if(this.state.isFormValid) {
+      fillCorrect =   <Modal>
+                        <MyCustomError handleCorrectly={this.handleCorrectly}/>
+                      </Modal>
+    }
+
      return (
     
 
   <div className="homeContainer">
-    
+      {fillCorrect}
   <form className="formStyle">
   
    <h1>Calculate BMI <span className="span1">(Metric unit)</span></h1>
@@ -172,7 +187,7 @@ import * as ROUTES from '../../Constants/Routes';
             id="age"
             placeholder="your Age"
           />
-          
+           <small className="form-text text-muted">number from 12 to 75</small>
           <div className='invalid-feedback'>{formErrors.age}</div>
 </div>
             </div>
@@ -223,8 +238,12 @@ import * as ROUTES from '../../Constants/Routes';
             onChange={e => this.change(e)}
           />
           <label htmlFor="low" className="form-check-label ">
-          <span className="activity">I am sedentary or do light activity (light excersize 1-3 days
-          per week to no excersize)</span>
+          <span className="activity">
+        <h4>
+          I am sedentary or do light activity (light excersize 1-3 days
+          per week to no excersize)
+         </h4>
+          </span>
      
           </label>
 
@@ -242,8 +261,10 @@ import * as ROUTES from '../../Constants/Routes';
           />
            <label htmlFor="med" className="form-check-label">
            <span className="activity">
+           <h4>
            I am active or moderately active (moderate excersize or sports
           3-5 days per week)
+          </h4>
            </span>
 
           </label>
@@ -260,8 +281,10 @@ import * as ROUTES from '../../Constants/Routes';
           />
            <label htmlFor="high" className="form-check-label activity">
            <span className="activity">
+           <h4>
            I am super active (very hard excersize or sports 6-7 days per
           week)
+          </h4>
            </span>
 
           </label>

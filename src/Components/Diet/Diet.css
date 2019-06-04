@@ -1,28 +1,36 @@
+.dietWrapper {
+    background-color: whitesmoke;
+    width: 100%;
+    height: 100vh;
+}
+
+
 .dietTableTh {
     font-weight: bold;
-    border-bottom: 2px solid blanchedalmond;
+    border-bottom: 2px solid #eca842;
     font-weight: bold;
 }
 
 .dailyGoalContainer {
     width: 200px;
-
+    border: 1px solid #d3d3e6;
 }
+
 .dailyGoalContainer p {
     font-size: 15px;
     font-style: italic;
-    color: blanchedalmond;
+    color: #0000af;
 }
 .dailyGoal {
     font-size: 40px;
     font-weight: bold;
-    color: blanchedalmond;
+    color:#cc4246;
 }
 
 .dinamicTableTd {
     font-size:20px;
     font-weight: bold;
-    color: blanchedalmond;
+    color: #0e7596;
     text-transform: capitalize;
 }
 
@@ -38,10 +46,14 @@
     box-sizing: border-box;
 }
 
+.mealTable h3 {
+    color: #0e7596;
+}
+
 .dangerZone {
     font-size: 40px;
     font-weight: bold;
-    color: red;
+    color: green;
 }
 
 .errorStyleDiv {
@@ -51,4 +63,23 @@
 
 .errorStyleDiv h3 {
     color: red;
+}
+
+.buttonDelete {
+    background-color: red;
+    border:red;
+    border-radius: 50%;
+    color: white;
+}
+
+.fillCorrect {
+    color: red;
+    position: fixed;
+    margin: auto;
+    left: 36%;
+    top: 30%;
+    z-index: 700;
+    background-color: blue;
+    width: 30%;
+    cursor: pointer;
 }

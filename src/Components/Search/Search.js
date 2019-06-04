@@ -4,7 +4,10 @@ const Search = props =>
 
      (
       <form onSubmit={props.handleSubmit}>
-             <input  onChange={props.onChange} type="text" value={props.value}/>
+            <h3>Search our food database</h3>
+             <input  onChange={props.onChange} type="text" value={props.value}
+             placeholder="search food"
+             />
              <button className="btn btn-primary">submit</button>
            
      </form>

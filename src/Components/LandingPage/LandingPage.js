@@ -7,7 +7,7 @@ const landingPage = () => {
     return ( 
         <div className="landing">
            <img src={fitnesImg} alt="fitnessImg"/>
-           <h2>welcome to my fitnes App do you have acc?</h2>
+           <h2>welcome to my fitness App do you have acc?</h2>
         </div>
      );
 }

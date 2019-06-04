@@ -9,12 +9,11 @@ import './Diet.css';
 import Modal from '../../Components/UI/Modal/Modal';
 import Auxiliary from '../../Components/myHoc/Auxiliary';
 import NutritionSummary from '../../Components/NutritionSummary/NutritionSummary';
-import User from '../../Components/User/User';
-
-const API = 'https://api.edamam.com/api/food-database/parser?nutrition-type=logging&ingr=';
-const API_KEY = '&app_id=ec5bc123&app_key=7bdb51e00e617d9d25545d840d03fa0b';
+import Calendar from '../../Components/Calendar/Calendar';
 
 
+// const API =
+// const APIKEY =
 
 class Diet extends Component {
   state = {
@@ -50,7 +49,10 @@ class Diet extends Component {
 
     isBelowZero: false,
     searchFood: false,
-    saveError: null
+    saveError: null,
+
+    user: localStorage.getItem('userEmail'),
+    isCorrect: false
   }
 
   getCurrentDate(separator = '-') {
@@ -95,18 +97,20 @@ class Diet extends Component {
   handleCancelModal = () => {
     this.setState({ nutritionFacts: false })
   }
-  myFirebase = () => {
-    axios.get('https://my-fitness-app-81de2.firebaseio.com/.json')
-      .then(responce => {
-        let arr = []
-        for (let diet in responce.data.diet) {
-          arr.push(responce.data.diet[diet])
-        }
-
-        this.setState({ dietFromFirebase: arr })
-        console.log(arr)
-      })
-  }
+  // myFirebase = () => {
+  //   axios.get('https://my-fitness-app-81de2.firebaseio.com/.json')
+  //     .then(responce => {
+  //       let arr = []
+  //       for(let key in responce.data.diet)
+  //       {
+  //         arr.push({...responce.data.diet[key],
+  //           id: key})
+  //       }
+  //       console.log(responce.data.diet)
+  //       this.setState({ dietFromFirebase: arr })
+  //       console.log(arr)
+  //     })
+  // }
 
   handleClickPagination = (event) => {
     console.log(+event.target.id)
@@ -233,32 +237,31 @@ class Diet extends Component {
       this.setState({ cup, gram, defaultGram, ounce, pound, kilo })
     }
     else {
-      alert('fill correct')
+      return this.setState({ isCorrect: true })
     }
   }
   saveDiet = () => {
-    const post = [this.state.dietData, {
-      date: this.getCurrentDate()
-    }];
-    // const diet =
-    // {
-    //   breakFast: { meal: 'oats', calories: 500 },
-    //   launch: {},
-    //   dinner: {},
-    //   createdDate: '',
-    //   totalCalories: 5000
-    //}
     let dietCalories = this.state.dietData.map(diet => diet.calories)
-      .reduce((acc, curr) => {
-        return acc + curr
-      }, 0)
+    .reduce((acc, curr) => {
+      return acc + curr
+    }, 0)
+    const post = {
+      date: this.getCurrentDate(),
+      user: this.state.user,
+      dietSave: this.state.dietData,
+      totalCalories: dietCalories
+    }
+    
     if (dietCalories < 1000) {
       this.setState({ saveError: true })
       return;
     }
-
+    this.setState({loading:true})
     axios.post('https://my-fitness-app-81de2.firebaseio.com/diet.json', post)
-      .then(responce => console.log(responce))
+      .then(responce => {
+        console.log(responce)
+        this.setState({dietData:[],calories: this.state.showCalories,loading:false,searchFood:false})
+      })
       .catch(err => console.log(err))
       
   }
@@ -275,8 +278,14 @@ class Diet extends Component {
   handleChangeError = () => {
     this.setState({ isBelowZero: false })
   }
+  handleFillCorrect = () => {
+    this.setState({ isCorrect: false })
+  }
   render() {
-    console.log(localStorage.getItem('userEmail'))
+    if(this.state.foodData) {
+     (this.state.foodData.forEach(obj =>  console.log(obj.measures)))
+    }
+   
     //pagination:
     this.state.dietData.forEach((diet, i) => { diet.id = i })
     const pageNumbers = [];
@@ -328,6 +337,7 @@ class Diet extends Component {
           handleChangeMeal={this.handleChangeMeal}
           value={this.state.value}
           valueMeal={this.state.valueMeal}
+          select2={this.state.foodData}
         />
       </Modal>
     }
@@ -336,15 +346,15 @@ class Diet extends Component {
 
     const breakFast = this.state.dietData.filter(diet => diet.meal === 'Breakfast')
       .map((meal, i) => <tr key={meal.foodName + i}><td>food:<span className="dinamicTableTd">{meal.foodName}: {meal.calories}calories</span>
-        <button onClick={() => this.handleDelete(meal.id, meal.calories)}>-</button></td></tr>)
+        <button className="buttonDelete" onClick={() => this.handleDelete(meal.id, meal.calories)}>-</button></td></tr>)
 
     const lunch = this.state.dietData.filter(diet => diet.meal === 'Lunch')
       .map((meal, i) => <tr key={meal.foodName + i}><td>food:<span className="dinamicTableTd">{meal.foodName}: {meal.calories}calories</span>
-        <button onClick={() => this.handleDelete(meal.id, meal.calories)}>-</button></td></tr>)
+        <button className="buttonDelete" onClick={() => this.handleDelete(meal.id, meal.calories)}>-</button></td></tr>)
 
     const dinner = this.state.dietData.filter(diet => diet.meal === 'Dinner')
       .map((meal, i) => <tr key={meal.foodName + i}><td>food:<span className="dinamicTableTd">{meal.foodName}: {meal.calories}calories</span>
-        <button onClick={() => this.handleDelete(meal.id, meal.calories)}>-</button></td></tr>)
+        <button className="buttonDelete" onClick={() => this.handleDelete(meal.id, meal.calories)}>-</button></td></tr>)
     let errorMessage = null;
 
     // error message for below zero calories
@@ -382,13 +392,20 @@ class Diet extends Component {
         <p>Even during weight loss, it's important to meet your body's basic nutrient and energy needs. Over time, not eating enough can lead to nutrient deficiencies, unpleasant side effects & other serious health problems.</p>
       </div>
     }
-
+    // fill form correct
+    let isModalCorrect = null;
+    if(this.state.isCorrect) {
+      isModalCorrect = <div>
+        <h3 onClick={this.handleFillCorrect} className="fillCorrect">please choose quantity or measure</h3>
+      </div>
+    }
     return (
       <Auxiliary>
+        
         {modalInfo}
-
-        <div >
-
+       
+        <div className="dietWrapper">
+{isModalCorrect}
           <div className="dailyGoalContainer">
             <p>basaed on your bmr: {this.state.bmr}
               you will need {this.state.showCalories} calories
@@ -398,9 +415,8 @@ class Diet extends Component {
             <p>daily Goal:<span className={this.state.calories < 500 ? 'dangerZone' : 'dailyGoal'}>{this.state.calories}</span>calories</p>
             <button onClick={this.handleCalories}>{this.state.searchFood ? 'hide food' : 'add food'}</button>
           </div>
-
+          
           {searchFood}
-          <button onClick={this.myFirebase}>firebase</button>
 
           <div className="mealTable">
             <table >
@@ -423,6 +439,7 @@ class Diet extends Component {
             </table>
             {saveError}
           </div>
+          <Calendar user={this.state.user}/>
         </div>
       </Auxiliary>
 

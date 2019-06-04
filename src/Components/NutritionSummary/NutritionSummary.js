@@ -4,7 +4,14 @@ import './NutritionSummary.css';
 
 
 const NutritionSummary = (props) => {
-   let options =  props.select.map(opt => <option key={opt}>{opt}</option>)
+     let op = null;
+     if(props.select2) {
+         console.log(props.select2)
+        const obj = props.select2.find(obj => obj.food.label === props.name)
+        op = obj.measures.map((mes,i) => <option key={mes+i}>{mes.label}</option>)
+     }
+     console.log(op)
+  // let options =  props.select.map(opt => <option key={opt}>{opt}</option>)
     return ( 
         <Auxiliary>
         <h3>food name:{props.name}</h3>
@@ -17,7 +24,8 @@ const NutritionSummary = (props) => {
          /> servings of
        
          <select value={props.value} onChange={props.handleChange}>
-        {options}
+        {/* {options} */}
+        {op}
         </select>
        <div>
         <h4>to wich meal?</h4>

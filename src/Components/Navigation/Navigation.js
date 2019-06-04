@@ -30,6 +30,7 @@ const Navigation = () => (
             <li className="nav-item active">
                 <Link className="nav-link" to={ROUTES.HOME}>BMI</Link>
             </li>
+ 
         </ul>
     </div>
     
@@ -65,7 +66,7 @@ const Navigation = () => (
     <div className="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
         <ul className="navbar-nav text-right">
             <li className="nav-item active">
-                <Link className="nav-link" to={ROUTES.Landing}>Landing</Link>
+                <Link className="nav-link" to={ROUTES.Landing}>Home</Link>
             </li>
             <li className="nav-item active">
                 <Link className="nav-link" to={ROUTES.SIGN_IN}>Sign In</Link>
