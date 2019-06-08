@@ -9,20 +9,23 @@ import  SignUp  from '../SignUp/SignUp';
 import Home from '../Home/Home';
 import Diet from '../Diet/Diet';
 import { WithAuthentication } from '../Hoc/Hoc';
-
+import Footer from '../../Components/Footer/Footer';
 
 const App = () => {
   return ( 
     <Router>
-    <div className="App">
-    <Navigation /> 
+       <Navigation /> 
+    <div className="container">
+   
   
   <Route exact path={ROUTES.Landing} component={LandingPage}/>
   <Route exact path={ROUTES.SIGN_IN} component={SignIn}/>
   <Route exact path={ROUTES.SIGN_UP} component={SignUp}/>
   <Route exact path={ROUTES.HOME} component={Home} />
   <Route exact path={ROUTES.DIET} component={Diet} />
+ 
   </div>
+  <Footer />
   </Router>
    );
 }

@@ -8,7 +8,7 @@ import * as ROUTES from '../../Constants/Routes';
 import { withFirebase } from '../Firebase';
 
 const SignUp = () => (
-  <div>
+  <div style={{backgroundColor:'red'}}>
    
     <SignUpForm />
   </div>
@@ -74,8 +74,9 @@ class SignUpFormBase  extends Component {
 
 
     return (
-    <div className="container">
-        <div className="d-flex justify-content-center h-100 m-5">
+      // m-5
+    <div className="contSignUp">
+        <div className="d-flex justify-content-center h-100">
             <div className="card">
         <div className="card-body">
         <h3>SignUp</h3>

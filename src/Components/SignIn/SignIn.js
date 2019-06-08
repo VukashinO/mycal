@@ -47,11 +47,6 @@ class SignInBase extends Component {
     this.setState({ [event.target.name] : event.target.value })
     };
 
-
-
-
-
-
     render() { 
         console.log(this.state.email)
             const { email, password, error } = this.state;
