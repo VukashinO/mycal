@@ -20,7 +20,7 @@ const Navigation = () => (
       //
     <nav className="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end">
     
-    <SignOutButton />
+   
     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
         <span className="navbar-toggler-icon"></span>
     </button>
@@ -34,7 +34,9 @@ const Navigation = () => (
             <li className="nav-item active">
                 <Link className="nav-link" to={ROUTES.HOME}>BMI</Link>
             </li>
-           
+            <li className="nav-item active">
+            <SignOutButton />
+            </li>
         </ul>
     </div>
     <div style={{position:'absolute', left:'290px',color:'red',width:'50px'}}>
@@ -75,9 +77,9 @@ const Navigation = () => (
     <div className="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent" style={{marginRight:'250px'}}>
         <ul className="navbar-nav text-right">
         
-            <li className="nav-item active">
+            {/* <li className="nav-item active">
                 <Link className="nav-link" to={ROUTES.Landing}>Home</Link>
-            </li>
+            </li> */}
             <li className="nav-item active">
                 <Link className="nav-link" to={ROUTES.SIGN_IN}>Sign In</Link>
             </li>

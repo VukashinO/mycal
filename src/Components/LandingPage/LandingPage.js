@@ -9,12 +9,13 @@ const landingPage = () => {
         <div className="row">
             <div className="col headerHome">
             <div className="divWrapper">
-               <h3>CalorieCounter aplication</h3>
-               <h4>do you want to count your daily calories?</h4>
-               <h4>make acc if u dont have one</h4>
+               <h1 className="marginElements">CalorieCounter</h1>
+               <h3 className="marginElements">count your daily calories?</h3>
+               <h3 className="marginElements">track and calculate your food</h3>
+               <h3 className="marginElements">make acc if u dont have one</h3>
                <div style={{marginTop:'25px'}}>
-               <Link to={ROUTES.SIGN_IN} style={{fontSize:'20px'}}>sign in</Link>
-               <Link to={ROUTES.SIGN_UP} style={{marginLeft:'10px', fontSize:'20px'}}>sign up</Link>  
+               <Link to={ROUTES.SIGN_IN} style={{fontSize:'20px',color:'#1e7a7a'}}>sign in</Link>
+               <Link to={ROUTES.SIGN_UP} style={{marginLeft:'10px', fontSize:'20px',color:'#1e7a7a'}}>sign up</Link>  
                </div>
             </div>
             </div>
@@ -26,3 +27,4 @@ const landingPage = () => {
 }
  
 export default landingPage;
+

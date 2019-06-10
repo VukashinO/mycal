@@ -12,7 +12,6 @@ import NutritionSummary from '../../Components/NutritionSummary/NutritionSummary
 import Calendar from '../../Components/Calendar/Calendar';
 
 
-
 class Diet extends Component {
   state = {
     bmr: this.props.location.state.bmr,

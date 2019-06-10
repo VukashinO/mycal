@@ -28,6 +28,9 @@
 .headerHome {
     text-align: center;
     margin:auto;
+    margin-top:50px;
+    padding: 10px;
+
 }
 
 div img {
@@ -38,9 +41,14 @@ div img {
 .fImg {
     width: 200px;
     height: 300px;
-    margin-top: 20px
+    margin-top: 55px;
 }
 
 .divWrapper {
     padding: 50px;
+}
+
+.marginElements {
+    margin-top:20px;
+    color: #1e7a7a;
 }

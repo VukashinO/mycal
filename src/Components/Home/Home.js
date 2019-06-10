@@ -141,12 +141,13 @@ import MyCustomError from '../../Components/myCustomError/MyCustomError';
      return (
     
 
-  <div className="homeContainer">
+  <div className="row">
       {fillCorrect}
   <form className="formStyle">
   
    <h1>Calculate BMI <span className="span1">(Metric unit)</span></h1>
-  <h3>Choose Gender</h3>
+  <h3 style={{textAlign:'center'}}>Choose Gender</h3>
+  <div style={{textAlign:'center'}}>
   <div className="form-check form-check-inline">
     
       <input
@@ -173,7 +174,7 @@ import MyCustomError from '../../Components/myCustomError/MyCustomError';
         />
        <label htmlFor="female" className="form-check-label radioStyle">Female</label>
   </div>
-  
+  </div>
        <div className="row">
             <div className="col">
             <div className="form-group">
@@ -201,7 +202,7 @@ import MyCustomError from '../../Components/myCustomError/MyCustomError';
             onChange={e => this.change(e)}
             className={`form-control ${formErrors.heightcm ?'is-invalid': ''}`}
             id="heightcm"
-            placeholder="your height in cm"
+            placeholder="height in cm"
           />
           <small className="form-text text-muted">number from 120 to 210</small>
           <div className='invalid-feedback'>{formErrors.heightcm}</div>
@@ -220,7 +221,8 @@ import MyCustomError from '../../Components/myCustomError/MyCustomError';
             onChange={e => this.change(e)}
             className={`form-control kgsWidth ${formErrors.weightkl ?'is-invalid': ''}`}
             id="weightkl"
-            placeholder="your weight in kgs"
+            placeholder="weight in kgs"
+            style={{width:'20%'}}
           />
           <small className="form-text text-muted">number from 50 to 140</small>
           <div className='invalid-feedback'>{formErrors.weightkl}</div>
@@ -290,16 +292,20 @@ import MyCustomError from '../../Components/myCustomError/MyCustomError';
           </label>
           </div>
 
-     
-        <button onClick={e => this.onSubmit(e)}>Calculate BMI</button>
+        <div style={{textAlign:'center', marginTop:'25px'}}>
+        <button onClick={e => this.onSubmit(e)} className="btn btn-success">Calculate BMI</button>
         <button
+          className="btn btn-warning"
           type="reset"
           name="clear"
           value="clear"
           onClick={this.clearhtmlForm}
+          style={{marginLeft:'20px'}}
         >
           Clear
-        </button>
+        </button >
+        </div>
+
       </form>
      
       </div>

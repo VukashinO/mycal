@@ -1,22 +1,20 @@
-.homeContainer {
-   margin-top: 0px;
-   width: 100%;
-  
+/* .homeContainer {
+margin-top: 0px;
+width: 100%;
 align-content: center;
-background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
-background-size: cover;
-background-repeat: no-repeat;
 height: 605px;
 font-family: 'Numans', sans-serif;
 height: auto;
-}
+background-color: #1eb841;
+} */
 
 .formStyle {
-    box-sizing: border-box;
-    width: 600px;
-    margin: auto;
-    border: 2px solid lightblue;
+    width: 65%;
+    margin: 20px auto;
+    border: 2px solid 888888;
     padding: 8px;
+    box-shadow: 5px 10px #888888;
+    background-color: #0d430b;
    
 }
 
@@ -50,16 +48,23 @@ h3 {
   
 }
 
-.kgsWidth {
-    width: 200px;
-    margin: auto;
-}
 
 .inputColor {
     background-color: lightblue;
 }
 
 .labelText {
-     color: whitesmoke; 
+     color: whitesmoke;
+     margin: auto; 
    
 }
+
+.form-control {
+    width: 55%;
+    margin: auto;
+}
+
+.form-group {
+    text-align: center;
+}
+

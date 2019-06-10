@@ -1,3 +1,29 @@
+## Calorie Counter app
+With this application you can count your daily calorie intake very easy.
+
+### this project is made with the following dependencys
+<ul>
+<li>React</li>
+<li>React-dom</li>
+<li>React-router</li>
+<li>Axios</li>
+<li>Firebase</li>
+<li>Boostrap-4</li>
+<li>CSS</li>
+<li>Moment</li>
+</ul>
+
+
+### functionalities
+- log in, sign up <br>
+- using firebase to store the data(users, food)<br>
+- calculating your BMI - wich leads to your daily Calorie max income if u want to cut weight.<br>
+- search field for food data base so u can count the food you eat.<br>
+- rendering the data food in table format <br>
+- save your daily diet so u can later see what have you eat and how many calories you eat that day.<br>
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
