@@ -8,7 +8,7 @@ import Auxiliary from '../../Components/myHoc/Auxiliary';
         if(props.foodData)
         {
         table = 
-            <table className="container">
+            <table className="containerTable">
                 <thead>
                     <tr>
                         <th><h1>food name</h1></th>

@@ -9,15 +9,18 @@ import './Diet.css';
 import Modal from '../../Components/UI/Modal/Modal';
 import Auxiliary from '../../Components/myHoc/Auxiliary';
 import NutritionSummary from '../../Components/NutritionSummary/NutritionSummary';
-import Calendar from '../../Components/Calendar/Calendar';
+import * as ROUTES from '../../Constants/Routes';
+//import Calendar from '../../Components/Calendar/Calendar';
 
+
+const API = 'https://api.edamam.com/api/food-database/parser?nutrition-type=logging&ingr=';
+const API_KEY = '&app_id=ec5bc123&app_key=7bdb51e00e617d9d25545d840d03fa0b';
 
 class Diet extends Component {
   state = {
-    bmr: this.props.location.state.bmr,
-    calories: this.props.location.state.calories,
-    showCalories: this.props.location.state.calories,
-
+    bmr: null,
+    calories: null,
+    showCalories: null,
     foodData: null,
     searchText: '',
     loading: false,
@@ -48,10 +51,27 @@ class Diet extends Component {
     searchFood: false,
     saveError: null,
 
-    user: localStorage.getItem('userEmail'),
+    user: JSON.parse(localStorage.getItem('user')),
     isCorrect: false
   }
 
+
+  componentDidMount(){
+    axios.get('https://my-fitness-app-81de2.firebaseio.com/.json')
+    .then(responce => {
+    const users = [];
+    for(let key in responce.data.users)
+    {
+      users.push({...responce.data.users[key], id:key})
+    }
+     console.log(users)
+      console.log(this.state.user.email)
+      const userFirebase = users.find(user => user.email === this.state.user.email);
+      console.log(userFirebase)
+      this.setState({ bmr:userFirebase.bmr, calories:userFirebase.calories, showCalories:userFirebase.calories })
+    })
+    .catch(err => console.log(err))
+  }
   getCurrentDate(separator = '-') {
 
     let newDate = new Date()
@@ -245,7 +265,7 @@ class Diet extends Component {
     const post = {
       date: this.getCurrentDate(),
       user: this.state.user,
-      dietSave: this.state.dietData,
+      dietInfo: this.state.dietData,
       totalCalories: dietCalories
     }
     
@@ -258,6 +278,7 @@ class Diet extends Component {
       .then(responce => {
         console.log(responce)
         this.setState({dietData:[],calories: this.state.showCalories,loading:false,searchFood:false})
+        this.props.history.push(ROUTES.MYCALENDAR)
       })
       .catch(err => console.log(err))
       
@@ -334,11 +355,12 @@ class Diet extends Component {
           handleChangeMeal={this.handleChangeMeal}
           value={this.state.value}
           valueMeal={this.state.valueMeal}
-          select2={this.state.foodData}
+          // select2={this.state.foodData}
         />
       </Modal>
     }
 
+    console.log(this.props.location.state)
     // renering mini table for diet to save with firebase
 
     const breakFast = this.state.dietData.filter(diet => diet.meal === 'Breakfast')
@@ -352,9 +374,10 @@ class Diet extends Component {
     const dinner = this.state.dietData.filter(diet => diet.meal === 'Dinner')
       .map((meal, i) => <tr key={meal.foodName + i}><td>food:<span className="dinamicTableTd">{meal.foodName}: {meal.calories}calories</span>
         <button className="buttonDelete" onClick={() => this.handleDelete(meal.id, meal.calories)}>-</button></td></tr>)
-    let errorMessage = null;
+   
 
     // error message for below zero calories
+    let errorMessage = null;
     if (this.state.isBelowZero) {
       errorMessage = <div className="errorStyleDiv">
         <h3>You are passing your daily goal, choose mesure so u dont go below zero,
@@ -383,11 +406,18 @@ class Diet extends Component {
     // render save error
     let saveError = null;
     if (this.state.saveError) {
-      saveError = <div>
+      saveError = 
+      <Modal>
+      <Auxiliary>
+
         <p style={{ color: 'red' }}>Based on your total calories consumed for today, you are likely not eating enough.</p>
         <p>For safe weight loss, the National Institutes of Health recommends no less than 1000-1200 calories for women and 1200-1500 calories for men.</p>
-        <p>Even during weight loss, it's important to meet your body's basic nutrient and energy needs. Over time, not eating enough can lead to nutrient deficiencies, unpleasant side effects & other serious health problems.</p>
-      </div>
+       <p>Even during weight loss, it's important to meet your body's basic nutrient and energy needs. Over time, not eating enough can lead to nutrient deficiencies, unpleasant side effects & other serious health problems.</p>
+       <button
+       onClick={()=>{this.setState({ saveError: null })}}
+       className="btn btn-success buttonMargin">ok</button> 
+       </Auxiliary>
+       </Modal>
     }
     // fill form correct
     let isModalCorrect = null;
@@ -396,27 +426,35 @@ class Diet extends Component {
         <h3 onClick={this.handleFillCorrect} className="fillCorrect">please choose quantity or measure</h3>
       </div>
     }
+    console.log(this.state.servingError)
+    console.log(this.state.bmr)
     return (
       <Auxiliary>
         
         {modalInfo}
        
-        <div className="dietWrapper">
-{isModalCorrect}
-          <div className="dailyGoalContainer">
-            <p>basaed on your bmr: {this.state.bmr}
-              you will need {this.state.showCalories} calories
+        {/* <div className="dietWrapper"> */}
+        <div className="row justify-content-between">
+          {isModalCorrect}
+          {/* <div className="dailyGoalContainer"> */}
+          <div className="col-4 marginTop">
+            <p className="leftColParagrafs">Basaed on your bmr: <b>{this.state.bmr}</b>
+              you will need <b>{this.state.showCalories}</b> calories
              to maintain your weith.
                    </p>
 
-            <p>daily Goal:<span className={this.state.calories < 500 ? 'dangerZone' : 'dailyGoal'}>{this.state.calories}</span>calories</p>
-            <button onClick={this.handleCalories}>{this.state.searchFood ? 'hide food' : 'add food'}</button>
+            <h3>Goal:<span className={this.state.calories < 500 ? 'dangerZone' : 'dailyGoal'}>{this.state.calories}</span>calories</h3>
+            <button className="btn btn-primary" onClick={this.handleCalories}>{this.state.searchFood ? 'hide food' : 'add food'}</button>
           </div>
+        
           
-          {searchFood}
+          
+         
+        
 
-          <div className="mealTable">
-            <table >
+          {/* <div className="mealTable"> */}
+          <div className="col-4 marginTop">
+            <table className="userTable">
 
               <tbody >
                 <tr><td><h3>My diet</h3></td></tr>
@@ -429,14 +467,23 @@ class Diet extends Component {
                 {dinner}
               </tbody>
               <tfoot>
-                <tr><td><button onClick={this.saveDiet}>Save diet</button></td></tr>
+                <tr><td><button className="btn btn-success" onClick={this.saveDiet}>Save diet</button></td></tr>
 
               </tfoot>
-
+      
             </table>
+          
             {saveError}
+          
+          
           </div>
-          <Calendar user={this.state.user}/>
+          {/* <Calendar user={this.state.user}/> */}
+        </div>
+        <div className="row">
+          <div className="col">
+          {searchFood}
+          
+          </div>
         </div>
       </Auxiliary>
 

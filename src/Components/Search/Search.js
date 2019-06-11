@@ -3,7 +3,7 @@ import React from 'react';
 const Search = props => 
 
      (
-      <form onSubmit={props.handleSubmit}>
+      <form onSubmit={props.handleSubmit} style={{textAlign:'center'}}>
             <h3>Search our food database</h3>
              <input  onChange={props.onChange} type="text" value={props.value}
              placeholder="search food"

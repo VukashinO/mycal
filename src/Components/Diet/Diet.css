@@ -28,9 +28,9 @@
 }
 
 .dinamicTableTd {
-    font-size:20px;
+    font-size:17px;
     font-weight: bold;
-    color: #0e7596;
+    color:#43c9f3;
     text-transform: capitalize;
 }
 
@@ -82,4 +82,23 @@
     background-color: blue;
     width: 30%;
     cursor: pointer;
+}
+
+.userTable {
+    margin: auto;
+}
+
+
+.marginTop {
+    margin-top: 25px;
+}
+
+
+.leftColParagrafs {
+    font-size: 25px;
+    color: green;
+}
+
+.buttonMargin {
+    margin-top: 10px;
 }

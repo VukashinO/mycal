@@ -4,6 +4,7 @@ import './Home.css';
 import * as ROUTES from '../../Constants/Routes';
 import Modal from '../../Components/UI/Modal/Modal';
 import MyCustomError from '../../Components/myCustomError/MyCustomError';
+import axios from 'axios';
 
  class HomePage extends Component {
 
@@ -104,14 +105,17 @@ import MyCustomError from '../../Components/myCustomError/MyCustomError';
       //      " calories/day to maintain your current weight"
       //  );
      this.setState({result: bmr, calories : calories })
-   
-      this.props.history.push({
-        pathname:ROUTES.DIET,
-        state:{
-            bmr: bmr.toFixed(0),
-            calories:calories.toFixed(0)
-         }
-       });
+     const retriveObj = JSON.parse(localStorage.getItem('user'));
+      const post = {
+        user: retriveObj.name,
+        email: retriveObj.email,
+        bmr: bmr.toFixed(0),
+        calories: calories.toFixed(0)
+      }
+      console.log(post)
+      console.log(retriveObj)
+      axios.post('https://my-fitness-app-81de2.firebaseio.com/users.json', post);
+      this.props.history.push(ROUTES.DIET);
   };
 
   clearhtmlForm = () => {
@@ -138,6 +142,10 @@ import MyCustomError from '../../Components/myCustomError/MyCustomError';
                       </Modal>
     }
 
+   
+    const retriveObj = JSON.parse(localStorage.getItem('user'));
+    console.log((retriveObj.name))
+  
      return (
     
 

@@ -17,10 +17,10 @@ With this application you can count your daily calorie intake very easy.
 ### functionalities
 - log in, sign up <br>
 - using firebase to store the data(users, food)<br>
-- calculating your BMI - wich leads to your daily Calorie max income if u want to cut weight.<br>
-- search field for food data base so u can count the food you eat.<br>
+- calculating your BMI - wich leads to your daily Calorie max income if you want to cut weight.<br>
+- search field for food data base so you can count the food you eat.<br>
 - rendering the data food in table format <br>
-- save your daily diet so u can later see what have you eat and how many calories you eat that day.<br>
+- save your daily diet so you can later see what have you eat and how many calories you eat that day.<br>
 
 
 

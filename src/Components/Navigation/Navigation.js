@@ -17,10 +17,7 @@ const Navigation = () => (
 );
 
   const NavigationAuth = () => (
-      //
     <nav className="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end">
-    
-   
     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
         <span className="navbar-toggler-icon"></span>
     </button>
@@ -32,7 +29,10 @@ const Navigation = () => (
                 <Link className="nav-link" to={ROUTES.Landing}>Home</Link>
             </li>
             <li className="nav-item active">
-                <Link className="nav-link" to={ROUTES.HOME}>BMI</Link>
+                <Link className="nav-link" to={ROUTES.DIET}>Diet</Link>
+            </li>
+            <li className="nav-item active">
+                <Link className="nav-link" to={ROUTES.MYCALENDAR}>MyCalendar</Link>
             </li>
             <li className="nav-item active">
             <SignOutButton />
@@ -45,30 +45,8 @@ const Navigation = () => (
     </div>
     
 </nav>
-    // <ul>
-    //   <li>
-    //     <Link to={ROUTES.Landing}>Landing</Link>
-    //   </li>
-    //   <li>
-    //     <Link to={ROUTES.HOME}>Home</Link>
-    //   </li>
-     
-    //   <li>
-    //     <SignOutButton />
-    //   </li>
-    // </ul>
   );
   const NavigationNonAuth = () => (
-
-    //  <ul>
-    //    <li>
-    //      <Link to={ROUTES.Landing}>Landing</Link>
-    //    </li>
-    //    <li>
-    //      <Link to={ROUTES.SIGN_IN}>Sign In</Link>
-        
-    //    </li>
-    //  </ul>
     <nav className="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end">
     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
         <span className="navbar-toggler-icon"></span>
@@ -93,26 +71,5 @@ const Navigation = () => (
     </div>
 </nav>
   );
-
-// const Navigation = () => {
-//     return ( 
-//         <div>
-//             <ul>
-//                 <li>
-//                     <Link to={ROUTES.Landing}>Landing</Link>
-//                 </li>
-//                 <li>
-//                     <Link to={ROUTES.SIGN_IN}>Sign in</Link>
-//                 </li>
-//                 <li>
-//                     <Link to={ROUTES.HOME}>Home</Link>
-//                 </li>
-//                 <li>
-//                     <SignOutButton />
-//                 </li>
-//             </ul>
-//         </div>
-//      );
-// }
  
 export default Navigation;

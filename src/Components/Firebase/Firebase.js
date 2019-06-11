@@ -29,7 +29,12 @@ const config = {
   doSignInWithEmailAndPassword = (email, password) =>
   this.auth.signInWithEmailAndPassword(email, password);
 
-  doSignOut = () => this.auth.signOut();
+  doSignOut = () => {
+    console.log(localStorage.getItem('user'))
+    localStorage.removeItem('user');
+    this.auth.signOut();
+    console.log(localStorage.getItem('user'))
+  }
   }
   
   

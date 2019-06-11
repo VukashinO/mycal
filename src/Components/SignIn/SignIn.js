@@ -15,9 +15,6 @@ const SignIn = () => {
  );
 }
  
-
-
-
 class SignInBase extends Component {
     state = { 
         email: '',
@@ -32,9 +29,9 @@ class SignInBase extends Component {
         .doSignInWithEmailAndPassword(email, password)
         .then(() => {
         this.setState({ ...this.state });
-        this.props.history.push(ROUTES.HOME);
-       
-        localStorage.setItem('userEmail',this.state.email)
+        let userObj = {name: "fake", email}
+        localStorage.setItem('user', JSON.stringify(userObj));
+        this.props.history.push( ROUTES.DIET );
         })
         .catch(error => {
         this.setState({ error });

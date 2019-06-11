@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import './SignUp.css';
 import {  withRouter } from 'react-router-dom';
-
 import * as ROUTES from '../../Constants/Routes';
-
 // passing firebase instance to the SignUpForm
 import { withFirebase } from '../Firebase';
 
@@ -38,13 +36,17 @@ class SignUpFormBase  extends Component {
 
   onSubmit = event => {
     
-    const { email, passwordOne } = this.state;
+    const { username, email, passwordOne } = this.state;
 
     this.props.firebase
     .doCreateUserWithEmailAndPassword(email, passwordOne)
     .then(authUser => {
         this.setState({...this.state});
-        this.props.history.push(ROUTES.HOME);
+      
+      // localStorage.setItem('user', this.state.email);
+      let userObj = {name: username, email}
+      localStorage.setItem('user', JSON.stringify(userObj));
+        this.props.history.push( ROUTES.HOME );
     })
     .catch(error => {
         this.setState({ error })
