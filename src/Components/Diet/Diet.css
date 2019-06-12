@@ -85,12 +85,15 @@
 }
 
 .userTable {
-    margin: auto;
+    margin: 20px auto;
+    
 }
 
 
 .marginTop {
     margin-top: 25px;
+    background-color: white;
+    text-align: center;
 }
 
 
@@ -99,6 +102,20 @@
     color: green;
 }
 
-.buttonMargin {
-    margin-top: 10px;
+
+.userTable button {
+    margin-top: 30px;
+}
+
+h1 {
+    color: #09b45dc9;
+    font-size: 2rem; 
+    font-style: normal;
+    font-weight: bold;
+}
+
+h2 {
+    color:#1ca560c9;
+    font-size: 1.5rem;
+    font-style: italic;
 }

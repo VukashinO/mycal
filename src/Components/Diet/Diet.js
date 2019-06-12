@@ -52,7 +52,8 @@ class Diet extends Component {
     saveError: null,
 
     user: JSON.parse(localStorage.getItem('user')),
-    isCorrect: false
+    isCorrect: false,
+    isDietSaved: false
   }
 
 
@@ -264,7 +265,7 @@ class Diet extends Component {
     }, 0)
     const post = {
       date: this.getCurrentDate(),
-      user: this.state.user,
+      user: this.state.user.email,
       dietInfo: this.state.dietData,
       totalCalories: dietCalories
     }
@@ -277,8 +278,7 @@ class Diet extends Component {
     axios.post('https://my-fitness-app-81de2.firebaseio.com/diet.json', post)
       .then(responce => {
         console.log(responce)
-        this.setState({dietData:[],calories: this.state.showCalories,loading:false,searchFood:false})
-        this.props.history.push(ROUTES.MYCALENDAR)
+        this.setState({ dietData:[],calories: this.state.showCalories,loading:false,searchFood:false, isDietSaved: true }) 
       })
       .catch(err => console.log(err))
       
@@ -299,11 +299,19 @@ class Diet extends Component {
   handleFillCorrect = () => {
     this.setState({ isCorrect: false })
   }
+
+  onIsDietSaveHandle = () => {
+    // this.setState({ isDietSaved:false })
+    this.props.history.push(ROUTES.MYCALENDAR);
+  }
+
+
   render() {
     if(this.state.foodData) {
      (this.state.foodData.forEach(obj =>  console.log(obj.measures)))
     }
    
+ 
     //pagination:
     this.state.dietData.forEach((diet, i) => { diet.id = i })
     const pageNumbers = [];
@@ -426,33 +434,39 @@ class Diet extends Component {
         <h3 onClick={this.handleFillCorrect} className="fillCorrect">please choose quantity or measure</h3>
       </div>
     }
-    console.log(this.state.servingError)
-    console.log(this.state.bmr)
+
+    // save diet
+    let dietSaveMessage = null;
+    if(this.state.isDietSaved)
+    {
+      dietSaveMessage = 
+      <Modal>
+        <Auxiliary>
+          <h1>Your diet have been successfuly saved!</h1>
+          <h2>would you like to check your diet calendar?</h2>
+          <div>
+          <button className="btn btn-success btn-sm" onClick={this.onIsDietSaveHandle}>yes</button>
+          <button className="brn btn-danger btn-sm" onClick={()=>(this.setState({ isDietSaved:false }))}>no</button>
+          </div>
+
+        </Auxiliary>
+      </Modal>
+    }
+    console.log(this.state.isDietSaved)
     return (
       <Auxiliary>
         
         {modalInfo}
-       
-        {/* <div className="dietWrapper"> */}
         <div className="row justify-content-between">
           {isModalCorrect}
-          {/* <div className="dailyGoalContainer"> */}
           <div className="col-4 marginTop">
-            <p className="leftColParagrafs">Basaed on your bmr: <b>{this.state.bmr}</b>
-              you will need <b>{this.state.showCalories}</b> calories
-             to maintain your weith.
-                   </p>
-
+                <p className="leftColParagrafs">Basaed on your bmr: <b>{this.state.bmr}</b>
+                  you will need <b>{this.state.showCalories}</b> calories
+                  to maintain your weith.
+                   </p> 
             <h3>Goal:<span className={this.state.calories < 500 ? 'dangerZone' : 'dailyGoal'}>{this.state.calories}</span>calories</h3>
             <button className="btn btn-primary" onClick={this.handleCalories}>{this.state.searchFood ? 'hide food' : 'add food'}</button>
           </div>
-        
-          
-          
-         
-        
-
-          {/* <div className="mealTable"> */}
           <div className="col-4 marginTop">
             <table className="userTable">
 
@@ -467,14 +481,13 @@ class Diet extends Component {
                 {dinner}
               </tbody>
               <tfoot>
-                <tr><td><button className="btn btn-success" onClick={this.saveDiet}>Save diet</button></td></tr>
-
+                <tr><td><button className="btn btn-success" onClick={this.saveDiet}>Save diet</button></td></tr>              
               </tfoot>
       
             </table>
           
             {saveError}
-          
+            {dietSaveMessage}
           
           </div>
           {/* <Calendar user={this.state.user}/> */}
