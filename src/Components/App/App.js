@@ -16,7 +16,7 @@ const App = () => {
   return ( 
     <Router>
        <Navigation /> 
-    <div className="container">
+    <div className="container main-section">
    
   
   <Route exact path={ROUTES.Landing} component={LandingPage}/>

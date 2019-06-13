@@ -24,6 +24,32 @@ class Calendar extends Component {
        }
 
 
+    componentDidMount() {
+
+      this.getDataFromFireBase();
+    }
+    getDataFromFireBase = () => {
+        axios.get('https://my-fitness-app-81de2.firebaseio.com/.json')
+        .then(responce => {
+          let arr = []
+          for(let key in responce.data.diet)
+          {
+            arr.push({...responce.data.diet[key],
+              id: key})
+          }
+          const checkDate = `${this.year()}-${moment().month(`${this.month()}`).format("MM")}-${this.currentDay()}`;
+          const filteredArr =  arr.filter(diet => diet.user === this.state.user.email )
+          console.log(filteredArr)
+          if(filteredArr.length === 0){
+              this.setState({ isDietSaved: true })
+              console.log("you haven't save diet for this user!")
+              
+              return;
+          }
+          this.setState({ dietFromFirebase: filteredArr, selectedDay: this.currentDay() })
+       });  
+    }
+
     weekdays = moment.weekdays(); 
     weekdaysShort = moment.weekdaysShort(); // ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     months = moment.months();
@@ -112,30 +138,30 @@ class Calendar extends Component {
     onDayClick = (e, day) => {
         this.setState({
             selectedDay: day
-        }, () => {
-            axios.get('https://my-fitness-app-81de2.firebaseio.com/.json')
-            .then(responce => {
-              let arr = []
-              for(let key in responce.data.diet)
-              {
-                arr.push({...responce.data.diet[key],
-                  id: key})
-              }
-              const checkDate = `${this.year()}-${moment().month(`${this.month()}`).format("MM")}-${this.state.selectedDay}`;
-              const filteredArr =  arr.filter(diet => diet.user === this.state.user.email && diet.date === checkDate)
-              console.log(filteredArr)
-              if(filteredArr.length === 0){
-                  this.setState({ isDietSaved: true })
-                  console.log("you haven't save diet for this user!")
+        // }, () => {
+        //     axios.get('https://my-fitness-app-81de2.firebaseio.com/.json')
+        //     .then(responce => {
+        //       let arr = []
+        //       for(let key in responce.data.diet)
+        //       {
+        //         arr.push({...responce.data.diet[key],
+        //           id: key})
+        //       }
+        //       const checkDate = `${this.year()}-${moment().month(`${this.month()}`).format("MM")}-${this.state.selectedDay}`;
+        //       const filteredArr =  arr.filter(diet => diet.user === this.state.user.email && diet.date === checkDate)
+        //       console.log(filteredArr)
+        //       if(filteredArr.length === 0){
+        //           this.setState({ isDietSaved: true })
+        //           console.log("you haven't save diet for this user!")
                   
-                  return;
-              }
-              this.setState({ dietFromFirebase: filteredArr })
-            })
-        });
+        //           return;
+        //       }
+        //       this.setState({ dietFromFirebase: filteredArr })
+        //     })
+        // });
 
+    });
     }
-
     handleNodiet = () => {
         this.setState({ isDietSaved: false })
     }
@@ -158,15 +184,20 @@ class Calendar extends Component {
                 </td>
             );
         }
+            let dietDays = null;
+            if(this.state.dietFromFirebase) {
+              dietDays = this.state.dietFromFirebase
+            }
 
 
         let daysInMonth = [];
         for (let d = 1; d <= this.daysInMonth(); d++) {
             let className = (d == this.currentDay() ? "day current-day": "day");
-            let selectedClass = (d == this.state.selectedDay ? " selected-day " : "")
-            // let dietDayClass = (d == this.state.dietFromFirebase[0]? " dietDay " : "")
+            let selectedClass = (d == this.state.selectedDay ? " selected-day " : "");
+            // let dietDayClass = (d == dietDay ? "dietDayColor" : "");
+            let dietDayClass = dietDays? dietDays.find(obj => obj.date.split("-")[2] == d)? " current-day" : "" : null;
             daysInMonth.push(
-                <td key={d} className={ className + selectedClass } >
+                <td key={d} className={ className+ selectedClass + dietDayClass } >
                     <span onClick={(e)=>{this.onDayClick(e, d)}}>{d}</span>
                 </td>
             );

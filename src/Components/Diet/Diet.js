@@ -13,8 +13,7 @@ import * as ROUTES from '../../Constants/Routes';
 //import Calendar from '../../Components/Calendar/Calendar';
 
 
-const API = 'https://api.edamam.com/api/food-database/parser?nutrition-type=logging&ingr=';
-const API_KEY = '&app_id=ec5bc123&app_key=7bdb51e00e617d9d25545d840d03fa0b';
+
 
 class Diet extends Component {
   state = {
@@ -457,17 +456,32 @@ class Diet extends Component {
       <Auxiliary>
         
         {modalInfo}
+        {/* <div className="row">
+          <div className="col">
+          {searchFood}
+          
+          </div>
+        </div> */}
         <div className="row justify-content-between">
           {isModalCorrect}
-          <div className="col-4 marginTop">
+          <div className="col-7">
+          {searchFood}
+          
+          </div>
+          <div className="col-5">
+       
+              <div className="marginTop">
+            <div>
                 <p className="leftColParagrafs">Basaed on your bmr: <b>{this.state.bmr}</b>
                   you will need <b>{this.state.showCalories}</b> calories
                   to maintain your weith.
                    </p> 
             <h3>Goal:<span className={this.state.calories < 500 ? 'dangerZone' : 'dailyGoal'}>{this.state.calories}</span>calories</h3>
             <button className="btn btn-primary" onClick={this.handleCalories}>{this.state.searchFood ? 'hide food' : 'add food'}</button>
+            </div>
           </div>
-          <div className="col-4 marginTop">
+              <div className="marginTop">
+            <div>
             <table className="userTable">
 
               <tbody >
@@ -488,13 +502,9 @@ class Diet extends Component {
           
             {saveError}
             {dietSaveMessage}
-          
+          </div>
           </div>
           {/* <Calendar user={this.state.user}/> */}
-        </div>
-        <div className="row">
-          <div className="col">
-          {searchFood}
           
           </div>
         </div>

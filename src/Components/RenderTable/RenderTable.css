@@ -51,14 +51,18 @@ h2 a {
 	  font-size: 1em;
   -webkit-box-shadow: 0 2px 2px -2px #0E1119;
 	   -moz-box-shadow: 0 2px 2px -2px #0E1119;
-	        box-shadow: 0 2px 2px -2px #0E1119;
+          box-shadow: 0 2px 2px -2px #0E1119;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          max-width: 200px;
+          cursor: pointer;
 }
 
 .containerTable {
 	  text-align: left;
 	  overflow: hidden;
-	  width: 60%;
-	  margin: 0 auto;
+	  width: 100%;
     display: table;
     padding: 0 0 8em 0;
     background-color: whitesmoke;
@@ -82,7 +86,8 @@ h2 a {
 }
 
 .containerTable th {
-	  background-color: #1F2739;
+    background-color: #1F2739;
+    max-width: 200px;
 }
 
 .containerTable td:first-child { color: #FB667A; }

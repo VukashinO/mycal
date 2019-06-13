@@ -30,7 +30,7 @@ const {
                 <td>{renderBrand}</td>
                 <td>{Math.round(ENERC_KCAL)}cal</td>
                 <td>{Math.round(PROCNT)}g</td>
-                <td>fat:{Math.round(FAT)}g</td>
+                <td>{Math.round(FAT)}g</td>
             </tr>
             )
 };

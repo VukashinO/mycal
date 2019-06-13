@@ -3,6 +3,12 @@
     
 }
 
-.container {
-    height: 100vh;
+.m-left-15
+{
+    margin-left: 15px;
+}
+
+.m-right-15
+{
+    margin-right: 15px;
 }
