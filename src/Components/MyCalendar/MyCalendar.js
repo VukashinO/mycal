@@ -244,7 +244,7 @@ class Calendar extends Component {
     
         return (
             <div className="row">
-            <div className="col">
+            <div className="col-4 m-5">
                      
             <div className="calendar-container" style={this.style}>
             <div className="divHeader centerElement"><span>Diet Calendar</span></div>
@@ -278,7 +278,7 @@ class Calendar extends Component {
                 {savedDiet}
             </div>
             </div>
-            <div className="col">
+            <div className="col-4 m-5">
             <FirebaseTable
                 handleDivClick={this.handleDivClick} 
                 dietFromFirebase={this.state.dietFromFirebase}

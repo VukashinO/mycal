@@ -10,9 +10,12 @@ import Modal from '../../Components/UI/Modal/Modal';
 import Auxiliary from '../../Components/myHoc/Auxiliary';
 import NutritionSummary from '../../Components/NutritionSummary/NutritionSummary';
 import * as ROUTES from '../../Constants/Routes';
+import Messures from '../../Components/MesuresEnum/MesuresEnum';
+
 //import Calendar from '../../Components/Calendar/Calendar';
 
 //Api's here
+
 
 
 class Diet extends Component {
@@ -52,7 +55,8 @@ class Diet extends Component {
 
     user: JSON.parse(localStorage.getItem('user')),
     isCorrect: false,
-    isDietSaved: false
+    isDietSaved: false,
+    startCount: 0
   }
 
   
@@ -147,6 +151,26 @@ class Diet extends Component {
     this.setState({ valueMeal: event.target.value });
   }
 
+  handleMesures = () => {
+
+    let mesure = this.state.value;
+        let calculateMesure = mesure === "Serving" ?
+        Math.round(+this.state.serving * (Messures[mesure] * this.state.individualCalorie)) :
+        Math.round(+this.state.serving * (Messures[mesure] * this.state.individualCalorie) / 100);
+
+            if (this.state.startCount + calculateMesure > this.state.calories) {
+             this.setState({ isBelowZero: true, nutritionFacts: false })
+            }
+              this.setState((prevState) => ({
+                startCount: prevState.startCount + calculateMesure,
+                dietData: prevState.dietData.concat({
+                  meal: this.state.valueMeal,
+                  foodName: this.state.foodName,
+                  calories: calculateMesure
+                }), nutritionFacts: false
+              }))
+  };
+
   handleSubmitModal = () => {
 
     let cup = this.state.cup;
@@ -157,100 +181,154 @@ class Diet extends Component {
     let kilo = this.state.kilo;
     if (this.state.servingError === null && this.state.value !== 'Choose serving') {
 
-      if (this.state.value === 'Cup') {
+      switch (this.state.value) {
+          case 'Cup':
+          this.handleMesures();
+          break;
+          case 'Gram':
+          this.handleMesures();
+          case 'Ounce':
+          this.handleMesures();
+          break;
+          case 'Serving':
+          this.handleMesures();
+          break;
+          case 'Pound': 
+          this.handleMesures();
+          break;
+          case 'Kilogram':
+          this.handleMesures();
+          break;
+        default:
+          break;
+      }
+      // if (this.state.value === 'Cup') {
 
-        cup = Math.round(+this.state.serving * (156 * this.state.individualCalorie) / 100)
-        if (this.state.calories - cup < 0) {
-          this.setState({ isBelowZero: true, nutritionFacts: false })
-          return;
-        }
-        this.setState((prevState) => ({
-          calories: prevState.calories - cup,
-          dietData: prevState.dietData.concat({
-            meal: this.state.valueMeal,
-            foodName: this.state.foodName,
-            calories: cup
-          }), nutritionFacts: false
-        }))
 
-      }
-      if (this.state.value === 'Gram') {
-        gram = Math.round(+this.state.serving * (1 * this.state.individualCalorie) / 100)
-        if (this.state.calories - gram < 0) {
-          this.setState({ isBelowZero: true, nutritionFacts: false })
-          return;
-        }
-        this.setState((prevState) => ({
-          calories: prevState.calories - gram,
-          dietData: prevState.dietData.concat({
-            meal: this.state.valueMeal,
-            foodName: this.state.foodName,
-            calories: gram
-          }), nutritionFacts: false
-        }))
-        // this.state.dietData.breakFast= {}
-      }
+      //   cup = Math.round(+this.state.serving * (156 * this.state.individualCalorie) / 100)
+      //   // logic for max to zero:
+      //   // if (this.state.calories - cup < 0) {
+      //   //   this.setState({ isBelowZero: true, nutritionFacts: false })
+      //   //   return;
+      //   // }
+      //   // logic for zero to max:
+      //      if (this.state.startCount + cup > this.state.calories) {
+      //       this.setState({ isBelowZero: true, nutritionFacts: false })
+          
+      //    }
+      //   this.setState((prevState) => ({
+      //     // calories: prevState.calories - cup,
+      //     startCount: prevState.startCount + cup,
+      //     dietData: prevState.dietData.concat({
+      //       meal: this.state.valueMeal,
+      //       foodName: this.state.foodName,
+      //       calories: cup
+      //     }), nutritionFacts: false
+      //   }))
 
-      if (this.state.value === 'Ounce') {
-        ounce = Math.round(+this.state.serving * (28.3495 * this.state.individualCalorie) / 100)
-        if (this.state.calories - ounce < 0) {
-          this.setState({ isBelowZero: true, nutritionFacts: false })
-          return;
-        }
-        this.setState((prevState) => ({
-          calories: prevState.calories - ounce,
-          dietData: prevState.dietData.concat({
-            meal: this.state.valueMeal,
-            foodName: this.state.foodName,
-            calories: ounce
-          }), nutritionFacts: false
-        }))
-      }
-      if (this.state.value === 'Serving') {
-        defaultGram = +this.state.serving * this.state.individualCalorie;
-        if (this.state.calories - defaultGram < 0) {
-          this.setState({ isBelowZero: true, nutritionFacts: false })
-          return;
-        }
-        this.setState((prevState) => ({
-          calories: prevState.calories - defaultGram,
-          dietData: prevState.dietData.concat({
-            meal: this.state.valueMeal,
-            foodName: this.state.foodName,
-            calories: defaultGram
-          }), nutritionFacts: false
-        }))
-      }
-      if (this.state.value === 'Pound') {
-        pound = Math.round(+this.state.serving * (453.592 * this.state.individualCalorie) / 100)
-        if (this.state.calories - pound < 0) {
-          this.setState({ isBelowZero: true, nutritionFacts: false })
-          return;
-        }
-        this.setState((prevState) => ({
-          calories: prevState.calories - pound,
-          dietData: prevState.dietData.concat({
-            meal: this.state.valueMeal,
-            foodName: this.state.foodName,
-            calories: pound
-          }), nutritionFacts: false
-        }))
-      }
-      if (this.state.value === 'Kilogram') {
-        kilo = Math.round(+this.state.serving * (1000 * this.state.individualCalorie) / 100)
-        if (this.state.calories - kilo < 0) {
-          this.setState({ isBelowZero: true, nutritionFacts: false })
-          return;
-        }
-        this.setState((prevState) => ({
-          calories: prevState.calories - kilo,
-          dietData: prevState.dietData.concat({
-            meal: this.state.valueMeal,
-            foodName: this.state.foodName,
-            calories: kilo
-          }), nutritionFacts: false
-        }))
-      }
+      // }
+      // if (this.state.value === 'Gram') {
+      //   gram = Math.round(+this.state.serving * (1 * this.state.individualCalorie) / 100)
+      //   // if (this.state.calories - gram < 0) {
+      //   //   this.setState({ isBelowZero: true, nutritionFacts: false })
+      //   //   return;
+      //   // }
+      //   if (this.state.startCount + gram > this.state.calories) {
+      //     this.setState({ isBelowZero: true, nutritionFacts: false })
+      //    // return;
+      //  }
+      //   this.setState((prevState) => ({
+      //     // calories: prevState.calories - gram,
+      //     startCount: prevState.startCount + gram,
+      //     dietData: prevState.dietData.concat({
+      //       meal: this.state.valueMeal,
+      //       foodName: this.state.foodName,
+      //       calories: gram
+      //     }), nutritionFacts: false
+      //   }))
+      //   // this.state.dietData.breakFast= {}
+      // }
+
+      // if (this.state.value === 'Ounce') {
+      //   ounce = Math.round(+this.state.serving * (28.3495 * this.state.individualCalorie) / 100)
+      //   // if (this.state.calories - ounce < 0) {
+      //   //   this.setState({ isBelowZero: true, nutritionFacts: false })
+      //   //   return;
+      //   // }
+      //   if (this.state.startCount + ounce > this.state.calories) {
+      //     this.setState({ isBelowZero: true, nutritionFacts: false })
+      //    // return;
+      //  }
+      //   this.setState((prevState) => ({
+      //     // calories: prevState.calories - ounce,
+      //     startCount: prevState.startCount + ounce,
+      //     dietData: prevState.dietData.concat({
+      //       meal: this.state.valueMeal,
+      //       foodName: this.state.foodName,
+      //       calories: ounce
+      //     }), nutritionFacts: false
+      //   }))
+      // }
+      // if (this.state.value === 'Serving') {
+      //   defaultGram = +this.state.serving *(1 * this.state.individualCalorie);
+      //   // if (this.state.calories - defaultGram < 0) {
+      //   //   this.setState({ isBelowZero: true, nutritionFacts: false })
+      //   //   return;
+      //   // }
+      //   if (this.state.startCount + defaultGram > this.state.calories) {
+      //     this.setState({ isBelowZero: true, nutritionFacts: false })
+      //    // return;
+      //  }
+      //   this.setState((prevState) => ({
+      //     // calories: prevState.calories - defaultGram,
+      //     startCount: prevState.startCount + defaultGram,
+      //     dietData: prevState.dietData.concat({
+      //       meal: this.state.valueMeal,
+      //       foodName: this.state.foodName,
+      //       calories: defaultGram
+      //     }), nutritionFacts: false
+      //   }))
+      // }
+      // if (this.state.value === 'Pound') {
+      //   pound = Math.round(+this.state.serving * (453.592 * this.state.individualCalorie) / 100)
+      //   // if (this.state.calories - pound < 0) {
+      //   //   this.setState({ isBelowZero: true, nutritionFacts: false })
+      //   //   return;
+      //   // }
+      //   if (this.state.startCount + pound > this.state.calories) {
+      //     this.setState({ isBelowZero: true, nutritionFacts: false })
+      //    // return;
+      //  }
+      //   this.setState((prevState) => ({
+      //     //calories: prevState.calories - pound,
+      //     startCount: prevState.startCount + pound,
+      //     dietData: prevState.dietData.concat({
+      //       meal: this.state.valueMeal,
+      //       foodName: this.state.foodName,
+      //       calories: pound
+      //     }), nutritionFacts: false
+      //   }))
+      // }
+      // if (this.state.value === 'Kilogram') {
+      //   kilo = Math.round(+this.state.serving * (1000 * this.state.individualCalorie) / 100)
+      //   // if (this.state.calories - kilo < 0) {
+      //   //   this.setState({ isBelowZero: true, nutritionFacts: false })
+      //   //   return;
+      //   // }
+      //   if (this.state.startCount + kilo > this.state.calories) {
+      //     this.setState({ isBelowZero: true, nutritionFacts: false })
+      //    // return;
+      //  }
+      //   this.setState((prevState) => ({
+      //    // calories: prevState.calories - kilo,
+      //     startCount: prevState.startCount + kilo,
+      //     dietData: prevState.dietData.concat({
+      //       meal: this.state.valueMeal,
+      //       foodName: this.state.foodName,
+      //       calories: kilo
+      //     }), nutritionFacts: false
+      //   }))
+      // }
 
       this.setState({ cup, gram, defaultGram, ounce, pound, kilo })
     }
@@ -289,8 +367,12 @@ class Diet extends Component {
     console.log(index)
     const dietData = [...this.state.dietData]
     dietData.splice(index, 1)
-    const cal = this.state.calories
-    this.setState({ dietData, calories: cal + calories })
+    // code for count from max to zero
+    //const cal = this.state.calories 
+    //this.setState({ dietData, calories: cal + calories })
+    // code for zero to max
+    const cal = this.state.startCount;
+    this.setState({ dietData, startCount: cal - calories })
   }
 
   handleChangeError = () => {
@@ -380,18 +462,17 @@ class Diet extends Component {
         <button className="buttonDelete" onClick={() => this.handleDelete(meal.id, meal.calories)}>-</button></td></tr>)
 
     const dinner = this.state.dietData.filter(diet => diet.meal === 'Dinner')
-      .map((meal, i) => <tr key={meal.foodName + i}><td>food:<span className="dinamicTableTd">{meal.foodName}: {meal.calories}calories</span>
-        <button className="buttonDelete" onClick={() => this.handleDelete(meal.id, meal.calories)}>-</button></td></tr>)
+      .map((meal, i) => <tr key={meal.foodName + i}><td>food:<span className="dinamicTableTd">{meal.foodName}: {meal.calories}
+        <button className="buttonDelete" onClick={() => this.handleDelete(meal.id, meal.calories)}>-</button>calories</span></td></tr>)
    
 
     // error message for below zero calories
     let errorMessage = null;
     if (this.state.isBelowZero) {
-      errorMessage = <div className="errorStyleDiv">
-        <h3>You are passing your daily goal, choose mesure so u dont go below zero,
-           please stay motivate so u can cut weigth<span onClick={this.handleChangeError} style={{ cursor: 'pointer', fontWeight: 'bold', color: 'green' }}>ok</span>
+      errorMessage = <Modal className="errorStyleDiv">
+        <h3>you are passing your daily goal, are you sure you want to eat this food :)<span onClick={this.handleChangeError} style={{ cursor: 'pointer', fontWeight: 'bold', color: 'green' }}>ok</span>
         </h3>
-      </div>
+      </Modal>
     }
 
     // Search and API for food
@@ -399,14 +480,14 @@ class Diet extends Component {
     if (this.state.searchFood) {
       searchFood = <div >
         {errorMessage}
-        <Search
+        {/* <Search
           handleSubmit={e => {
             e.preventDefault();
             this.handleSubmit()
           }}
           onChange={(e) => this.onChange(e.target.value)}
           value={this.state.searchText}
-        />
+        /> */}
         {loader}
       </div>
     }
@@ -466,8 +547,16 @@ class Diet extends Component {
         <div className="row justify-content-between">
           {isModalCorrect}
           <div className="col-7">
-          {searchFood}
-          
+          <Search
+          handleSubmit={e => {
+            e.preventDefault();
+            this.handleSubmit()
+          }}
+          onChange={(e) => this.onChange(e.target.value)}
+          value={this.state.searchText}
+        />
+          {loader}
+          {errorMessage}
           </div>
           <div className="col-5">
        
@@ -477,8 +566,11 @@ class Diet extends Component {
                   you will need <b>{this.state.showCalories}</b> calories
                   to maintain your weith.
                    </p> 
-            <h3>Goal:<span className={this.state.calories < 500 ? 'dangerZone' : 'dailyGoal'}>0/{this.state.calories} </span>calories</h3>
-            <button className="btn btn-primary" onClick={this.handleCalories}>{this.state.searchFood ? 'hide food' : 'add food'}</button>
+            <h3>Goal:<span className="dailyGoal">
+              {this.state.calories}</span>/<span className={this.state.startCount === 0 || 
+              this.state.startCount > this.state.calories? 'dangerZone' : 'dailyGoal'}>{this.state.startCount}</span>calories</h3>
+              {/* hide - add food */}
+          {/* <button className="btn btn-primary" onClick={this.handleCalories}>{this.state.searchFood ? 'hide food' : 'add food'}</button> */}
             </div>
           </div>
               <div className="marginTop">

@@ -6,7 +6,6 @@
 
 
 .dietTableTh {
-    font-weight: bold;
     border-bottom: 2px solid #eca842;
     font-weight: bold;
 }
@@ -24,14 +23,15 @@
 .dailyGoal {
     font-size: 40px;
     font-weight: bold;
-    color:#cc4246;
+    color:green;
 }
 
 .dinamicTableTd {
-    font-size:17px;
+    /* font-size:17px; */
     font-weight: bold;
-    color:#43c9f3;
+    /* color:#43c9f3; */
     text-transform: capitalize;
+    color: #43c9f3;
 }
 
 .mealTable {
@@ -53,7 +53,7 @@
 .dangerZone {
     font-size: 40px;
     font-weight: bold;
-    color: green;
+    color: red;
 }
 
 .errorStyleDiv {
@@ -67,9 +67,13 @@
 
 .buttonDelete {
     background-color: red;
-    border:red;
-    border-radius: 50%;
+    border: red;
+    border-radius: 45%;
     color: white;
+    height: 30px;
+    width: 30px;
+    line-height: 20px;
+    
 }
 
 .fillCorrect {
@@ -91,7 +95,6 @@
 
 
 .marginTop {
-    margin-top: 25px;
     background-color: white;
     text-align: center;
 }

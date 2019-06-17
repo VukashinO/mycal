@@ -55,7 +55,7 @@ h2 a {
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
-          max-width: 200px;
+          max-width: 201px;
           cursor: pointer;
 }
 
@@ -72,7 +72,8 @@ h2 a {
 	  padding-bottom: 2%;
 	  padding-top: 2%;
     padding-left:2%;
-    color: #FB667A;  
+    color: #FB667A;
+    max-width: 201px;  
 }
 
 /* Background-color of the odd rows */
@@ -87,7 +88,7 @@ h2 a {
 
 .containerTable th {
     background-color: #1F2739;
-    max-width: 200px;
+    max-width: 201px;
 }
 
 .containerTable td:first-child { color: #FB667A; }
