@@ -12,7 +12,7 @@ import NutritionSummary from '../../Components/NutritionSummary/NutritionSummary
 import * as ROUTES from '../../Constants/Routes';
 //import Calendar from '../../Components/Calendar/Calendar';
 
-
+//Api's here
 
 
 class Diet extends Component {
@@ -55,6 +55,7 @@ class Diet extends Component {
     isDietSaved: false
   }
 
+  
 
   componentDidMount(){
     axios.get('https://my-fitness-app-81de2.firebaseio.com/.json')
@@ -476,7 +477,7 @@ class Diet extends Component {
                   you will need <b>{this.state.showCalories}</b> calories
                   to maintain your weith.
                    </p> 
-            <h3>Goal:<span className={this.state.calories < 500 ? 'dangerZone' : 'dailyGoal'}>{this.state.calories}</span>calories</h3>
+            <h3>Goal:<span className={this.state.calories < 500 ? 'dangerZone' : 'dailyGoal'}>0/{this.state.calories} </span>calories</h3>
             <button className="btn btn-primary" onClick={this.handleCalories}>{this.state.searchFood ? 'hide food' : 'add food'}</button>
             </div>
           </div>

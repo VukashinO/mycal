@@ -14,8 +14,8 @@ const landingPage = () => {
                <h3 className="marginElements">track and calculate your food</h3>
                <h3 className="marginElements">make acc if u dont have one</h3>
                <div style={{marginTop:'25px'}}>
-               <Link to={ROUTES.SIGN_IN} style={{fontSize:'20px',color:'#1e7a7a'}}>sign in</Link>
-               <Link to={ROUTES.SIGN_UP} style={{marginLeft:'10px', fontSize:'20px',color:'#1e7a7a'}}>sign up</Link>  
+               <Link className="btn btn-success" to={ROUTES.SIGN_IN} style={{fontSize:'20px',color:'white'}}>sign in</Link>
+               <Link className="btn btn-success" to={ROUTES.SIGN_UP} style={{marginLeft:'10px', fontSize:'20px',color:'white'}}>sign up</Link>  
                </div>
             </div>
             </div>

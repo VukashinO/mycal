@@ -70,6 +70,14 @@ tr {
      border-radius: 2%;
     color: white;
 }
+
+.diet-day {
+    background-color:#6091eb;
+    max-width: 15px;
+    max-height: 15px;
+    border-radius: 2%;
+   color: white;
+}
 .selected-day {
     background-color:yellow;
     max-width: 15px;
@@ -113,7 +121,11 @@ tr {
 }
 
 .noDietSave {
-    color: red;
+    color:#1e55ba;
     cursor: pointer;
+    text-align: center;
 }
 
+.centerElement {
+    text-align: center;
+}
