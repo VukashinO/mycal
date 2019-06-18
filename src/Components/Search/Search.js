@@ -1,14 +1,15 @@
 import React from 'react';
+import './Search.css';
 
 const Search = props => 
 
      (
-      <form onSubmit={props.handleSubmit} style={{textAlign:'center'}}>
-            <h3>Search our food database</h3>
+      <form onSubmit={props.handleSubmit} className="searchField" style={{ margin:'auto',maxWidth:'300px', padding:'10px' }}>
+            {/* <h3>Search our food database</h3> */}
              <input  onChange={props.onChange} type="text" value={props.value}
              placeholder="search food"
              />
-             <button className="btn btn-primary">submit</button>
+             <button><i className="fa fa-search"></i></button>
            
      </form>
  

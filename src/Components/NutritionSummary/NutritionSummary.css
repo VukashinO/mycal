@@ -1,3 +1,33 @@
 .error {
     border: 2px solid red;
 }
+
+.addFood {
+    background-color: green;
+    border: green;
+    margin-right: 5px;
+    color: white;
+    height: 40px;
+    width: 75px;
+    border-radius: 5px;
+}
+
+.onCancel {
+    background-color: #3fb23f;
+    border: #3fb23f;
+    margin-right: 5px;
+    color: white;
+    height: 40px;
+    width: 75px;
+    border-radius: 5px;
+}
+
+.addFood:hover {
+    background-color: orange;
+    color: red;
+}
+
+.onCancel:hover {
+    background-color: orange;
+    color: red;
+}

@@ -77,15 +77,8 @@
 }
 
 .fillCorrect {
-    color: red;
-    position: fixed;
-    margin: auto;
-    left: 36%;
-    top: 30%;
-    z-index: 700;
-    background-color: blue;
-    width: 30%;
-    cursor: pointer;
+   color:#477280;
+    cursor:pointer;
 }
 
 .userTable {
@@ -95,6 +88,7 @@
 
 
 .marginTop {
+    margin-top: 10px;
     background-color: white;
     text-align: center;
 }
@@ -121,4 +115,24 @@ h2 {
     color:#1ca560c9;
     font-size: 1.5rem;
     font-style: italic;
+}
+
+
+.btnConfirm-btnSucsses {
+    width: 40px;
+    height: 30px;
+    background-color: green;
+    border: 1px solid green;
+    color: white;
+    border-radius: 2px;
+    margin: 5px;
+}
+
+.btnConfirm-btnCancel {
+    width: 40px;
+    height: 30px;
+    background-color: red;
+    border: 1px solid red;
+    color: white;
+    border-radius: 2px;
 }

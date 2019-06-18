@@ -40,22 +40,22 @@ h2 a {
 
 .containerTable th h1 {
 	  font-weight: bold;
-	  font-size: 1em;
-  text-align: left;
-  /* color: #185875; */
-  color:#449ac1;
+	  font-size: 17px;
+    text-align: left;
+    color:#449ac1;
+    max-width: 200px;
 }
 
 .containerTable td {
 	  font-weight: normal;
-	  font-size: 1em;
+	  font-size: 17px;
   -webkit-box-shadow: 0 2px 2px -2px #0E1119;
 	   -moz-box-shadow: 0 2px 2px -2px #0E1119;
           box-shadow: 0 2px 2px -2px #0E1119;
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
-          max-width: 201px;
+          max-width: 200px;
           cursor: pointer;
 }
 
@@ -73,7 +73,8 @@ h2 a {
 	  padding-top: 2%;
     padding-left:2%;
     color: #FB667A;
-    max-width: 201px;  
+    max-width: 200px;
+    font-size: 16px;  
 }
 
 /* Background-color of the odd rows */
@@ -88,7 +89,7 @@ h2 a {
 
 .containerTable th {
     background-color: #1F2739;
-    max-width: 201px;
+    max-width: 200px;
 }
 
 .containerTable td:first-child { color: #FB667A; }

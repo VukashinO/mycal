@@ -37,7 +37,7 @@ class Calendar extends Component {
             arr.push({...responce.data.diet[key],
               id: key})
           }
-          const checkDate = `${this.year()}-${moment().month(`${this.month()}`).format("MM")}-${this.currentDay()}`;
+         // const checkDate = `${this.year()}-${moment().month(`${this.month()}`).format("MM")}-${this.currentDay()}`;
           const filteredArr =  arr.filter(diet => diet.user === this.state.user.email )
           console.log(filteredArr)
           if(filteredArr.length === 0){
