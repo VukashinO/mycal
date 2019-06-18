@@ -16,8 +16,7 @@ import Messures from '../../Components/MesuresEnum/MesuresEnum';
 
 //Api's here
 
-const API = 'https://api.edamam.com/api/food-database/parser?nutrition-type=logging&ingr=';
-const API_KEY = '&app_id=ec5bc123&app_key=7bdb51e00e617d9d25545d840d03fa0b';
+
 
 class Diet extends Component {
   state = {
