@@ -12,10 +12,8 @@ import NutritionSummary from '../../Components/NutritionSummary/NutritionSummary
 import * as ROUTES from '../../Constants/Routes';
 import Messures from '../../Components/MesuresEnum/MesuresEnum';
 
-//import Calendar from '../../Components/Calendar/Calendar';
 
-//Api's here
-
+//Api's here :
 
 
 class Diet extends Component {
@@ -56,27 +54,42 @@ class Diet extends Component {
     user: JSON.parse(localStorage.getItem('user')),
     isCorrect: false,
     isDietSaved: false,
-    startCount: 0
+    startCount: 0,
+    userFirebase: null
   }
 
-  
 
-  componentDidMount(){
+
+
+
+  // ------------ Load data from FireBase -------------------
+
+  componentDidMount() {
+
+    this.setState({ isFetched: true })
+
     axios.get('https://my-fitness-app-81de2.firebaseio.com/.json')
-    .then(responce => {
-    const users = [];
-    for(let key in responce.data.users)
-    {
-      users.push({...responce.data.users[key], id:key})
-    }
-     console.log(users)
-      console.log(this.state.user.email)
-      const userFirebase = users.find(user => user.email === this.state.user.email);
-      console.log(userFirebase)
-      this.setState({ bmr:userFirebase.bmr, calories:userFirebase.calories, showCalories:userFirebase.calories })
-    })
-    .catch(err => console.log(err))
+      .then(responce => {
+        const users = [];
+        for (let key in responce.data.users) {
+          users.push({ ...responce.data.users[key], id: key })
+        }
+        console.log(users)
+        console.log(this.state.user.email)
+        const userFirebase = users.find(user => user.email === this.state.user.email);
+        console.log(userFirebase)
+        this.setState({
+          bmr: userFirebase.bmr,
+          calories: userFirebase.calories,
+          showCalories: userFirebase.calories,
+          usersFromFirebase: users,
+        })
+        console.log(this.state.user)
+      })
+      .catch(err => console.log(err))
   }
+
+  // ------------ Function for Get Current Date to save in Firebase --------------------
   getCurrentDate(separator = '-') {
 
     let newDate = new Date()
@@ -91,10 +104,12 @@ class Diet extends Component {
     this.setState((prevState) => ({ searchFood: !prevState.searchFood }))
   }
 
+  // ----------- Changing state dinamic what user type ----------------------
   onChange = (text) => {
     this.setState(({ searchText: text }))
   }
 
+  // --------------On submit making request to Edamam get Food Data
   handleSubmit = () => {
     if (this.state.searchText) {
       this.setState({ loading: true })
@@ -109,63 +124,55 @@ class Diet extends Component {
         })
         .catch(err => console.log(`something went wrong ${err}`))
     }
-    
+
   };
 
+  // ------------------- Seting state for Calorie on 100g and food name for the Modal
   handleOnclickNutriton = (individualCalorie, foodName) => {
     this.setState({ nutritionFacts: true, individualCalorie, foodName })
   }
 
+  //--------------  On click to cancel Modal
   handleCancelModal = () => {
     this.setState({ nutritionFacts: false })
   }
-  // myFirebase = () => {
-  //   axios.get('https://my-fitness-app-81de2.firebaseio.com/.json')
-  //     .then(responce => {
-  //       let arr = []
-  //       for(let key in responce.data.diet)
-  //       {
-  //         arr.push({...responce.data.diet[key],
-  //           id: key})
-  //       }
-  //       console.log(responce.data.diet)
-  //       this.setState({ dietFromFirebase: arr })
-  //       console.log(arr)
-  //     })
-  // }
 
   handleClickPagination = (event) => {
-    console.log(+event.target.id)
     this.setState({ currentPage: +event.target.id })
   }
+
+  //----------------------- Quantity input and validation for the food modal
   handleInput = (event) => {
     let { name, value } = event.target;
     let error = this.state.servingError;
     error = value && value <= 5 ? null : "enter number from 1 to 5";
     this.setState({ servingError: error, [name]: value })
   }
+
   handleChange = event => {
     this.setState({ value: event.target.value });
   }
+
   handleChangeMeal = event => {
     this.setState({ valueMeal: event.target.value });
   }
 
+  // --------------- Logic for calculating meal mesures
   handleMesures = () => {
 
     let mesure = this.state.value;
 
-    if(!Messures[mesure]) return;
+    if (!Messures[mesure]) return;
 
-    let calculateMesure = mesure === "Serving" 
-      ? Math.round( + this.state.serving * (Messures[mesure] * this.state.individualCalorie)) 
-      : Math.round( + this.state.serving * (Messures[mesure] * this.state.individualCalorie) / 100);
+    let calculateMesure = mesure === "Serving"
+      ? Math.round(+ this.state.serving * (Messures[mesure] * this.state.individualCalorie))
+      : Math.round(+ this.state.serving * (Messures[mesure] * this.state.individualCalorie) / 100);
 
     if (this.state.startCount + calculateMesure > this.state.calories) {
       this.setState(
-        { 
-          isBelowZero: true, 
-          nutritionFacts: false 
+        {
+          isBelowZero: true,
+          nutritionFacts: false
         })
     }
 
@@ -179,6 +186,7 @@ class Diet extends Component {
     }))
   };
 
+  // ------------------- Update the state if Modal i correct or show error message
   handleSubmitModal = () => {
 
     let cup = this.state.cup;
@@ -187,9 +195,9 @@ class Diet extends Component {
     let ounce = this.state.ounce;
     let pound = this.state.pound;
     let kilo = this.state.kilo;
+
     if (this.state.servingError === null && this.state.value !== 'Choose serving') {
-      
- 
+
       this.handleMesures();
       this.setState({ cup, gram, defaultGram, ounce, pound, kilo })
     }
@@ -197,32 +205,34 @@ class Diet extends Component {
       return this.setState({ isCorrect: true })
     }
   }
+
+  // ------------------------- Saving Diet to Firebase
   saveDiet = () => {
     let dietCalories = this.state.dietData.map(diet => diet.calories)
-    .reduce((acc, curr) => {
-      return acc + curr
-    }, 0)
+      .reduce((acc, curr) => {
+        return acc + curr
+      }, 0)
     const post = {
       date: this.getCurrentDate(),
       user: this.state.user.email,
       dietInfo: this.state.dietData,
       totalCalories: dietCalories
     }
-    
+
     if (dietCalories < 1000) {
       this.setState({ saveError: true })
       return;
     }
-    this.setState({loading:true})
+    this.setState({ loading: true })
     axios.post('https://my-fitness-app-81de2.firebaseio.com/diet.json', post)
       .then(responce => {
         console.log(responce)
-        this.setState({ dietData:[],calories: this.state.showCalories,loading:false,searchFood:false, isDietSaved: true }) 
+        this.setState({ dietData: [], calories: this.state.showCalories, loading: false, searchFood: false, isDietSaved: true })
       })
       .catch(err => console.log(err))
-      
   }
 
+  //----------------- Delete Food on the dinamic table
   handleDelete = (ind, calories) => {
     const index = this.state.dietData.findIndex(diet => diet.id === ind)
     console.log(index)
@@ -249,13 +259,14 @@ class Diet extends Component {
   }
 
 
+
   render() {
-    if(this.state.foodData) {
-     (this.state.foodData.forEach(obj =>  console.log(obj.measures)))
+    if (this.state.foodData) {
+      (this.state.foodData.forEach(obj => console.log(obj.measures)))
     }
-   
- 
-    //pagination:
+
+
+    //--------------------Pagination --------------------------------
     this.state.dietData.forEach((diet, i) => { diet.id = i })
     const pageNumbers = [];
     if (this.state.foodData) {
@@ -276,7 +287,8 @@ class Diet extends Component {
       onClick={this.handleClickPagination}
     >{num}
     </li>)
-    //  conditional render table or loader
+
+    //-------------------------------  Conditional render table or loader -------------------------------
 
     let loader = <RenderTable
       foodData={paginationFoods}
@@ -311,9 +323,9 @@ class Diet extends Component {
       </Modal>
     }
 
-    console.log(this.props.location.state)
-    // renering mini table for diet to save with firebase
+    console.log(this.props.location)
 
+    //----------------------------- Renering mini table for diet to save with firebase -----------------------------
     const breakFast = this.state.dietData.filter(diet => diet.meal === 'Breakfast')
       .map((meal, i) => <tr key={meal.foodName + i}><td>food:<span className="dinamicTableTd">{meal.foodName}: {meal.calories}calories</span>
         <button className="buttonDelete" onClick={() => this.handleDelete(meal.id, meal.calories)}>-</button></td></tr>)
@@ -325,79 +337,83 @@ class Diet extends Component {
     const dinner = this.state.dietData.filter(diet => diet.meal === 'Dinner')
       .map((meal, i) => <tr key={meal.foodName + i}><td>food:<span className="dinamicTableTd">{meal.foodName}: {meal.calories}
         <button className="buttonDelete" onClick={() => this.handleDelete(meal.id, meal.calories)}>-</button>calories</span></td></tr>)
-   
 
-    // error message for below zero calories
+
+    // --------------------------- Error message for below zero calories -------------------------------
     let errorMessage = null;
     if (this.state.isBelowZero) {
-      errorMessage = <Modal className="errorStyleDiv">
-        <h3>you are passing your daily goal, are you sure you want to eat this food :)<span onClick={this.handleChangeError} style={{ cursor: 'pointer', fontWeight: 'bold', color: 'green' }}>ok</span>
-        </h3>
-      </Modal>
+      errorMessage =
+        <Modal className="errorStyleDiv">
+          <h3>you are passing your daily goal, are you sure you want to eat this food :)<span onClick={this.handleChangeError} style={{ cursor: 'pointer', fontWeight: 'bold', color: 'green' }}>ok</span>
+          </h3>
+        </Modal>
     }
 
-    // Search and API for food
-  //  let searchFood = null;
-  //    if (this.state.searchFood) {
-  //      searchFood = <div >
-  //        {errorMessage}
-  //        <Search
-  //         handleSubmit={e => {
-  //           e.preventDefault();
-  //           this.handleSubmit()
-  //         }}
-  //         onChange={(e) => this.onChange(e.target.value)}
-  //         value={this.state.searchText}
-        
-  //        {loader}
-  //      </div>
-  //   }
-
-    // render save error
+    // --------------------------------------------------- Render save error ---------------------------------
     let saveError = null;
     if (this.state.saveError) {
-      saveError = 
-      <Modal>
-      <Auxiliary>
+      saveError =
+        <Modal>
+          <Auxiliary>
 
-        <p style={{ color: 'red' }}>Based on your total calories consumed for today, you are likely not eating enough.</p>
-        <p>For safe weight loss, the National Institutes of Health recommends no less than 1000-1200 calories for women and 1200-1500 calories for men.</p>
-       <p>Even during weight loss, it's important to meet your body's basic nutrient and energy needs. Over time, not eating enough can lead to nutrient deficiencies, unpleasant side effects & other serious health problems.</p>
-       <button
-       onClick={ () => {this.setState({ saveError: null })}}
-       className="btn btn-success buttonMargin">ok</button> 
-       </Auxiliary>
-       </Modal>
+            <p style={{ color: 'red' }}>Based on your total calories consumed for today, you are likely not eating enough.</p>
+            <p>For safe weight loss, the National Institutes of Health recommends no less than 1000-1200 calories for women and 1200-1500 calories for men.</p>
+            <p>Even during weight loss, it's important to meet your body's basic nutrient and energy needs. Over time, not eating enough can lead to nutrient deficiencies, unpleasant side effects & other serious health problems.</p>
+            <button
+              onClick={() => { this.setState({ saveError: null }) }}
+              className="btn btn-success buttonMargin">ok</button>
+          </Auxiliary>
+        </Modal>
     }
-    // fill form correct
+
+    // -------------------------------Fill form correct -----------------------------
     let isModalCorrect = null;
-    if(this.state.isCorrect) {
+    if (this.state.isCorrect) {
       isModalCorrect = <Modal>
         <h3 onClick={this.handleFillCorrect} className="fillCorrect">please choose quantity or select measure</h3>
       </Modal>
     }
 
-    // save diet
+    // -------------------------------- Save diet -------------------------------------
     let dietSaveMessage = null;
-    if(this.state.isDietSaved)
-    {
-      dietSaveMessage = 
-      <Modal>
-        <Auxiliary>
-          <h1>Your diet have been successfuly saved!</h1>
-          <h2>would you like to check your diet calendar?</h2>
-          <div>
-          <button className="btnConfirm-btnSucsses" onClick={this.onIsDietSaveHandle}>yes</button>
-          <button className="btnConfirm-btnCancel" onClick={()=>(this.setState({ isDietSaved : false, startCount : 0 }))}>no</button>
-          </div>
+    if (this.state.isDietSaved) {
+      dietSaveMessage =
+        <Modal>
+          <Auxiliary>
+            <h1>Your diet have been successfuly saved!</h1>
+            <h2>would you like to check your diet calendar?</h2>
+            <div>
+              <button className="btnConfirm-btnSucsses" onClick={this.onIsDietSaveHandle}>yes</button>
+              <button className="btnConfirm-btnCancel" onClick={() => (this.setState({ isDietSaved: false, startCount: 0 }))}>no</button>
+            </div>
 
-        </Auxiliary>
-      </Modal>
+          </Auxiliary>
+        </Modal>
     }
+    //  let renderDailyGoal = null;
+    //  if(this.state.isFetched)
+    //  {
+    //    renderDailyGoal = 
+    //    <div className="marginTop">
+    //    <div>
+    //        <p className="leftColParagrafs">Basaed on your bmr: <b>{this.state.bmr}, </b>
+    //          you will need <b>{this.state.showCalories}</b> calories
+    //          to maintain your weith.
+    //           </p> 
+    //    <h3>Goal:<span className="dailyGoal">
+    //      {this.state.calories}</span> /<span className={this.state.startCount === 0 || 
+    //      this.state.startCount > this.state.calories? 'dangerZone' : 'dailyGoal'}> {this.state.startCount}</span> calories</h3>
+    //      {/* hide - add food */}
+    //  {/* <button className="btn btn-primary" onClick={this.handleCalories}>{this.state.searchFood ? 'hide food' : 'add food'}</button> */}
+    //  </div>
+    //  </div>
+    //  }
+
+
     console.log(this.state.isDietSaved)
     return (
       <Auxiliary>
-        
+
         {modalInfo}
         {/* <div className="row">
           <div className="col">
@@ -405,61 +421,62 @@ class Diet extends Component {
           
           </div>
         </div> */}
+
         <div className="row justify-content-between">
           {isModalCorrect}
           <div className="col-7">
-          <Search
-          handleSubmit={e => {
-            e.preventDefault();
-            this.handleSubmit()
-          }}
-          onChange={(e) => this.onChange(e.target.value)}
-          value={this.state.searchText}
-        />
-          {loader}
-          {errorMessage}
+            <Search
+              handleSubmit={e => {
+                e.preventDefault();
+                this.handleSubmit()
+              }}
+              onChange={(e) => this.onChange(e.target.value)}
+              value={this.state.searchText}
+            />
+            {loader}
+            {errorMessage}
           </div>
           <div className="col-5">
-       
-              <div className="marginTop">
-            <div>
+
+            <div className="marginTop">
+              <div>
                 <p className="leftColParagrafs">Basaed on your bmr: <b>{this.state.bmr}, </b>
                   you will need <b>{this.state.showCalories}</b> calories
                   to maintain your weith.
-                   </p> 
-            <h3>Goal:<span className="dailyGoal">
-              {this.state.calories}</span> /<span className={this.state.startCount === 0 || 
-              this.state.startCount > this.state.calories? 'dangerZone' : 'dailyGoal'}> {this.state.startCount}</span> calories</h3>
-              {/* hide - add food */}
-          {/* <button className="btn btn-primary" onClick={this.handleCalories}>{this.state.searchFood ? 'hide food' : 'add food'}</button> */}
+                </p>
+                <h3>Goal:<span className="dailyGoal">
+                  {this.state.calories}</span> /<span className={this.state.startCount === 0 ||
+                    this.state.startCount > this.state.calories ? 'dangerZone' : 'dailyGoal'}> {this.state.startCount}</span> calories</h3>
+                {/* hide - add food */}
+                {/* <button className="btn btn-primary" onClick={this.handleCalories}>{this.state.searchFood ? 'hide food' : 'add food'}</button> */}
+              </div>
             </div>
-          </div>
-              <div className="marginTop">
-            <div style={{ padding: '10px' }}>
-            <table className="userTable">
+            <div className="marginTop">
+              <div style={{ padding: '10px' }}>
+                <table className="userTable">
 
-              <tbody >
-                <tr><td><h3>My diet</h3></td></tr>
-                {/* <tr><td><p>cal:{dietCalories}</p></td></tr> */}
-                <tr><td><span className="dietTableTh">Breakfast</span></td></tr>
-                {breakFast}
-                <tr><td><span className="dietTableTh">Lunch</span></td></tr>
-                {lunch}
-                <tr><td><span className="dietTableTh">Dinner</span></td></tr>
-                {dinner}
-              </tbody>
-              <tfoot>
-                <tr><td><button className="btn btn-success" onClick={this.saveDiet}>Save diet</button></td></tr>              
-              </tfoot>
-      
-            </table>
-          
-            {saveError}
-            {dietSaveMessage}
-          </div>
-          </div>
-          {/* <Calendar user={this.state.user}/> */}
-          
+                  <tbody >
+                    <tr><td><h3>My diet</h3></td></tr>
+                    {/* <tr><td><p>cal:{dietCalories}</p></td></tr> */}
+                    <tr><td><span className="dietTableTh">Breakfast</span></td></tr>
+                    {breakFast}
+                    <tr><td><span className="dietTableTh">Lunch</span></td></tr>
+                    {lunch}
+                    <tr><td><span className="dietTableTh">Dinner</span></td></tr>
+                    {dinner}
+                  </tbody>
+                  <tfoot>
+                    <tr><td><button className="btn btn-success" onClick={this.saveDiet}>Save diet</button></td></tr>
+                  </tfoot>
+
+                </table>
+
+                {saveError}
+                {dietSaveMessage}
+              </div>
+            </div>
+            {/* <Calendar user={this.state.user}/> */}
+
           </div>
         </div>
       </Auxiliary>

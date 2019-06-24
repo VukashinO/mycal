@@ -4,9 +4,9 @@ import React from 'react';
 const Tbody = props => {
 
     // destructure
-const {
-    food: {
-         
+    const {
+        food: {
+
             label,
             brand,
             nutrients: {
@@ -14,25 +14,24 @@ const {
                 PROCNT,
                 FAT
             }
-          }    
-} = props.obj || {}
+        }
+    } = props.obj || {}
 
     let renderBrand = "N/A";
-    if(brand)
-    {
+    if (brand) {
         renderBrand = brand
     }
     return (
 
-          
-            <tr>
-                <td onClick={()=>props.click(Math.round(ENERC_KCAL),label)}>{label}</td>
-                <td>{renderBrand}</td>
-                <td>{Math.round(ENERC_KCAL)}cal</td>
-                <td>{Math.round(PROCNT)}g</td>
-                <td>{Math.round(FAT)}g</td>
-            </tr>
-            )
+
+        <tr>
+            <td onClick={() => props.click(Math.round(ENERC_KCAL), label)}>{label}</td>
+            <td>{renderBrand}</td>
+            <td>{Math.round(ENERC_KCAL)}cal</td>
+            <td>{Math.round(PROCNT)}g</td>
+            <td>{Math.round(FAT)}g</td>
+        </tr>
+    )
 };
 
 

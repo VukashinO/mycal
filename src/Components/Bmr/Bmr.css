@@ -1,13 +1,3 @@
-/* .homeContainer {
-margin-top: 0px;
-width: 100%;
-align-content: center;
-height: 605px;
-font-family: 'Numans', sans-serif;
-height: auto;
-background-color: #1eb841;
-} */
-
 .formStyle {
     width: 65%;
     margin: 20px auto;
@@ -24,9 +14,11 @@ h1 {
     color: orange;
     font-style: italic;
 }
+
 h3 {
     color: lightblue;
 }
+
 .span1 {
     font-size: 14px;
     vertical-align: middle;

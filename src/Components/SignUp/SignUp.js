@@ -33,7 +33,7 @@ class SignUpFormBase  extends Component {
     // which will pass all the form data to the Firebase authentication API via your 
     // authentication interface in the Firebase class:
 
-
+  // ----------------- Fetch user from input, save to local storage for compare later ----------------------------------------
   onSubmit = event => {
     
     const { username, email, passwordOne } = this.state;
@@ -46,7 +46,9 @@ class SignUpFormBase  extends Component {
       // localStorage.setItem('user', this.state.email);
       let userObj = {name: username, email}
       localStorage.setItem('user', JSON.stringify(userObj));
-        this.props.history.push( ROUTES.HOME );
+      console.log(this.props.firebase);
+        this.props.history.push( ROUTES.BMR );
+        
     })
     .catch(error => {
         this.setState({ error })
@@ -77,7 +79,7 @@ class SignUpFormBase  extends Component {
 
     return (
       // m-5
-    <div className="contSignUp">
+    <div >
         <div className="d-flex justify-content-center h-100">
             <div className="card">
         <div className="card-body">

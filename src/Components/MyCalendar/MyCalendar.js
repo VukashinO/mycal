@@ -3,6 +3,8 @@ import moment from 'moment';
 import './MyCalendar.css';
 import axios from 'axios';
 import FirebaseTable from '../../Components/FirebaseTable/FirebaseTable';
+import { withRouter } from 'react-router-dom';
+import { WithAuthorization } from '../../Components/Hoc/Hoc';
 
 class Calendar extends Component {
     state = {
@@ -16,41 +18,42 @@ class Calendar extends Component {
         user: JSON.parse(localStorage.getItem('user'))
     }
 
-       constructor(props) {
-           super(props);
-           this.width = props.width || "285px";
-           this.style = props.style || {};
-           this.style.width = this.width; // add this
-       }
+    constructor(props) {
+        super(props);
+        this.width = props.width || "285px";
+        this.style = props.style || {};
+        this.style.width = this.width; // add this
+    }
 
-
+    // OnLoad always go to fireBase and get data
     componentDidMount() {
 
-      this.getDataFromFireBase();
+        this.getDataFromFireBase();
     }
     getDataFromFireBase = () => {
         axios.get('https://my-fitness-app-81de2.firebaseio.com/.json')
-        .then(responce => {
-          let arr = []
-          for(let key in responce.data.diet)
-          {
-            arr.push({...responce.data.diet[key],
-              id: key})
-          }
-         // const checkDate = `${this.year()}-${moment().month(`${this.month()}`).format("MM")}-${this.currentDay()}`;
-          const filteredArr =  arr.filter(diet => diet.user === this.state.user.email )
-          console.log(filteredArr)
-          if(filteredArr.length === 0){
-              this.setState({ isDietSaved: true })
-              console.log("you haven't save diet for this user!")
-              
-              return;
-          }
-          this.setState({ dietFromFirebase: filteredArr, selectedDay: this.currentDay() })
-       });  
+            .then(responce => {
+                let arr = []
+                for (let key in responce.data.diet) {
+                    arr.push({
+                        ...responce.data.diet[key],
+                        id: key
+                    })
+                }
+                // const checkDate = `${this.year()}-${moment().month(`${this.month()}`).format("MM")}-${this.currentDay()}`;
+                const filteredArr = arr.filter(diet => diet.user === this.state.user.email)
+                console.log(filteredArr)
+                if (filteredArr.length === 0) {
+                    this.setState({ isDietSaved: true })
+                    console.log("you haven't save diet for this user!")
+
+                    return;
+                }
+                this.setState({ dietFromFirebase: filteredArr, selectedDay: this.currentDay() })
+            });
     }
 
-    weekdays = moment.weekdays(); 
+    weekdays = moment.weekdays();
     weekdaysShort = moment.weekdaysShort(); // ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     months = moment.months();
 
@@ -96,7 +99,7 @@ class Calendar extends Component {
         let popup = props.data.map((data) => {
             return (
                 <div key={data}>
-                    <p onClick={(e)=> {this.onSelectChange(e, data)}}>
+                    <p onClick={(e) => { this.onSelectChange(e, data) }}>
                         {data}
                     </p>
                 </div>
@@ -119,10 +122,10 @@ class Calendar extends Component {
     MonthNav = () => {
         return (
             <span className="label-month"
-                onClick={(e)=> {this.onChangeMonth(e, this.month())}}>
+                onClick={(e) => { this.onChangeMonth(e, this.month()) }}>
                 {this.month()}
                 {this.state.showMonthPopup &&
-                 <this.SelectList data={this.months} />
+                    <this.SelectList data={this.months} />
                 }
             </span>
         );
@@ -131,34 +134,36 @@ class Calendar extends Component {
 
     YearNav = () => {
         return (
-        <span>{this.year()}</span>
+            <span>{this.year()}</span>
         );
     }
+
 
     onDayClick = (e, day) => {
         this.setState({
             selectedDay: day
-         }, () => {
-             axios.get('https://my-fitness-app-81de2.firebaseio.com/.json')
-             .then(responce => {
-               let arr = []
-               for(let key in responce.data.diet)
-               {
-                 arr.push({...responce.data.diet[key],
-                   id: key})
-               }
-               const checkDate = `${this.year()}-${moment().month(`${this.month()}`).format("MM")}-${this.state.selectedDay}`;
-               const filteredArr =  arr.filter(diet => diet.user === this.state.user.email && diet.date === checkDate)
-               console.log(filteredArr)
-               if(filteredArr.length === 0){
-                   this.setState({ isDietSaved: true })
-                   return;
-               }
-               this.setState({ dietFromFirebase: filteredArr })
-             })
-         });
+        }, () => {
+            axios.get('https://my-fitness-app-81de2.firebaseio.com/.json')
+                .then(responce => {
+                    let arr = []
+                    for (let key in responce.data.diet) {
+                        arr.push({
+                            ...responce.data.diet[key],
+                            id: key
+                        })
+                    }
+                    const checkDate = `${this.year()}-${moment().month(`${this.month()}`).format("MM")}-${this.state.selectedDay}`;
+                    const filteredArr = arr.filter(diet => diet.user === this.state.user.email && diet.date === checkDate)
+                    console.log(filteredArr)
+                    if (filteredArr.length === 0) {
+                        this.setState({ isDietSaved: true })
+                        return;
+                    }
+                    this.setState({ dietFromFirebase: filteredArr })
+                })
+        });
 
-   
+
     }
     handleNodiet = () => {
         this.setState({ isDietSaved: false })
@@ -179,30 +184,30 @@ class Calendar extends Component {
         for (let i = 0; i < this.firstDayOfMonth(); i++) {
             blanks.push(<td key={i * 80} className="emptySlot">
                 {""}
-                </td>
+            </td>
             );
         }
-            let dietDays = null;
-            if(this.state.dietFromFirebase) {
-              dietDays = this.state.dietFromFirebase
-            }
+        let dietDays = null;
+        if (this.state.dietFromFirebase) {
+            dietDays = this.state.dietFromFirebase
+        }
 
 
         let daysInMonth = [];
         for (let d = 1; d <= this.daysInMonth(); d++) {
-            let className = (d == this.currentDay() ? "day current-day": "day");
+            let className = (d == this.currentDay() ? "day current-day" : "day");
             let selectedClass = (d == this.state.selectedDay ? " selected-day " : "");
             // let dietDayClass = (d == dietDay ? "dietDayColor" : "");
-            let dietDayClass = dietDays? dietDays.find(obj => obj.date.split("-")[2] == d)? " diet-day" : "" : null;
+            let dietDayClass = dietDays ? dietDays.find(obj => obj.date.split("-")[2] == d) ? " diet-day" : "" : null;
             daysInMonth.push(
-                <td key={d} className={ className+ selectedClass + dietDayClass } >
-                    <span onClick={(e)=>{this.onDayClick(e, d)}}>{d}</span>
+                <td key={d} className={className + selectedClass + dietDayClass} >
+                    <span onClick={(e) => { this.onDayClick(e, d) }}>{d}</span>
                 </td>
             );
         }
 
 
-       
+
         var totalSlots = [...blanks, ...daysInMonth];
         let rows = [];
         let cells = [];
@@ -211,81 +216,85 @@ class Calendar extends Component {
             if ((i % 7) !== 0) {
                 cells.push(row);
             } else {
-                 let insertRow = cells.slice();
-                 rows.push(insertRow);
-              
+                let insertRow = cells.slice();
+                rows.push(insertRow);
+
                 cells = [];
                 cells.push(row);
             }
             if (i === totalSlots.length - 1) {
-                 let insertRow = cells.slice();
-                 rows.push(insertRow);
+                let insertRow = cells.slice();
+                rows.push(insertRow);
                 // rows.push(cells)
             }
         });
 
         let trElems = rows.map((d, i) => {
             return (
-                <tr key={i*100}>
+                <tr key={i * 100}>
                     {d}
                 </tr>
             );
         })
 
-    // render if no diet save 
-    let savedDiet = null;
-    if(this.state.isDietSaved) {
-        savedDiet = <div>
-            <h3 
-            onClick={this.handleNodiet}
-            className="noDietSave">You haven't saved diet for this date please go to Diet!</h3>
-        </div>
-    }
-    
+        // render if no diet save 
+        let savedDiet = null;
+        if (this.state.isDietSaved) {
+            savedDiet = <div>
+                <h3
+                    onClick={this.handleNodiet}
+                    className="noDietSave">You haven't saved diet for this date please go to Diet!</h3>
+            </div>
+        }
+
         return (
             <div className="row">
-            <div className="col-4 m-5">
-                     
-            <div className="calendar-container" style={this.style}>
-            <div className="divHeader centerElement"><span>Diet Calendar</span></div>
-            
-                <table className="calendar">
-                    <thead>
-                        <tr className="calendar-header centerElement">
-                            <td colSpan="5">
-                                <this.MonthNav />
-                                {" "}
-                                <this.YearNav />
-                            </td>
-                            <td colSpan="2" className="nav-month">
-                                {/* <i className="prev fa fa-fw fa-chevron-left"
+                <div className="col-4 m-5">
+
+                    <div className="calendar-container" style={this.style}>
+                        <div className="divHeader centerElement"><span>Diet Calendar</span></div>
+
+                        <table className="calendar">
+                            <thead>
+                                <tr className="calendar-header centerElement">
+                                    <td colSpan="5">
+                                        <this.MonthNav />
+                                        {" "}
+                                        <this.YearNav />
+                                    </td>
+                                    <td colSpan="2" className="nav-month">
+                                        {/* <i className="prev fa fa-fw fa-chevron-left"
                                     >
                                 </i>
                                 <i className="prev fa fa-fw fa-chevron-right"
                                     >
                                 </i> */}
 
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            {weekdays}
-                        </tr>
-                        {trElems}
-                    </tbody>
-                </table>
-                {savedDiet}
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    {weekdays}
+                                </tr>
+                                {trElems}
+                            </tbody>
+                        </table>
+                        {savedDiet}
+                    </div>
+                </div>
+                <div className="col-4 m-5">
+                    <FirebaseTable
+                        handleDivClick={this.handleDivClick}
+                        dietFromFirebase={this.state.dietFromFirebase}
+                    />
+                </div>
             </div>
-            </div>
-            <div className="col-4 m-5">
-            <FirebaseTable
-                handleDivClick={this.handleDivClick} 
-                dietFromFirebase={this.state.dietFromFirebase}
-                />
-            </div>
-        </div>                       
         );
     }
 }
-export default Calendar;
+
+
+const condition = authUser => authUser !== null;
+
+export default withRouter(WithAuthorization(condition)(Calendar));

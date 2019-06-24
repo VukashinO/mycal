@@ -1,0 +1,62 @@
+.formStyle {
+    width: 65%;
+    margin: 20px auto;
+    border: 2px solid 888888;
+    padding: 8px;
+    box-shadow: 5px 10px #888888;
+    background-color: #0d430b;
+   
+}
+
+
+h1 {
+    
+    color: orange;
+    font-style: italic;
+}
+
+h3 {
+    color: lightblue;
+}
+
+.span1 {
+    font-size: 14px;
+    vertical-align: middle;
+    color: orange;
+}
+
+.radioStyle {
+
+    color: lightblue;
+    font-size: 20px;
+}
+
+.activity {
+    /* color: #05051d; */
+    /* color: whitesmoke; */
+    color:#fffa10;
+    font-size: 25px;
+    /* font-style: italic; */
+  
+}
+
+
+.inputColor {
+    background-color: lightblue;
+}
+
+.labelText {
+     color: whitesmoke;
+     margin: auto; 
+   
+}
+
+.form-control {
+    width: 55%;
+    margin: auto;
+}
+
+.form-group {
+    text-align: center;
+}
+
