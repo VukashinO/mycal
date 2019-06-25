@@ -15,6 +15,8 @@ import Messures from '../../Components/MesuresEnum/MesuresEnum';
 
 //Api's here :
 
+// ---------------- URL to firebase
+const getDataFromFirebase = 'https://my-fitness-app-81de2.firebaseio.com';
 
 class Diet extends Component {
   state = {
@@ -68,7 +70,7 @@ class Diet extends Component {
 
     this.setState({ isFetched: true })
 
-    axios.get('https://my-fitness-app-81de2.firebaseio.com/.json')
+    axios.get(`${getDataFromFirebase}/.json`)
       .then(responce => {
         const users = [];
         for (let key in responce.data.users) {
@@ -164,7 +166,7 @@ class Diet extends Component {
 
     if (!Messures[mesure]) return;
 
-    let calculateMesure = mesure === "Serving"
+    let calculateMesure = mesure === "Serving" || mesure === "Steak" || mesure === "Tuna"
       ? Math.round(+ this.state.serving * (Messures[mesure] * this.state.individualCalorie))
       : Math.round(+ this.state.serving * (Messures[mesure] * this.state.individualCalorie) / 100);
 
@@ -223,8 +225,9 @@ class Diet extends Component {
       this.setState({ saveError: true })
       return;
     }
+    
     this.setState({ loading: true })
-    axios.post('https://my-fitness-app-81de2.firebaseio.com/diet.json', post)
+    axios.post(`${getDataFromFirebase}/diet.json`, post)
       .then(responce => {
         console.log(responce)
         this.setState({ dietData: [], calories: this.state.showCalories, loading: false, searchFood: false, isDietSaved: true })
@@ -258,7 +261,7 @@ class Diet extends Component {
     this.props.history.push(ROUTES.MYCALENDAR);
   }
 
-
+ 
 
   render() {
     if (this.state.foodData) {
@@ -413,7 +416,6 @@ class Diet extends Component {
     console.log(this.state.isDietSaved)
     return (
       <Auxiliary>
-
         {modalInfo}
         {/* <div className="row">
           <div className="col">
@@ -479,6 +481,7 @@ class Diet extends Component {
 
           </div>
         </div>
+
       </Auxiliary>
 
 

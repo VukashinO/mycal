@@ -6,6 +6,9 @@ import FirebaseTable from '../../Components/FirebaseTable/FirebaseTable';
 import { withRouter } from 'react-router-dom';
 import { WithAuthorization } from '../../Components/Hoc/Hoc';
 
+// ---------------- URL to firebase
+const getDataFromFirebase = 'https://my-fitness-app-81de2.firebaseio.com';
+
 class Calendar extends Component {
     state = {
         dateContext: moment(),
@@ -31,7 +34,7 @@ class Calendar extends Component {
         this.getDataFromFireBase();
     }
     getDataFromFireBase = () => {
-        axios.get('https://my-fitness-app-81de2.firebaseio.com/.json')
+        axios.get(`${getDataFromFirebase}/.json`)
             .then(responce => {
                 let arr = []
                 for (let key in responce.data.diet) {
@@ -143,7 +146,7 @@ class Calendar extends Component {
         this.setState({
             selectedDay: day
         }, () => {
-            axios.get('https://my-fitness-app-81de2.firebaseio.com/.json')
+            axios.get(`${getDataFromFirebase}/.json`)
                 .then(responce => {
                     let arr = []
                     for (let key in responce.data.diet) {

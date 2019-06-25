@@ -15,12 +15,19 @@ With this application you can count your daily calorie intake very easy.
 
 
 ### functionalities
-- log in, sign up <br>
-- using firebase to store the data(users, food)<br>
-- calculating your BMI - wich leads to your daily Calorie max income if you want to cut weight.<br>
-- search field for food data base so you can count the food you eat.<br>
-- rendering the data food in table format <br>
-- save your daily diet so you can later see what have you eat and how many calories you eat that day.<br>
+- sign in, sign up, sign out <br>
+- protected routes if user is not logged in <br>
+- using firebase to store the data(users, food, bmr calories date)<br>
+- CRUD operations with the stored data on firebase <br>
+- calculating your BMR - which leads to your daily Calorie max income if you want to cut weight.<br>
+- search field for food data base using free account and keys from edamam so you can count the food you eat.<br>
+- rendering the data food in table format with pagination <br>
+- you can add or delete food which is rendering to a dinamic table 
+- save your daily diet to firebase <br>
+- calendar where you can see your last diet and diets mark with color on the days where u have diet. <br>
+- user validation from firebase <br>
+- custom validation on calculation BMR and handling errors with modules <br>
+
 
 
 

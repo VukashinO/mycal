@@ -79,7 +79,7 @@ class SignUpFormBase  extends Component {
 
     return (
       // m-5
-    <div >
+    <div className="contSignUp">
         <div className="d-flex justify-content-center h-100">
             <div className="card">
         <div className="card-body">

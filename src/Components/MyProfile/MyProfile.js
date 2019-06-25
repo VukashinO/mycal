@@ -6,6 +6,10 @@ import Modal from '../../Components/UI/Modal/Modal';
 import MyCustomError from '../../Components/myCustomError/MyCustomError';
 import * as ROUTES from '../../Constants/Routes';
 
+// ---------------- URL to firebase
+const getDataFromFirebase = 'https://my-fitness-app-81de2.firebaseio.com';
+
+
 class MyProfile extends Component {
 
     state = {
@@ -25,11 +29,12 @@ class MyProfile extends Component {
         isSubmited: false,
         isFormValid: false,
 
-        user : null
+        user : null,
+        isUpdated: false
       };
 
       componentDidMount() {
-        axios.get('https://my-fitness-app-81de2.firebaseio.com/.json')
+        axios.get(`${getDataFromFirebase}/.json`)
         .then(responce => {
             const arr = [];
             for(let prop in responce.data.users)
@@ -40,9 +45,22 @@ class MyProfile extends Component {
                 })
             }
             const user = arr.find(user => user.email === JSON.parse(localStorage.getItem('user')).email);
-            this.setState( { age : user.age ,
-                 heightcm : user.heightcm , 
-                 weightkl : user.weightkl,
+            // const { 
+            //   calculationInfo: {
+            //     age,
+            //     heightcm,
+            //     weightkl,
+            //     life,
+            //     gender
+            //   }
+
+            //  } = user || {};
+            this.setState( { age: user.age,
+                 heightcm: user.heightcm , 
+                 weightkl: user.weightkl,
+                 life : user.life,
+                 gender: user. gender,
+                 formErrors: { age: null, heightcm: null, weightkl: null },
                  user } );
            
         })
@@ -89,7 +107,7 @@ class MyProfile extends Component {
       }
     
       // -------------------- Handle all inputs and saving on Firebase ----------------------
-      onSubmit = e => {
+       onSubmit = e => {
 
         e.preventDefault();
         //console.log(this.state);
@@ -101,7 +119,7 @@ class MyProfile extends Component {
         let life = this.state.life;
         console.log(this.formValidation(this.state.formErrors));
         console.log(this.state.gender)
-        if (!this.formValidation(this.state.formErrors) && this.state.gender) {
+        if (this.formValidation(this.state.formErrors) && this.state.gender) {
           if (gender && weightkl && heightcm && age && life) {
             if (gender === "male") {
               bmr = 10 * weightkl + 6.25 * heightcm - 5 * age + 5; // funkcija da bide refactor
@@ -113,16 +131,17 @@ class MyProfile extends Component {
         else {
           this.setState({ isFormValid: true })
           return;
-          // return window.alert("Please fill in everything correctly");
         }
     
         let calories = this.state.calories;
     
         if (life === "sedentary") {
           calories = bmr * 1.53;
-        } else if (life === "moderate") { // i ova u funkcija 
+        } 
+        if (life === "moderate") { // i ova u funkcija 
           calories = bmr * 1.76;
-        } else {
+        }
+        if (life === "vigorous") {
           calories = bmr * 2.25;
         }
     
@@ -132,10 +151,18 @@ class MyProfile extends Component {
             heightcm: this.state.heightcm,
             weightkl: this.state.weightkl,
             bmr: Math.floor(bmr),
-            calories: Math.floor(calories)
+            calories: Math.floor(calories),
+            gender: this.state.gender,
+            life: this.state.life
         }
-           this.props.firebase.dbfromFirebase(this.state.user.id).update(updateUser);
-           this.props.history.push(ROUTES.DIET);
+           this.props.firebase.dbfromFirebase(this.state.user.id).update(updateUser); // update user on firebase
+           this.setState( { isUpdated : true } )
+
+          setTimeout(() => {
+            this.props.history.push(ROUTES.DIET);
+          }, 3000);
+          
+
     
       };
        
@@ -167,16 +194,25 @@ class MyProfile extends Component {
         }
     
     
-        const retriveObj = JSON.parse(localStorage.getItem('user'));
-        console.log((retriveObj.name))
+        //----------- Render friendly message for update the BMR ------------
+        let renderFriendlyMessage = null;
+
+        if(this.state.isUpdated)
+        {
+          renderFriendlyMessage =  <Modal>
+             <h1> You have sucssesfuly updated your diet </h1>
+          </Modal>
+
+        }
     
         return (
     
     
           <div className="row">
+          
             {fillCorrect}
             <form onSubmit={this.onSubmit} className="formStyle">
-    
+          
               <h1>Calculate BMI <span className="span1">(Metric unit)</span></h1>
               <h3 style={{ textAlign: 'center' }}>Choose Gender</h3>
               <div style={{ textAlign: 'center' }}>
@@ -330,7 +366,8 @@ class MyProfile extends Component {
               </div>
     
               <div style={{ textAlign: 'center', marginTop: '25px' }}>
-                <button type="submit" className="btn btn-success">Calculate BMI</button>
+                <button type="submit" className="btn btn-success">Update BMR</button>
+               
                 {/* <button
               className="btn btn-warning"
               type="reset"
@@ -344,7 +381,7 @@ class MyProfile extends Component {
               </div>
     
             </form>
-    
+            {renderFriendlyMessage}
           </div>
     
         );

@@ -6,6 +6,9 @@ import Modal from '../UI/Modal/Modal';
 import MyCustomError from '../myCustomError/MyCustomError';
 import axios from 'axios';
 
+// firebaseURL
+const firebaseURL = 'https://my-fitness-app-81de2.firebaseio.com';
+
 class Bmr extends Component {
 
   state = {
@@ -93,9 +96,11 @@ class Bmr extends Component {
 
     if (life === "sedentary") {
       calories = bmr * 1.53;
-    } else if (life === "moderate") { // i ova u funkcija 
+    } 
+    if (life === "moderate") { // i ova u funkcija 
       calories = bmr * 1.76;
-    } else {
+    } 
+    if (life === "vigorous") {
       calories = bmr * 2.25;
     }
 
@@ -104,14 +109,17 @@ class Bmr extends Component {
     const post = {
       user: retriveObj.name,
       email: retriveObj.email,
-      bmr: bmr.toFixed(0),
-      calories: calories.toFixed(0),
-      age,
-      heightcm,
-      weightkl
-    }
+       
+          bmr: bmr.toFixed(0),
+          calories: calories.toFixed(0),
+          age,
+          heightcm,
+          weightkl,
+          life,
+          gender
+      }
 
-    axios.post('https://my-fitness-app-81de2.firebaseio.com/users.json', post)
+    axios.post(`${firebaseURL}/users.json`, post)
       .then(res => {
         this.props.history.push(ROUTES.DIET)
       })

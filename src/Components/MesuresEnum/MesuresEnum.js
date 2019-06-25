@@ -6,7 +6,8 @@ const messures = {
     'Pound': 453.592,
     'Kilogram': 1000,
     'Teaspoon': 5,
-    'Tablespoon': 15
+    'Tablespoon': 15,
+    'Steak': 1
 }
 
 export default messures;

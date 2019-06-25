@@ -32,14 +32,15 @@ const NavigationAuth = () => (
                 <div className="collapse navbar-collapse flex-grow-0 m-right-15" id="navbarSupportedContent">
 
                     <ul className="navbar-nav text-right">
-                        <li className="nav-item active">
-                            <Link className="nav-link" to={ROUTES.MYPROFILE}>MyProfile</Link>
-                        </li>
+
                         <li className="nav-item active">
                             <Link className="nav-link" to={ROUTES.DIET}>Diet</Link>
                         </li>
                         <li className="nav-item active">
                             <Link className="nav-link" to={ROUTES.MYCALENDAR}>MyCalendar</Link>
+                        </li>
+                        <li className="nav-item active">
+                            <Link className="nav-link" to={ROUTES.MYPROFILE}>MyProfile</Link>
                         </li>
                         <li className="nav-item active">
                             <SignOutButton />
