@@ -1,7 +1,7 @@
 ## Calorie Counter app
 With this application you can count your daily calorie intake very easy.
 
-### this project is made with the following dependencys
+### Project(Calorie Counter app) is made with the following dependencies
 <ul>
 <li>React</li>
 <li>React-dom</li>
@@ -11,10 +11,11 @@ With this application you can count your daily calorie intake very easy.
 <li>Boostrap-4</li>
 <li>CSS</li>
 <li>Moment</li>
+<li>React-Bootsrap</li>
 </ul>
 
 
-### functionalities
+### Functionalities
 - sign in, sign up, sign out <br>
 - protected routes if user is not logged in <br>
 - using firebase to store the data(users, food, bmr calories date)<br>
@@ -22,11 +23,11 @@ With this application you can count your daily calorie intake very easy.
 - calculating your BMR - which leads to your daily Calorie max income if you want to cut weight.<br>
 - search field for food data base using free account and keys from edamam so you can count the food you eat.<br>
 - rendering the data food in table format with pagination <br>
-- you can add or delete food which is rendering to a dinamic table 
+- you can add or delete food which is rendering to a dynamic table 
 - save your daily diet to firebase <br>
 - calendar where you can see your last diet and diets mark with color on the days where u have diet. <br>
 - user validation from firebase <br>
-- custom validation on calculation BMR and handling errors with modules <br>
+- custom validation on calculating the BMR and handling errors with modules <br>
 
 
 

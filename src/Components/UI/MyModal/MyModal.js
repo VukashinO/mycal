@@ -1,7 +1,7 @@
 import React from 'react';
-import './Modal.css';
+import './MyModal.css';
 
-const modal = (props) => {
+const MyModal = (props) => {
     return ( 
       
          <div className="Modal">
@@ -11,4 +11,4 @@ const modal = (props) => {
      );
 }
  
-export default modal;
+export default MyModal;

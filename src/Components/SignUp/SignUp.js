@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './SignUp.css';
 import {  withRouter } from 'react-router-dom';
 import * as ROUTES from '../../Constants/Routes';
+import { Alert } from 'react-bootstrap';
 // passing firebase instance to the SignUpForm
 import { withFirebase } from '../Firebase';
 
@@ -140,7 +141,12 @@ class SignUpFormBase  extends Component {
         />
         </div>
         <button disabled={visible} type="submit" className="btn float-none signUp_btn">SignUp</button>
-        {error && <p>{error.message}</p>}
+        {error && <Alert variant="danger" onClose={() => this.setState({ error:null, username: '', email: '', passwordOne: '', passwordTwo: '' })} dismissible>
+                        <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+                            <p>
+                                {error.message}
+                            </p>
+                      </Alert>}}
       </form>
       </div>
       </div>

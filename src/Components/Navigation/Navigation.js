@@ -17,7 +17,7 @@ const Navigation = () => (
 );
 
 const NavigationAuth = () => (
-    <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
+    <header className="navbar navbar-expand-sm bg-dark navbar-dark">
         <div className="container">
             <div className="row justify-content-between flex-grow-1">
                 <div style={{ width: '50px', marginLeft: '15px' }}>
@@ -49,11 +49,11 @@ const NavigationAuth = () => (
                 </div>
             </div>
         </div>
-    </nav>
+    </header>
 );
 const NavigationNonAuth = () => (
 
-    <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
+    <header className="navbar navbar-expand-sm bg-dark navbar-dark">
         <div className="container">
             <div className="row justify-content-between flex-grow-1">
                 <div style={{ width: '50px', marginLeft: '15px' }}>
@@ -76,7 +76,7 @@ const NavigationNonAuth = () => (
                 </div>
             </div>
         </div>
-    </nav>
+    </header>
 );
 
 export default Navigation;

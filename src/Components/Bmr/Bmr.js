@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { WithAuthorization } from '../Hoc/Hoc';
 import './Bmr.css';
 import * as ROUTES from '../../Constants/Routes';
-import Modal from '../UI/Modal/Modal';
-import MyCustomError from '../myCustomError/MyCustomError';
+// import MyModal from '../UI/MyModal/MyModal';
+// import MyCustomError from '../myCustomError/MyCustomError';
 import axios from 'axios';
+import { Modal, Button } from 'react-bootstrap';
 
 // firebaseURL
 const firebaseURL = 'https://my-fitness-app-81de2.firebaseio.com';
@@ -148,9 +149,22 @@ class Bmr extends Component {
     //------ Render Modal if form is not correct
     let fillCorrect = null;
     if (this.state.isFormValid) {
-      fillCorrect = <Modal>
-        <MyCustomError handleCorrectly={this.handleCorrectly} />
-      </Modal>
+      // fillCorrect = <MyModal>
+      //   <MyCustomError handleCorrectly={this.handleCorrectly} />
+      // </MyModal>
+      fillCorrect = 
+      <Modal show={this.state.isFormValid} onHide={this.handleCorrectly}>
+      <Modal.Header closeButton>
+        <Modal.Title>Form Handling</Modal.Title>
+      </Modal.Header>
+      <Modal.Body><p style={{color: 'red'}}>Please fill out every field with correct data!</p></Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={this.handleCorrectly}>
+          Close
+        </Button>
+    
+      </Modal.Footer>
+    </Modal>
     }
 
 

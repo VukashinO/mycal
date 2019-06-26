@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { withFirebase } from '../../Components/Firebase';
 import { WithAuthorization } from '../../Components/Hoc/Hoc';
-import Modal from '../../Components/UI/Modal/Modal';
+//import Modal from '../../Components/UI/Modal/Modal';
 import MyCustomError from '../../Components/myCustomError/MyCustomError';
 import * as ROUTES from '../../Constants/Routes';
-
+//import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 // ---------------- URL to firebase
 const getDataFromFirebase = 'https://my-fitness-app-81de2.firebaseio.com';
 
@@ -30,7 +31,9 @@ class MyProfile extends Component {
         isFormValid: false,
 
         user : null,
-        isUpdated: false
+        isUpdated: false,
+
+        show: false
       };
 
       componentDidMount() {
@@ -156,7 +159,7 @@ class MyProfile extends Component {
             life: this.state.life
         }
            this.props.firebase.dbfromFirebase(this.state.user.id).update(updateUser); // update user on firebase
-           this.setState( { isUpdated : true } )
+           this.setState( { show : true} )
 
           setTimeout(() => {
             this.props.history.push(ROUTES.DIET);
@@ -166,21 +169,11 @@ class MyProfile extends Component {
     
       };
        
-      clearhtmlForm = () => {
-        this.setState({
-          age: "",
-          heightcm: "",
-          weightkl: "",
-          gender: "",
-          life: "",
-          result: ""
-        });
-      };
-    
       handleCorrectly = () => {
         this.setState({ isFormValid: false })
       }
     
+
       render() {
         console.log(this.state.user)
         const { formErrors } = this.state;
@@ -192,24 +185,26 @@ class MyProfile extends Component {
             <MyCustomError handleCorrectly={this.handleCorrectly} />
           </Modal>
         }
-    
+     
     
         //----------- Render friendly message for update the BMR ------------
-        let renderFriendlyMessage = null;
+      
+        //  let friendlyRender = null;
+        //  if(this.state.isUpdated)
+        //  {
+        //    friendlyRender = 
 
-        if(this.state.isUpdated)
-        {
-          renderFriendlyMessage =  <Modal>
-             <h1> You have sucssesfuly updated your diet </h1>
-          </Modal>
+ 
+        
+        //  }
 
-        }
+        
     
         return (
     
     
           <div className="row">
-          
+                    
             {fillCorrect}
             <form onSubmit={this.onSubmit} className="formStyle">
           
@@ -381,7 +376,15 @@ class MyProfile extends Component {
               </div>
     
             </form>
-            {renderFriendlyMessage}
+            <Modal show={this.state.show} dialogClassName="modal-">
+            <Modal.Header>
+              <Modal.Title>Edit Page</Modal.Title>
+            </Modal.Header>
+            <Modal.Body><p style={{color: 'green'}}>Successfully updated your BMR!</p></Modal.Body>
+            <Modal.Footer>
+              &copy; 2019 MyCalorieApp
+            </Modal.Footer>
+        </Modal>
           </div>
     
         );

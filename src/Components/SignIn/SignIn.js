@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './SignIn.css';
 import { Link, withRouter } from 'react-router-dom';
 import * as ROUTES from '../../Constants/Routes';
-
+import { Alert } from 'react-bootstrap';
 // passing firebase instance to the SignUpForm
 import { withFirebase } from '../Firebase';
 
@@ -92,15 +92,22 @@ class SignInBase extends Component {
                 <div className="form-group">
                   <button disabled={visible} type="submit" className="btn float-right login_btn">Sign In</button>
                 </div>
-                {error && <p className="errorMessage">{error.message}</p>}
+                {/* old one
+                {error && <p className="errorMessage">{error.message}</p>} */}
+                {error && <Alert variant="danger" onClose={() => this.setState({ error:null, email: '', password: '' })} dismissible>
+                        <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+                            <p>
+                                {error.message}
+                            </p>
+                      </Alert>}
               </form>
             </div>
             <div className="card-footer">
               <div className="d-flex justify-content-center links">
-                Don't have an account?
-                    <p>
-                  <Link to={ROUTES.SIGN_UP} >Sign Up</Link>
-                </p>
+               <p> Don't have an account?
+                   
+                  <span style={{fontSize:'25px', marginLeft:'3px'}}><Link to={ROUTES.SIGN_UP} >Sign Up</Link></span>
+                  </p>
 
               </div>
             </div>

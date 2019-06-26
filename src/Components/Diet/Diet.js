@@ -6,12 +6,12 @@ import Spiner from '../../Components/UI/Spiner/Spiner';
 import RenderTable from '../../Components/RenderTable/RenderTable';
 import Search from '../../Components/Search/Search';
 import './Diet.css';
-import Modal from '../../Components/UI/Modal/Modal';
+import MyModal from '../../Components/UI/MyModal/MyModal';
 import Auxiliary from '../../Components/myHoc/Auxiliary';
 import NutritionSummary from '../../Components/NutritionSummary/NutritionSummary';
 import * as ROUTES from '../../Constants/Routes';
 import Messures from '../../Components/MesuresEnum/MesuresEnum';
-
+import { Modal, Button } from 'react-bootstrap';
 
 //Api's here :
 
@@ -57,7 +57,9 @@ class Diet extends Component {
     isCorrect: false,
     isDietSaved: false,
     startCount: 0,
-    userFirebase: null
+    userFirebase: null,
+    
+    show: false
   }
 
 
@@ -222,7 +224,8 @@ class Diet extends Component {
     }
 
     if (dietCalories < 1000) {
-      this.setState({ saveError: true })
+      // old custom modal : saveError: true
+      this.setState({ show: true })
       return;
     }
     
@@ -261,7 +264,11 @@ class Diet extends Component {
     this.props.history.push(ROUTES.MYCALENDAR);
   }
 
- 
+  handleClose = () => {
+    this.setState({ isCorrect: false, show : false });
+  }
+
+
 
   render() {
     if (this.state.foodData) {
@@ -305,7 +312,8 @@ class Diet extends Component {
 
     let modalInfo = null;
     if (this.state.nutritionFacts) {
-      modalInfo = <Modal>
+      modalInfo =
+       <MyModal>
         <NutritionSummary
           // serving={this.state.individualCalorie}
           //select={this.state.measuresObj}
@@ -323,7 +331,7 @@ class Diet extends Component {
           valueMeal={this.state.valueMeal}
           select2={this.state.foodData}
         />
-      </Modal>
+      </MyModal>
     }
 
     console.log(this.props.location)
@@ -346,51 +354,85 @@ class Diet extends Component {
     let errorMessage = null;
     if (this.state.isBelowZero) {
       errorMessage =
-        <Modal className="errorStyleDiv">
+        <MyModal className="errorStyleDiv">
           <h3>you are passing your daily goal, are you sure you want to eat this food :)<span onClick={this.handleChangeError} style={{ cursor: 'pointer', fontWeight: 'bold', color: 'green' }}>ok</span>
           </h3>
-        </Modal>
+        </MyModal>
     }
 
     // --------------------------------------------------- Render save error ---------------------------------
-    let saveError = null;
-    if (this.state.saveError) {
-      saveError =
-        <Modal>
-          <Auxiliary>
+    //  let saveError = null;
+    //  if (this.state.saveError) {
+    //    saveError =
+    //      <MyModal>
+    //        <Auxiliary>
 
-            <p style={{ color: 'red' }}>Based on your total calories consumed for today, you are likely not eating enough.</p>
-            <p>For safe weight loss, the National Institutes of Health recommends no less than 1000-1200 calories for women and 1200-1500 calories for men.</p>
-            <p>Even during weight loss, it's important to meet your body's basic nutrient and energy needs. Over time, not eating enough can lead to nutrient deficiencies, unpleasant side effects & other serious health problems.</p>
-            <button
-              onClick={() => { this.setState({ saveError: null }) }}
-              className="btn btn-success buttonMargin">ok</button>
-          </Auxiliary>
-        </Modal>
-    }
+    //          <p style={{ color: 'red' }}>Based on your total calories consumed for today, you are likely not eating enough.</p>
+    //         <p>For safe weight loss, the National Institutes of Health recommends no less than 1000-1200 calories for women and 1200-1500 calories for men.</p>
+    //          <p>Even during weight loss, it's important to meet your body's basic nutrient and energy needs. Over time, not eating enough can lead to nutrient deficiencies, unpleasant side effects & other serious health problems.</p>
+    //         <button
+    //           onClick={() => { this.setState({ saveError: null }) }}
+    //           className="btn btn-success buttonMargin">ok</button>
+    //        </Auxiliary>
+    //      </MyModal>
+    // }
 
     // -------------------------------Fill form correct -----------------------------
     let isModalCorrect = null;
     if (this.state.isCorrect) {
-      isModalCorrect = <Modal>
-        <h3 onClick={this.handleFillCorrect} className="fillCorrect">please choose quantity or select measure</h3>
-      </Modal>
+      // isModalCorrect = <MyModal>
+      //   <h3 onClick={this.handleFillCorrect} className="fillCorrect">please choose quantity or select measure</h3>
+      // </MyModal>
+      isModalCorrect= <Modal
+      size="sm"
+      show={this.state.isCorrect}
+      onHide={this.handleClose}
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>
+        Fill Correct
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>Please choose quantity or select Measure</Modal.Body>
+    </Modal>
     }
 
     // -------------------------------- Save diet -------------------------------------
     let dietSaveMessage = null;
-    if (this.state.isDietSaved) {
-      dietSaveMessage =
-        <Modal>
-          <Auxiliary>
-            <h1>Your diet have been successfuly saved!</h1>
-            <h2>would you like to check your diet calendar?</h2>
-            <div>
-              <button className="btnConfirm-btnSucsses" onClick={this.onIsDietSaveHandle}>yes</button>
-              <button className="btnConfirm-btnCancel" onClick={() => (this.setState({ isDietSaved: false, startCount: 0 }))}>no</button>
-            </div>
+    // if (this.state.isDietSaved) {
+    //   dietSaveMessage =
+    //     <MyModal>
+    //       <Auxiliary>
+    //         <h1>Your diet have been successfuly saved!</h1>
+    //         <h2>would you like to check your diet calendar?</h2>
+    //         <div>
+    //           <button className="btnConfirm-btnSucsses" onClick={this.onIsDietSaveHandle}>yes</button>
+    //           <button className="btnConfirm-btnCancel" onClick={() => (this.setState({ isDietSaved: false, startCount: 0 }))}>no</button>
+    //         </div>
 
-          </Auxiliary>
+    //       </Auxiliary>
+        //</MyModal>
+        if(this.state.isDietSaved)
+        {
+        dietSaveMessage =    
+        <Modal show={this.state.isDietSaved} onHide={this.handleClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Diet Save</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <p style={{color:'green'}}>
+                Your diet have been successfuly saved!
+                would you like to check your diet calendar?
+                </p>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="info" onClick={this.onIsDietSaveHandle}>
+                    Yes
+                  </Button>
+                  <Button variant="secondary" onClick={() => (this.setState({ isDietSaved: false, startCount: 0 }))}>
+                    No
+                  </Button>
+                </Modal.Footer>
         </Modal>
     }
     //  let renderDailyGoal = null;
@@ -473,15 +515,32 @@ class Diet extends Component {
 
                 </table>
 
-                {saveError}
+                {/* {saveError} */}
                 {dietSaveMessage}
+                      <Modal
+          show={this.state.show} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>
+              Friendly advice for safe fat loss
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p style={{color:'red'}}>
+            Based on your total calories consumed for today, you are likely not eating enough.
+            For safe weight loss, the National Institutes of Health recommends no less than 1000-1200 calories for women and 1200-1500 calories for men.
+            </p>
+            <p>
+            Even during weight loss, it's important to meet your body's basic nutrient and energy needs. Over time, not eating enough can lead to nutrient deficiencies, unpleasant side effects & other serious health problems.
+            </p>
+        </Modal.Body>
+        </Modal> 
               </div>
             </div>
             {/* <Calendar user={this.state.user}/> */}
 
           </div>
         </div>
-
+                 
       </Auxiliary>
 
 
