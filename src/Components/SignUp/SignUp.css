@@ -12,7 +12,7 @@ font-family: 'Numans', sans-serif;
 }
 
 .card{
-height: 370px;
+height: 440px;
 margin-top: auto;
 margin-bottom: auto;
 width: 400px;
@@ -52,6 +52,7 @@ margin-right: 5px;
 color: black;
 background-color: #FFC312;
 width: 100px;
+margin-bottom: 10px;
 
 }
 

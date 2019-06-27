@@ -24,8 +24,8 @@ const Tbody = props => {
     return (
 
 
-        <tr>
-            <td onClick={() => props.click(Math.round(ENERC_KCAL), label)}>{label}</td>
+        <tr onClick={() => props.click(Math.round(ENERC_KCAL), label)}>
+            <td >{label}</td>
             <td>{renderBrand}</td>
             <td>{Math.round(ENERC_KCAL)}cal</td>
             <td>{Math.round(PROCNT)}g</td>

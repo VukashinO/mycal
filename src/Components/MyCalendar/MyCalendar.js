@@ -141,33 +141,42 @@ class Calendar extends Component {
         );
     }
 
-
+// ------------------ Ne mi treba use eden povik do Firebase.... ???????!!!!!!!!!!!!?????????????
+    // onDayClick = (e, day) => {
+    //     this.setState({
+    //         selectedDay: day
+    //     }, () => {
+    //         axios.get(`${getDataFromFirebase}/.json`)
+    //             .then(responce => {
+                    
+    //                 let arr = []
+    //                 for (let key in responce.data.diet) {
+    //                     arr.push({
+    //                         ...responce.data.diet[key],
+    //                         id: key
+    //                     })
+    //                 }
+    //                 const checkDate = `${this.year()}-${moment().month(`${this.month()}`).format("MM")}-${this.state.selectedDay}`;
+    //                 const filteredArr = arr.filter(diet => diet.user === this.state.user.email && diet.date === checkDate)
+    //                 console.log(filteredArr)
+    //                 if (filteredArr.length === 0) {
+    //                     this.setState({ isDietSaved: true })
+    //                     return;
+    //                 }
+    //                 this.setState({ dietFromFirebase: filteredArr })
+    //             })
+    //     });
+    // }
     onDayClick = (e, day) => {
         this.setState({
             selectedDay: day
         }, () => {
-            axios.get(`${getDataFromFirebase}/.json`)
-                .then(responce => {
-                    let arr = []
-                    for (let key in responce.data.diet) {
-                        arr.push({
-                            ...responce.data.diet[key],
-                            id: key
-                        })
-                    }
-                    const checkDate = `${this.year()}-${moment().month(`${this.month()}`).format("MM")}-${this.state.selectedDay}`;
-                    const filteredArr = arr.filter(diet => diet.user === this.state.user.email && diet.date === checkDate)
-                    console.log(filteredArr)
-                    if (filteredArr.length === 0) {
-                        this.setState({ isDietSaved: true })
-                        return;
-                    }
-                    this.setState({ dietFromFirebase: filteredArr })
-                })
-        });
 
-
+            console.log("WTF")
+        })
+            
     }
+    
     handleNodiet = () => {
         this.setState({ isDietSaved: false })
     }

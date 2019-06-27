@@ -31,3 +31,18 @@
     background-color: orange;
     color: red;
 }
+
+.form-control {
+    width: 85%;
+    margin: auto;
+}
+
+.row {
+
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    justify-content: space-between;
+}

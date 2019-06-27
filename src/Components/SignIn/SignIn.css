@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
 .wrapper {
@@ -14,14 +13,20 @@ height: 100%;
 font-family: 'Numans', sans-serif;
 }
 
-.card{
-height: 370px;
+.card {
+height: 440px;
 margin-top: auto;
 margin-bottom: auto;
 width: 400px;
 background-color: rgba(0,0,0,0.5) !important;
 }
 
+.card-body {
+    -webkit-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+    height: 0px;
+}
 .social_icon span{
 font-size: 60px;
 margin-left: 10px;
@@ -87,3 +92,6 @@ color: white;
     color: red;
 }
 
+/* .buttonTextRight {
+    text-align: right;
+} */

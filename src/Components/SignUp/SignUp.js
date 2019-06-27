@@ -140,13 +140,13 @@ class SignUpFormBase  extends Component {
         placeholder="Confirm Password"
         />
         </div>
-        <button disabled={visible} type="submit" className="btn float-none signUp_btn">SignUp</button>
+        <button disabled={visible} type="submit" className="btn signUp_btn">SignUp</button>
         {error && <Alert variant="danger" onClose={() => this.setState({ error:null, username: '', email: '', passwordOne: '', passwordTwo: '' })} dismissible>
-                        <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+                        <Alert.Heading></Alert.Heading>
                             <p>
                                 {error.message}
                             </p>
-                      </Alert>}}
+                      </Alert>}
       </form>
       </div>
       </div>

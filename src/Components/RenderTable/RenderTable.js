@@ -12,7 +12,7 @@ const RenderTable = props => {
                     <tr>
                         <th><h1>food name</h1></th>
                         <th><h1>food brand</h1></th>
-                        <th><h1>calories</h1><span style={{ color: '#449ac1' }}>per 100g</span></th>
+                        <th><h1>calories</h1><span style={{ color: '#449ac1' }}>(per 100g)</span></th>
                         <th><h1>proteins</h1></th>
                         <th><h1>fat</h1></th>
                     </tr>

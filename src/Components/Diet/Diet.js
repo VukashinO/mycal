@@ -477,6 +477,11 @@ class Diet extends Component {
               onChange={(e) => this.onChange(e.target.value)}
               value={this.state.searchText}
             />
+            <div className="headerInstructions">
+                <h4 >
+                    Search our food database from Edamam!
+                </h4>
+            </div>
             {loader}
             {errorMessage}
           </div>
@@ -484,9 +489,9 @@ class Diet extends Component {
 
             <div className="marginTop">
               <div>
-                <p className="leftColParagrafs">Basaed on your bmr: <b>{this.state.bmr}, </b>
+                <p className="leftColParagrafs">Based on your bmr: <b>{this.state.bmr}, </b>
                   you will need <b>{this.state.showCalories}</b> calories
-                  to maintain your weith.
+                  to maintain your weight.
                 </p>
                 <h3>Goal:<span className="dailyGoal">
                   {this.state.calories}</span> /<span className={this.state.startCount === 0 ||
@@ -533,6 +538,9 @@ class Diet extends Component {
             Even during weight loss, it's important to meet your body's basic nutrient and energy needs. Over time, not eating enough can lead to nutrient deficiencies, unpleasant side effects & other serious health problems.
             </p>
         </Modal.Body>
+        <Modal.Footer>
+      <Button variant="secondary"  onClick={this.handleClose}>Close</Button>
+  </Modal.Footer>
         </Modal> 
               </div>
             </div>

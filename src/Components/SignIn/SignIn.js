@@ -89,13 +89,13 @@ class SignInBase extends Component {
                     placeholder="password" />
                 </div>
 
-                <div className="form-group">
-                  <button disabled={visible} type="submit" className="btn float-right login_btn">Sign In</button>
+                <div className="form-group text-right">
+                  <button disabled={visible} type="submit" className="btn login_btn">Sign In</button>
                 </div>
                 {/* old one
                 {error && <p className="errorMessage">{error.message}</p>} */}
                 {error && <Alert variant="danger" onClose={() => this.setState({ error:null, email: '', password: '' })} dismissible>
-                        <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+                        <Alert.Heading></Alert.Heading>
                             <p>
                                 {error.message}
                             </p>
