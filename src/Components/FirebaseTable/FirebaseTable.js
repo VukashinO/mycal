@@ -5,15 +5,15 @@ import './FirebaseTable.css';
 const FirebaseTable = props => {
     console.log(props.dietFromFirebase)
     let table = null;
-    if (props.dietFromFirebase) {
-        const lastIndex = props.dietFromFirebase.length - 1;
-        const obj = props.dietFromFirebase[lastIndex];
+    if (props.objForRenderingFirebaseTable) {
+        // const lastIndex = props.dietFromFirebase.length - 1;
+        // const obj = props.dietFromFirebase[lastIndex];
 
         const {
             date,
             dietInfo,
             totalCalories
-        } = obj || {};
+        } = props.objForRenderingFirebaseTable || {};
 
         const breakFast = dietInfo.filter(diet => diet.meal === 'Breakfast')
             .map((meal, i) => <tr key={meal.foodName + i}><td>food:<span className="dinamicTableTd">{meal.foodName}: {meal.calories}calories</span>

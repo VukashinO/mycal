@@ -58,11 +58,9 @@ class Diet extends Component {
     isDietSaved: false,
     startCount: 0,
     userFirebase: null,
-    
-    show: false
+
+    show: false,
   }
-
-
 
 
 
@@ -228,7 +226,7 @@ class Diet extends Component {
       this.setState({ show: true })
       return;
     }
-    
+
     this.setState({ loading: true })
     axios.post(`${getDataFromFirebase}/diet.json`, post)
       .then(responce => {
@@ -265,7 +263,7 @@ class Diet extends Component {
   }
 
   handleClose = () => {
-    this.setState({ isCorrect: false, show : false });
+    this.setState({ isCorrect: false, show: false });
   }
 
 
@@ -313,51 +311,67 @@ class Diet extends Component {
     let modalInfo = null;
     if (this.state.nutritionFacts) {
       modalInfo =
-       <MyModal>
-        <NutritionSummary
-          // serving={this.state.individualCalorie}
-          //select={this.state.measuresObj}
-          onCancel={this.handleCancelModal}
-          name={this.state.foodName}
-          calories={this.state.calories}
-          modal={this.state.nutritionFacts}
-          onSubmit={this.handleSubmitModal}
-          handleInput={this.handleInput}
-          inputServing={this.state.serving}
-          servingError={this.state.servingError}
-          handleChange={this.handleChange}
-          handleChangeMeal={this.handleChangeMeal}
-          value={this.state.value}
-          valueMeal={this.state.valueMeal}
-          select2={this.state.foodData}
-        />
-      </MyModal>
+        <MyModal>
+          <NutritionSummary
+            // serving={this.state.individualCalorie}
+            //select={this.state.measuresObj}
+            onCancel={this.handleCancelModal}
+            name={this.state.foodName}
+            calories={this.state.calories}
+            modal={this.state.nutritionFacts}
+            onSubmit={this.handleSubmitModal}
+            handleInput={this.handleInput}
+            inputServing={this.state.serving}
+            servingError={this.state.servingError}
+            handleChange={this.handleChange}
+            handleChangeMeal={this.handleChangeMeal}
+            value={this.state.value}
+            valueMeal={this.state.valueMeal}
+            select2={this.state.foodData}
+          />
+        </MyModal>
     }
 
     console.log(this.props.location)
 
     //----------------------------- Renering mini table for diet to save with firebase -----------------------------
     const breakFast = this.state.dietData.filter(diet => diet.meal === 'Breakfast')
-      .map((meal, i) => <tr key={meal.foodName + i}><td>food:<span className="dinamicTableTd">{meal.foodName}: {meal.calories}calories</span>
-        <button className="buttonDelete" onClick={() => this.handleDelete(meal.id, meal.calories)}>-</button></td></tr>)
+      .map((meal, i) => <tr key={meal.foodName + i}><td><span className="dinamicTableTd">{meal.foodName}: {meal.calories}calories
+      <button className="buttonDelete" onClick={() => this.handleDelete(meal.id, meal.calories)}><span className="buttonIcon">X</span></button>
+      </span>
+      </td></tr>)
 
     const lunch = this.state.dietData.filter(diet => diet.meal === 'Lunch')
-      .map((meal, i) => <tr key={meal.foodName + i}><td>food:<span className="dinamicTableTd">{meal.foodName}: {meal.calories}calories</span>
-        <button className="buttonDelete" onClick={() => this.handleDelete(meal.id, meal.calories)}>-</button></td></tr>)
+      .map((meal, i) => <tr key={meal.foodName + i}><td><span className="dinamicTableTd">{meal.foodName}: {meal.calories}calories</span>
+        <button className="buttonDelete" onClick={() => this.handleDelete(meal.id, meal.calories)}>x</button></td></tr>)
 
     const dinner = this.state.dietData.filter(diet => diet.meal === 'Dinner')
-      .map((meal, i) => <tr key={meal.foodName + i}><td>food:<span className="dinamicTableTd">{meal.foodName}: {meal.calories}
-        <button className="buttonDelete" onClick={() => this.handleDelete(meal.id, meal.calories)}>-</button>calories</span></td></tr>)
+      .map((meal, i) => <tr key={meal.foodName + i}><td><span className="dinamicTableTd">{meal.foodName}: {meal.calories}
+        <button className="buttonDelete" onClick={() => this.handleDelete(meal.id, meal.calories)}>x</button>calories</span></td></tr>)
 
 
     // --------------------------- Error message for below zero calories -------------------------------
     let errorMessage = null;
     if (this.state.isBelowZero) {
       errorMessage =
-        <MyModal className="errorStyleDiv">
-          <h3>you are passing your daily goal, are you sure you want to eat this food :)<span onClick={this.handleChangeError} style={{ cursor: 'pointer', fontWeight: 'bold', color: 'green' }}>ok</span>
-          </h3>
-        </MyModal>
+        // <MyModal className="errorStyleDiv">
+        //   <h3>you are passing your daily goal, are you sure you want to eat this food<span onClick={this.handleChangeError} style={{ cursor: 'pointer', fontWeight: 'bold', color: 'green' }}>ok</span>
+        //   </h3>
+        // </MyModal>
+        <Modal show={this.state.isBelowZero} onHide={this.handleChangeError}>
+          <Modal.Header closeButton>
+            <Modal.Title>Are you sure you want to eat this food ?</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Please stay motivate so you can cut your weight!</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleChangeError}>
+              Close
+          </Button>
+            {/* <Button variant="primary" onClick={this.handleClose}>
+            Save Changes
+          </Button> */}
+          </Modal.Footer>
+        </Modal>
     }
 
     // --------------------------------------------------- Render save error ---------------------------------
@@ -383,18 +397,18 @@ class Diet extends Component {
       // isModalCorrect = <MyModal>
       //   <h3 onClick={this.handleFillCorrect} className="fillCorrect">please choose quantity or select measure</h3>
       // </MyModal>
-      isModalCorrect= <Modal
-      size="sm"
-      show={this.state.isCorrect}
-      onHide={this.handleClose}
-    >
-      <Modal.Header closeButton>
-        <Modal.Title>
-        Fill Correct
+      isModalCorrect = <Modal
+        size="sm"
+        show={this.state.isCorrect}
+        onHide={this.handleClose}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Fill Correct
         </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>Please choose quantity or select Measure</Modal.Body>
-    </Modal>
+        </Modal.Header>
+        <Modal.Body>Please choose quantity or select Measure</Modal.Body>
+      </Modal>
     }
 
     // -------------------------------- Save diet -------------------------------------
@@ -411,28 +425,27 @@ class Diet extends Component {
     //         </div>
 
     //       </Auxiliary>
-        //</MyModal>
-        if(this.state.isDietSaved)
-        {
-        dietSaveMessage =    
+    //</MyModal>
+    if (this.state.isDietSaved) {
+      dietSaveMessage =
         <Modal show={this.state.isDietSaved} onHide={this.handleClose}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Diet Save</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <p style={{color:'green'}}>
-                Your diet have been successfuly saved!
-                would you like to check your diet calendar?
+          <Modal.Header closeButton>
+            <Modal.Title>Diet Save</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p style={{ color: 'green' }}>
+              Your diet have been successfuly saved!
+              would you like to check your diet calendar?
                 </p>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="info" onClick={this.onIsDietSaveHandle}>
-                    Yes
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="info" onClick={this.onIsDietSaveHandle}>
+              Yes
                   </Button>
-                  <Button variant="secondary" onClick={() => (this.setState({ isDietSaved: false, startCount: 0 }))}>
-                    No
+            <Button variant="secondary" onClick={() => (this.setState({ isDietSaved: false, startCount: 0 }))}>
+              No
                   </Button>
-                </Modal.Footer>
+          </Modal.Footer>
         </Modal>
     }
     //  let renderDailyGoal = null;
@@ -459,13 +472,6 @@ class Diet extends Component {
     return (
       <Auxiliary>
         {modalInfo}
-        {/* <div className="row">
-          <div className="col">
-          {searchFood}
-          
-          </div>
-        </div> */}
-
         <div className="row justify-content-between">
           {isModalCorrect}
           <div className="col-7">
@@ -477,11 +483,15 @@ class Diet extends Component {
               onChange={(e) => this.onChange(e.target.value)}
               value={this.state.searchText}
             />
-            <div className="headerInstructions">
+            {
+              !this.state.foodData &&
+              <div className="headerInstructions">
                 <h4 >
-                    Search our food database from Edamam!
-                </h4>
-            </div>
+                  Search our food database from Edamam!
+                  </h4>
+              </div>
+            }
+
             {loader}
             {errorMessage}
           </div>
@@ -519,36 +529,32 @@ class Diet extends Component {
                   </tfoot>
 
                 </table>
-
-                {/* {saveError} */}
                 {dietSaveMessage}
-                      <Modal
-          show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>
-              Friendly advice for safe fat loss
+                <Modal
+                  show={this.state.show} onHide={this.handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>
+                      Friendly advice for safe fat loss
             </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p style={{color:'red'}}>
-            Based on your total calories consumed for today, you are likely not eating enough.
-            For safe weight loss, the National Institutes of Health recommends no less than 1000-1200 calories for women and 1200-1500 calories for men.
+                  </Modal.Header>
+                  <Modal.Body>
+                    <p style={{ color: 'red' }}>
+                      Based on your total calories consumed for today, you are likely not eating enough.
+                      For safe weight loss, the National Institutes of Health recommends no less than 1000-1200 calories for women and 1200-1500 calories for men.
             </p>
-            <p>
-            Even during weight loss, it's important to meet your body's basic nutrient and energy needs. Over time, not eating enough can lead to nutrient deficiencies, unpleasant side effects & other serious health problems.
+                    <p>
+                      Even during weight loss, it's important to meet your body's basic nutrient and energy needs. Over time, not eating enough can lead to nutrient deficiencies, unpleasant side effects & other serious health problems.
             </p>
-        </Modal.Body>
-        <Modal.Footer>
-      <Button variant="secondary"  onClick={this.handleClose}>Close</Button>
-  </Modal.Footer>
-        </Modal> 
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={this.handleClose}>Close</Button>
+                  </Modal.Footer>
+                </Modal>
               </div>
             </div>
-            {/* <Calendar user={this.state.user}/> */}
-
           </div>
         </div>
-                 
+
       </Auxiliary>
 
 

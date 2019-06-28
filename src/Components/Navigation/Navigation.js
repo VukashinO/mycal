@@ -37,10 +37,10 @@ const NavigationAuth = () => (
                             <Link className="nav-link" to={ROUTES.DIET}>Diet</Link>
                         </li>
                         <li className="nav-item active">
-                            <Link className="nav-link" to={ROUTES.MYCALENDAR}>MyCalendar</Link>
+                            <Link className="nav-link" to={ROUTES.MYCALENDAR}>My Calendar</Link>
                         </li>
                         <li className="nav-item active">
-                            <Link className="nav-link" to={ROUTES.MYPROFILE}>MyProfile</Link>
+                            <Link className="nav-link" to={ROUTES.MYPROFILE}>My Profile</Link>
                         </li>
                         <li className="nav-item active">
                             <SignOutButton />
@@ -69,7 +69,7 @@ const NavigationNonAuth = () => (
 
                     <ul className="navbar-nav text-right">
                         <li className="nav-item active">
-                            <Link className="nav-link" to={ROUTES.SIGN_IN}>SignIn</Link>
+                            <Link className="nav-link" to={ROUTES.SIGN_IN}>Sign In</Link>
                         </li>
 
                     </ul>

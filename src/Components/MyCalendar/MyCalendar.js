@@ -18,7 +18,9 @@ class Calendar extends Component {
         dietFromFirebase: null,
 
         isDietSaved: false,
-        user: JSON.parse(localStorage.getItem('user'))
+        user: JSON.parse(localStorage.getItem('user')),
+
+        selectDayObj: null
     }
 
     constructor(props) {
@@ -44,15 +46,21 @@ class Calendar extends Component {
                     })
                 }
                 // const checkDate = `${this.year()}-${moment().month(`${this.month()}`).format("MM")}-${this.currentDay()}`;
-                const filteredArr = arr.filter(diet => diet.user === this.state.user.email)
+                const filteredArr = arr.filter(diet => diet.user === this.state.user.email);
+                const initialDietFromFirebase = filteredArr.find(diet => diet.date.split("-")[2] == this.currentDay());
                 console.log(filteredArr)
+                console.log(initialDietFromFirebase)
                 if (filteredArr.length === 0) {
                     this.setState({ isDietSaved: true })
                     console.log("you haven't save diet for this user!")
 
                     return;
                 }
-                this.setState({ dietFromFirebase: filteredArr, selectedDay: this.currentDay() })
+                this.setState({ 
+                    dietFromFirebase: filteredArr, 
+                    selectedDay: this.currentDay(), 
+                    selectDayObj: initialDietFromFirebase 
+                    })
             });
     }
 
@@ -172,7 +180,16 @@ class Calendar extends Component {
             selectedDay: day
         }, () => {
 
-            console.log("WTF")
+          const selectDayObj = this.state.dietFromFirebase.find(diet => diet.date.split("-")[2] === day.toString());
+          if(selectDayObj)
+          {
+            this.setState({ selectDayObj, isDietSaved: false }); 
+          }
+          else
+          {
+            this.setState({ isDietSaved: true, selectDayObj: null });
+          }
+         
         })
             
     }
@@ -298,7 +315,8 @@ class Calendar extends Component {
                 <div className="col-4 m-5">
                     <FirebaseTable
                         handleDivClick={this.handleDivClick}
-                        dietFromFirebase={this.state.dietFromFirebase}
+                        // dietFromFirebase={this.state.dietFromFirebase}
+                        objForRenderingFirebaseTable={this.state.selectDayObj}
                     />
                 </div>
             </div>
