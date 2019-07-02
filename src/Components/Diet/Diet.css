@@ -72,11 +72,13 @@
     height: 20px;
     width: 20px;
     vertical-align: middle;
+    margin-left: 10px;
     
 }
 
 .buttonIcon {
-    font-size: 20px;
+    font-size: 12px;
+    vertical-align: middle;
 }
 .fillCorrect {
    color:#477280;

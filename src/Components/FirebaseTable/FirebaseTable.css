@@ -5,3 +5,8 @@
     text-align: center;
 }
 
+.divDinamicTable {
+    overflow-y: auto;
+    max-height: 450px;
+    min-height: 400px;
+}

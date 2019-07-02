@@ -50,6 +50,7 @@ class Calendar extends Component {
                 const initialDietFromFirebase = filteredArr.find(diet => diet.date.split("-")[2] == this.currentDay());
                 console.log(filteredArr)
                 console.log(initialDietFromFirebase)
+                console.log(this.month())
                 if (filteredArr.length === 0) {
                     this.setState({ isDietSaved: true })
                     console.log("you haven't save diet for this user!")
@@ -126,6 +127,7 @@ class Calendar extends Component {
 
     onChangeMonth = (e, month) => {
         this.setState({
+            
             showMonthPopup: !this.state.showMonthPopup
         });
     }
@@ -227,7 +229,7 @@ class Calendar extends Component {
             let className = (d == this.currentDay() ? "day current-day" : "day");
             let selectedClass = (d == this.state.selectedDay ? " selected-day " : "");
             // let dietDayClass = (d == dietDay ? "dietDayColor" : "");
-            let dietDayClass = dietDays ? dietDays.find(obj => obj.date.split("-")[2] == d) ? " diet-day" : "" : null;
+            let dietDayClass = dietDays ? dietDays.find(obj =>  obj.date.split("-")[2] == d) ? " diet-day" : "" : null;
             daysInMonth.push(
                 <td key={d} className={className + selectedClass + dietDayClass} >
                     <span onClick={(e) => { this.onDayClick(e, d) }}>{d}</span>
@@ -275,8 +277,8 @@ class Calendar extends Component {
                     className="noDietSave">You haven't saved diet for this date please go to Diet!</h3>
             </div>
         }
-
         return (
+          
             <div className="row">
                 <div className="col-4 m-5">
 

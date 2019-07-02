@@ -16,15 +16,15 @@ const FirebaseTable = props => {
         } = props.objForRenderingFirebaseTable || {};
 
         const breakFast = dietInfo.filter(diet => diet.meal === 'Breakfast')
-            .map((meal, i) => <tr key={meal.foodName + i}><td>food:<span className="dinamicTableTd">{meal.foodName}: {meal.calories}calories</span>
+            .map((meal, i) => <tr key={meal.foodName + i}><td><span className="dinamicTableTd">{meal.foodName}: {meal.calories} calories</span>
             </td></tr>);
 
         const lunch = dietInfo.filter(diet => diet.meal === 'Lunch')
-            .map((meal, i) => <tr key={meal.foodName + i}><td>food:<span className="dinamicTableTd">{meal.foodName}: {meal.calories}calories</span>
+            .map((meal, i) => <tr key={meal.foodName + i}><td><span className="dinamicTableTd">{meal.foodName}: {meal.calories} calories</span>
             </td></tr>);
 
         const dinner = dietInfo.filter(diet => diet.meal === 'Dinner')
-            .map((meal, i) => <tr key={meal.foodName + i}><td>food:<span className="dinamicTableTd">{meal.foodName}: {meal.calories}calories</span>
+            .map((meal, i) => <tr key={meal.foodName + i}><td><span className="dinamicTableTd">{meal.foodName}: {meal.calories} calories</span>
             </td></tr>);
 
         table = <table className="firebaseTable">
@@ -57,7 +57,7 @@ const FirebaseTable = props => {
 
     return (
 
-        <div>
+        <div className="divDinamicTable">
             {table}
         </div>
     );

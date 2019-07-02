@@ -16,18 +16,20 @@ With this application you can count your daily calorie intake very easy.
 
 
 ### Functionalities
-- sign in, sign up, sign out <br>
-- protected routes if user is not logged in <br>
-- using firebase to store the data(users, food, bmr calories date)<br>
+- Sign in, sign up, sign out <br>
+- Protected routes if user is not logged in <br>
+- Using firebase to store the data(users, food, bmr calories date)<br>
+- User validation from firebase <br>
 - CRUD operations with the stored data on firebase <br>
-- calculating your BMR - which leads to your daily Calorie max income if you want to cut weight.<br>
-- search field for food data base using free account and keys from edamam so you can count the food you eat.<br>
-- rendering the data food in table format with pagination <br>
-- you can add or delete food which is rendering to a dynamic table 
-- save your daily diet to firebase <br>
-- calendar where you can see your last diet and diets mark with color on the days where u have diet. <br>
-- user validation from firebase <br>
-- custom validation on calculating the BMR and handling errors with modules <br>
+- BMR Calculator - Basal Metabolic Rate is the number of calories required to keep your body functioning at rest. BMR is also known as your body’s metabolism; therefore,<br> 
+  any increase to your metabolic weight, such as exercise, will increase your BMR. To get your BMR, simply input your height, gender, age and weight. Once you’ve<br>
+  determined your BMR, you can begin to monitor how many calories a day you need to maintain or lose weight.<br>
+- Search field for food data base using free account and keys from Edamam so you can count the food you eat.<br>
+- Rendering the data food in table format with pagination <br>
+- You can add or delete food which is rendering to a dynamic table 
+- Save your daily diet to firebase <br>
+- Calendar where you can see your last diet and diets mark with color on the days where u have diet. <br>
+- Custom validation on calculating the BMR and handling errors with modules <br>
 
 
 

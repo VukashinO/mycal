@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { WithAuthorization } from '../Hoc/Hoc';
 import './Bmr.css';
 import * as ROUTES from '../../Constants/Routes';
-// import MyModal from '../UI/MyModal/MyModal';
-// import MyCustomError from '../myCustomError/MyCustomError';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
 
@@ -172,9 +170,7 @@ class Bmr extends Component {
     console.log((retriveObj.name))
 
     return (
-
-
-      <div className="row">
+    <div className="row">
         {fillCorrect}
         <form onSubmit={this.onSubmit} className="formStyle">
 
@@ -184,7 +180,7 @@ class Bmr extends Component {
             <div className="form-check form-check-inline">
 
               <input
-                className="form-check-input "
+                className="form-check-input"
                 type="radio"
                 name="gender"
                 value="male"

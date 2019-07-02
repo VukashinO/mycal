@@ -136,7 +136,13 @@ class Diet extends Component {
 
   //--------------  On click to cancel Modal
   handleCancelModal = () => {
-    this.setState({ nutritionFacts: false })
+    this.setState({
+      nutritionFacts: false, 
+      serving: '',
+      value: 'Choose serving', 
+      valueMeal: 'Breakfast' 
+    })
+  
   }
 
   handleClickPagination = (event) => {
@@ -190,7 +196,8 @@ class Diet extends Component {
 
   // ------------------- Update the state if Modal i correct or show error message
   handleSubmitModal = () => {
-
+    
+    this.handleCancelModal();
     let cup = this.state.cup;
     let gram = this.state.gram;
     let defaultGram = this.state.defaultGram;
@@ -337,17 +344,21 @@ class Diet extends Component {
     //----------------------------- Renering mini table for diet to save with firebase -----------------------------
     const breakFast = this.state.dietData.filter(diet => diet.meal === 'Breakfast')
       .map((meal, i) => <tr key={meal.foodName + i}><td><span className="dinamicTableTd">{meal.foodName}: {meal.calories}calories
-      <button className="buttonDelete" onClick={() => this.handleDelete(meal.id, meal.calories)}><span className="buttonIcon">X</span></button>
+      <button className="buttonDelete" onClick={() => this.handleDelete(meal.id, meal.calories)}><div className="buttonIcon">X</div></button>
       </span>
       </td></tr>)
 
     const lunch = this.state.dietData.filter(diet => diet.meal === 'Lunch')
-      .map((meal, i) => <tr key={meal.foodName + i}><td><span className="dinamicTableTd">{meal.foodName}: {meal.calories}calories</span>
-        <button className="buttonDelete" onClick={() => this.handleDelete(meal.id, meal.calories)}>x</button></td></tr>)
+      .map((meal, i) => <tr key={meal.foodName + i}><td><span className="dinamicTableTd">{meal.foodName}: {meal.calories}calories
+       <button className="buttonDelete" onClick={() => this.handleDelete(meal.id, meal.calories)}><div className="buttonIcon">X</div></button>
+      </span>
+      </td></tr>)
 
     const dinner = this.state.dietData.filter(diet => diet.meal === 'Dinner')
-      .map((meal, i) => <tr key={meal.foodName + i}><td><span className="dinamicTableTd">{meal.foodName}: {meal.calories}
-        <button className="buttonDelete" onClick={() => this.handleDelete(meal.id, meal.calories)}>x</button>calories</span></td></tr>)
+      .map((meal, i) => <tr key={meal.foodName + i}><td><span className="dinamicTableTd">{meal.foodName}: {meal.calories}calories
+             <button className="buttonDelete" onClick={() => this.handleDelete(meal.id, meal.calories)}><div className="buttonIcon">X</div></button>
+      </span>
+      </td></tr>)
 
 
     // --------------------------- Error message for below zero calories -------------------------------
@@ -487,7 +498,7 @@ class Diet extends Component {
               !this.state.foodData &&
               <div className="headerInstructions">
                 <h4 >
-                  Search our food database from Edamam!
+                  Search our food database!
                   </h4>
               </div>
             }

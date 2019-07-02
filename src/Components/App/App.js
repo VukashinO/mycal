@@ -3,7 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 import * as ROUTES from '../../Constants/Routes';
-import LandingPage from '../LandingPage/LandingPage';
+import ConditionalLandingPage from '../../Components/ConditionalLandingPage/ConditionalLandingPage';
 import SignIn from '../SignIn/SignIn';
 import SignUp from '../SignUp/SignUp';
 import Bmr from '../../Components/Bmr/Bmr';
@@ -20,7 +20,7 @@ const App = () => {
       <div className="container main-section">
 
 
-        <Route exact path={ROUTES.Landing} component={LandingPage} />
+        <Route exact path={ROUTES.Landing} component={ConditionalLandingPage} />
         <Route exact path={ROUTES.SIGN_IN} component={SignIn} />
         <Route exact path={ROUTES.SIGN_UP} component={SignUp} />
         <Route exact path={ROUTES.BMR} component={Bmr} />
