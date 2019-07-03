@@ -174,94 +174,105 @@ class Bmr extends Component {
         {fillCorrect}
         <form onSubmit={this.onSubmit} className="formStyle">
 
-          <h1>Calculate BMI <span className="span1">(Metric unit)</span></h1>
-          <h3 style={{ textAlign: 'center' }}>Choose Gender</h3>
-          <div style={{ textAlign: 'center' }}>
-            <div className="form-check form-check-inline">
-
-              <input
-                className="form-check-input"
-                type="radio"
-                name="gender"
-                value="male"
-                checked={this.state.gender === "male"}
-                onChange={e => this.change(e)}
-                id="male"
-              />
-              <label htmlFor="male" className="form-check-label radioStyle">Male</label>
-
+            <div className="formHeader">
+              <h1>Calculate BMI <span className="span1">(Metric unit)</span></h1>
             </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="gender"
-                value="female"
-                checked={this.state.gender === "female"}
-                onChange={e => this.change(e)}
-                id="female"
-              />
-              <label htmlFor="female" className="form-check-label radioStyle">Female</label>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col">
-              <div className="form-group">
-                <label htmlFor="age"><span className="labelText">enter your Age</span></label>
+          <div className="row justify-content-end genderHeight m-2 ">
+              <label className="col-sm-6 labelField">Gender</label>
+            <div className="col-sm-4 " style={{marginRight: '7px'}}>
+                <div className="form-check form-check-inline">
+    
+                  <input
+                    className="form-check-input "
+                    type="radio"
+                    name="gender"
+                    value="male"
+                    checked={this.state.gender === "male"}
+                    onChange={e => this.change(e)}
+                    id="male"
+                  />
+                  <label htmlFor="male" className="form-check-label radioStyle">Male</label>
+    
+                </div>
+                <div className="form-check form-check-inline">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="gender"
+                    value="female"
+                    checked={this.state.gender === "female"}
+                    onChange={e => this.change(e)}
+                    id="female"
+                  />
+                  <label htmlFor="female" className="form-check-label radioStyle">Female</label>
+                </div>
+          </div>   
+              </div>
+
+              <div>
+              <div className="row justify-content-end m-2">
+              <label htmlFor="age" className="col-sm-2 labelField">Age</label>
+                <div className="col-sm-8 form-group">
+                 
+                    
+                    <input
+                      type="text"
+                      name="age"
+                      value={this.state.age}
+                      onChange={e => this.change(e)}
+                      className={`${formErrors.age ? 'is-invalid' : ''} form-control`}
+                      id="age"
+                      placeholder="your Age"
+                    />
+                    <small className="form-text text-muted text-muted-left">number from 12 to 75</small>
+                    {/* conditional rendering */}
+                    {/* <div className='invalid-feedback'>{formErrors.age}</div>  */}
+                    {formErrors.age && <div className='invalid-feedback'>{formErrors.age}</div>}
+    
+                
+                </div>
+                </div>
+                <div className="row justify-content-end m-2">
+                <label htmlFor="heightcm" className="col-sm-2 labelField">Height</label>
+               
+                  <div className="col-sm-8 form-group">
+                    
+                    <input
+                      type="text"
+                      name="heightcm"
+                      value={this.state.heightcm}
+                      onChange={e => this.change(e)}
+                      className={`${formErrors.heightcm ? 'is-invalid' : ''} form-control`}
+                      id="heightcm"
+                      placeholder="height in cm"
+                    />
+                    <small className="form-text text-muted text-muted-left">number from 120 to 210</small>
+                    {/* <div className='invalid-feedback'>{formErrors.heightcm}</div> */}
+                    {formErrors.heightcm && <div className='invalid-feedback'>{formErrors.heightcm}</div>}
+                  </div>
+                
+                </div>
+    
+    
+    
+              <div className="row justify-content-end m-2">
+                <label htmlFor="weightkl" className="col-sm-2 labelField">Weight</label>
+                <div className="col-sm-8 form-group">
                 <input
                   type="text"
-                  name="age"
-                  value={this.state.age}
+                  name="weightkl"
+                  value={this.state.weightkl}
                   onChange={e => this.change(e)}
-                  className={`form-control ${formErrors.age ? 'is-invalid' : ''}`}
-                  id="age"
-                  placeholder="your Age"
+                  className={`${formErrors.weightkl ? 'is-invalid' : ''} form-control`}
+                  id="weightkl"
+                  placeholder="weight in kgs"               
                 />
-                <small className="form-text text-muted">number from 12 to 75</small>
-                {/* conditional rendering */}
-                {/* <div className='invalid-feedback'>{formErrors.age}</div>  */}
-                {formErrors.age && <div className='invalid-feedback'>{formErrors.age}</div>}
-
+                <small className="form-text text-muted text-muted-left">number from 50 to 140</small>
+                {/* <div className='invalid-feedback'>{formErrors.weightkl}</div> */}
+                {formErrors.weightkl && <div className='invalid-feedback'>{formErrors.weightkl}</div>}
+                </div>
               </div>
-            </div>
-            <div className="col">
-              <div className="form-group">
-                <label htmlFor="heightcm"><span className="labelText">enter your height in cm</span></label>
-                <input
-                  type="text"
-                  name="heightcm"
-                  value={this.state.heightcm}
-                  onChange={e => this.change(e)}
-                  className={`form-control ${formErrors.heightcm ? 'is-invalid' : ''}`}
-                  id="heightcm"
-                  placeholder="height in cm"
-                />
-                <small className="form-text text-muted">number from 120 to 210</small>
-                {/* <div className='invalid-feedback'>{formErrors.heightcm}</div> */}
-                {formErrors.heightcm && <div className='invalid-feedback'>{formErrors.heightcm}</div>}
               </div>
-            </div>
-          </div>
-
-
-
-          <div className="form-group">
-            <label htmlFor="weightkl"><span className="labelText">enter your weight in kg</span></label>
-            <input
-              type="text"
-              name="weightkl"
-              value={this.state.weightkl}
-              onChange={e => this.change(e)}
-              className={`form-control kgsWidth ${formErrors.weightkl ? 'is-invalid' : ''}`}
-              id="weightkl"
-              placeholder="weight in kgs"
-              style={{ width: '20%' }}
-            />
-            <small className="form-text text-muted">number from 50 to 140</small>
-            {/* <div className='invalid-feedback'>{formErrors.weightkl}</div> */}
-            {formErrors.weightkl && <div className='invalid-feedback'>{formErrors.weightkl}</div>}
-          </div>
-
 
           <div className="form-check">
             <input

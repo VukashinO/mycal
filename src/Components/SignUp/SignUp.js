@@ -7,7 +7,7 @@ import { Alert } from 'react-bootstrap';
 import { withFirebase } from '../Firebase';
 
 const SignUp = () => (
-  <div style={{backgroundColor:'red'}}>
+  <div className="wrapper">
    
     <SignUpForm />
   </div>
@@ -80,7 +80,7 @@ class SignUpFormBase  extends Component {
 
     return (
       // m-5
-    <div className="contSignUp">
+    <div className="cont">
         <div className="d-flex justify-content-center h-100">
             <div className="card">
         <div className="card-body">

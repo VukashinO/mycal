@@ -1,6 +1,5 @@
 import React from 'react';
- import './MyModal.css';
-import { Modal, Button } from 'react-bootstrap';
+import './MyModal.css';
 
 const MyModal = (props) => {
     return ( 
@@ -9,9 +8,6 @@ const MyModal = (props) => {
               {props.children}
           </div>
         
-    //     <Modal show={true}>
-    //    {props.children}
-    //     </Modal>
        
      );
 }

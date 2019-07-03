@@ -194,10 +194,10 @@ class Diet extends Component {
     }))
   };
 
-  // ------------------- Update the state if Modal i correct or show error message
+  // ------------------- Update the state if Modal is correct or show error message
   handleSubmitModal = () => {
     
-    this.handleCancelModal();
+    
     let cup = this.state.cup;
     let gram = this.state.gram;
     let defaultGram = this.state.defaultGram;
@@ -209,6 +209,7 @@ class Diet extends Component {
 
       this.handleMesures();
       this.setState({ cup, gram, defaultGram, ounce, pound, kilo })
+      this.handleCancelModal();
     }
     else {
       return this.setState({ isCorrect: true })
@@ -260,6 +261,7 @@ class Diet extends Component {
   handleChangeError = () => {
     this.setState({ isBelowZero: false })
   }
+
   handleFillCorrect = () => {
     this.setState({ isCorrect: false })
   }
@@ -276,12 +278,10 @@ class Diet extends Component {
 
 
   render() {
-    if (this.state.foodData) {
-      (this.state.foodData.forEach(obj => console.log(obj.measures)))
-    }
-
+ 
 
     //--------------------Pagination --------------------------------
+    
     this.state.dietData.forEach((diet, i) => { diet.id = i })
     const pageNumbers = [];
     if (this.state.foodData) {
@@ -320,8 +320,6 @@ class Diet extends Component {
       modalInfo =
         <MyModal>
           <NutritionSummary
-            // serving={this.state.individualCalorie}
-            //select={this.state.measuresObj}
             onCancel={this.handleCancelModal}
             name={this.state.foodName}
             calories={this.state.calories}
@@ -338,8 +336,6 @@ class Diet extends Component {
           />
         </MyModal>
     }
-
-    console.log(this.props.location)
 
     //----------------------------- Renering mini table for diet to save with firebase -----------------------------
     const breakFast = this.state.dietData.filter(diet => diet.meal === 'Breakfast')
@@ -365,10 +361,7 @@ class Diet extends Component {
     let errorMessage = null;
     if (this.state.isBelowZero) {
       errorMessage =
-        // <MyModal className="errorStyleDiv">
-        //   <h3>you are passing your daily goal, are you sure you want to eat this food<span onClick={this.handleChangeError} style={{ cursor: 'pointer', fontWeight: 'bold', color: 'green' }}>ok</span>
-        //   </h3>
-        // </MyModal>
+
         <Modal show={this.state.isBelowZero} onHide={this.handleChangeError}>
           <Modal.Header closeButton>
             <Modal.Title>Are you sure you want to eat this food ?</Modal.Title>
@@ -378,36 +371,13 @@ class Diet extends Component {
             <Button variant="secondary" onClick={this.handleChangeError}>
               Close
           </Button>
-            {/* <Button variant="primary" onClick={this.handleClose}>
-            Save Changes
-          </Button> */}
           </Modal.Footer>
         </Modal>
     }
 
-    // --------------------------------------------------- Render save error ---------------------------------
-    //  let saveError = null;
-    //  if (this.state.saveError) {
-    //    saveError =
-    //      <MyModal>
-    //        <Auxiliary>
-
-    //          <p style={{ color: 'red' }}>Based on your total calories consumed for today, you are likely not eating enough.</p>
-    //         <p>For safe weight loss, the National Institutes of Health recommends no less than 1000-1200 calories for women and 1200-1500 calories for men.</p>
-    //          <p>Even during weight loss, it's important to meet your body's basic nutrient and energy needs. Over time, not eating enough can lead to nutrient deficiencies, unpleasant side effects & other serious health problems.</p>
-    //         <button
-    //           onClick={() => { this.setState({ saveError: null }) }}
-    //           className="btn btn-success buttonMargin">ok</button>
-    //        </Auxiliary>
-    //      </MyModal>
-    // }
-
     // -------------------------------Fill form correct -----------------------------
     let isModalCorrect = null;
     if (this.state.isCorrect) {
-      // isModalCorrect = <MyModal>
-      //   <h3 onClick={this.handleFillCorrect} className="fillCorrect">please choose quantity or select measure</h3>
-      // </MyModal>
       isModalCorrect = <Modal
         size="sm"
         show={this.state.isCorrect}
@@ -419,24 +389,13 @@ class Diet extends Component {
         </Modal.Title>
         </Modal.Header>
         <Modal.Body>Please choose quantity or select Measure</Modal.Body>
+        <Modal.Footer><Button variant="secondary" onClick={this.handleClose}>Close</Button></Modal.Footer>
+             
       </Modal>
     }
 
     // -------------------------------- Save diet -------------------------------------
     let dietSaveMessage = null;
-    // if (this.state.isDietSaved) {
-    //   dietSaveMessage =
-    //     <MyModal>
-    //       <Auxiliary>
-    //         <h1>Your diet have been successfuly saved!</h1>
-    //         <h2>would you like to check your diet calendar?</h2>
-    //         <div>
-    //           <button className="btnConfirm-btnSucsses" onClick={this.onIsDietSaveHandle}>yes</button>
-    //           <button className="btnConfirm-btnCancel" onClick={() => (this.setState({ isDietSaved: false, startCount: 0 }))}>no</button>
-    //         </div>
-
-    //       </Auxiliary>
-    //</MyModal>
     if (this.state.isDietSaved) {
       dietSaveMessage =
         <Modal show={this.state.isDietSaved} onHide={this.handleClose}>
@@ -459,27 +418,7 @@ class Diet extends Component {
           </Modal.Footer>
         </Modal>
     }
-    //  let renderDailyGoal = null;
-    //  if(this.state.isFetched)
-    //  {
-    //    renderDailyGoal = 
-    //    <div className="marginTop">
-    //    <div>
-    //        <p className="leftColParagrafs">Basaed on your bmr: <b>{this.state.bmr}, </b>
-    //          you will need <b>{this.state.showCalories}</b> calories
-    //          to maintain your weith.
-    //           </p> 
-    //    <h3>Goal:<span className="dailyGoal">
-    //      {this.state.calories}</span> /<span className={this.state.startCount === 0 || 
-    //      this.state.startCount > this.state.calories? 'dangerZone' : 'dailyGoal'}> {this.state.startCount}</span> calories</h3>
-    //      {/* hide - add food */}
-    //  {/* <button className="btn btn-primary" onClick={this.handleCalories}>{this.state.searchFood ? 'hide food' : 'add food'}</button> */}
-    //  </div>
-    //  </div>
-    //  }
 
-
-    console.log(this.state.isDietSaved)
     return (
       <Auxiliary>
         {modalInfo}
@@ -517,8 +456,6 @@ class Diet extends Component {
                 <h3>Goal:<span className="dailyGoal">
                   {this.state.calories}</span> /<span className={this.state.startCount === 0 ||
                     this.state.startCount > this.state.calories ? 'dangerZone' : 'dailyGoal'}> {this.state.startCount}</span> calories</h3>
-                {/* hide - add food */}
-                {/* <button className="btn btn-primary" onClick={this.handleCalories}>{this.state.searchFood ? 'hide food' : 'add food'}</button> */}
               </div>
             </div>
             <div className="marginTop">
@@ -527,7 +464,6 @@ class Diet extends Component {
 
                   <tbody >
                     <tr><td><h3>My diet</h3></td></tr>
-                    {/* <tr><td><p>cal:{dietCalories}</p></td></tr> */}
                     <tr><td><span className="dietTableTh">Breakfast</span></td></tr>
                     {breakFast}
                     <tr><td><span className="dietTableTh">Lunch</span></td></tr>

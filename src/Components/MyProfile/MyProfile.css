@@ -2,42 +2,39 @@
     width: 65%;
     margin: 20px auto;
     border: 2px solid 888888;
-    padding: 8px;
-     box-shadow: 5px 10px #888888; 
-    background-color: #0d430b;
+    padding: 20px;
+    box-shadow:  0 0 1px 1px rgba(50, 50, 50, 0.1);
+    background-color: white;
    
 }
 
+.formHeader {
+    height: 77px;
+}
 
 h1 {
-    
-    color: orange;
-    font-style: italic;
+color: orange;
+font-style: italic;
 }
 
 h3 {
-    color: lightblue;
+    color: #68d29c;
 }
 
 .span1 {
     font-size: 14px;
     vertical-align: middle;
-    color: orange;
 }
 
 .radioStyle {
 
-    color: lightblue;
-    font-size: 20px;
+    color: green;
+    font-size: 22px;
 }
 
 .activity {
-    /* color: #05051d; */
-    /* color: whitesmoke; */
-    color:#fffa10;
+    color: rgb(86, 211, 124);
     font-size: 25px;
-    /* font-style: italic; */
-  
 }
 
 
@@ -51,10 +48,7 @@ h3 {
    
 }
 
-.form-control {
-    width: 55%;
-    margin: auto;
-}
+
 
 .form-group {
     text-align: center;
@@ -65,3 +59,15 @@ h3 {
     font-size: 200px;
 }
 
+.labelField {
+    font-weight: bold;
+    color: #149D56;
+}
+
+.genderHeight {
+    height: 77px;
+}
+
+.text-muted-left {
+    width: 50%;
+}

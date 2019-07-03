@@ -4,7 +4,6 @@
     background-color: white;
     width: 70%;
     border: 1px solid #ccc;
-    /* box-shadow: 1px 1px 1px #6ec86e; */
     padding: 16px;
     left: 15%;
     top: 30%;
@@ -14,14 +13,6 @@
 }
 
 
-/* .modal-dialog {
-    position: relative;
-    width: auto;
-    margin: 0.5rem;
-    pointer-events: none;
-    top: 20%;
-    left:30%;
-} */
 @media (min-width: 600px) {
     .Modal {
         width: 500px;

@@ -1,34 +1,37 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
 
+.wrapper {
+    height: 601px;
+ }
 
-.contSignUp{
+.cont{ 
 align-content: center;
-background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+/* background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg'); */
 background-size: cover;
 background-repeat: no-repeat;
-height: 75vh;
+height: 100%;
 font-family: 'Numans', sans-serif;
 }
-
 .card{
 height: 440px;
 margin-top: auto;
 margin-bottom: auto;
 width: 400px;
-background-color: rgba(0,0,0,0.5) !important;
+/* background-color: rgba(0,0,0,0.5) !important; */
 }
 
 .card h3 {
-    color: white;
+    color: #489848;
 }
 
 .input-group-prepend span{
-width: 50px;
-background-color: #FFC312;
-color: black;
-border:0 !important;
-}
+    width: 50px;
+    /* background-color: #FFC312; */
+    background-color: #489848;
+    color: white;
+    border:0 !important;
+    }
 
 input:focus{
 outline: 0 0 0 0  !important;
@@ -50,7 +53,7 @@ margin-right: 5px;
 
 .signUp_btn{
 color: black;
-background-color: #FFC312;
+background-color:  rgb(28, 183, 28);
 width: 100px;
 margin-bottom: 10px;
 

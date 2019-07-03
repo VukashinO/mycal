@@ -55,13 +55,13 @@ class SignInBase extends Component {
 
     return (
       <div className="cont">
-        <div className="d-flex justify-content-center h-100 m-7">
+        <div className="d-flex justify-content-center h-100">
           <div className="card">
-            <div className="card-header">
+            <div className="card-header colorUpdate">
               <h3>Sign In</h3>
 
             </div>
-            <div className="card-body">
+            <div className="card-body colorUpdate">
               <form onSubmit={this.onSubmit}>
                 <div className="input-group form-group">
                   <div className="input-group-prepend">
@@ -102,11 +102,11 @@ class SignInBase extends Component {
                       </Alert>}
               </form>
             </div>
-            <div className="card-footer">
+            <div className="card-footer colorUpdate">
               <div className="d-flex justify-content-center links">
-               <p> Don't have an account?
+               <p style={{color: "#489848"}}> Don't have an account?
                    
-                  <span style={{fontSize:'25px', marginLeft:'3px'}}><Link to={ROUTES.SIGN_UP} >Sign Up</Link></span>
+                  <span style={{fontSize:'20px', marginLeft:'13px'}}><Link to={ROUTES.SIGN_UP}  style={{color:'#489848'}}>Sign Up</Link></span>
                   </p>
 
               </div>

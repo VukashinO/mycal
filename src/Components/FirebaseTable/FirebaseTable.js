@@ -6,10 +6,7 @@ const FirebaseTable = props => {
     console.log(props.dietFromFirebase)
     let table = null;
     if (props.objForRenderingFirebaseTable) {
-        // const lastIndex = props.dietFromFirebase.length - 1;
-        // const obj = props.dietFromFirebase[lastIndex];
-
-        const {
+     const {
             date,
             dietInfo,
             totalCalories
