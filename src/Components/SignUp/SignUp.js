@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './SignUp.css';
-import {  withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import * as ROUTES from '../../Constants/Routes';
 import { Alert } from 'react-bootstrap';
 // passing firebase instance to the SignUpForm
@@ -79,12 +79,12 @@ class SignUpFormBase  extends Component {
 
 
     return (
-      // m-5
+    
     <div className="cont">
         <div className="d-flex justify-content-center h-100">
             <div className="card card-signUp">
         <div className="card-header colorUpdate">
-          <h3>SignUp</h3>
+          <h3>Sign Up</h3>
         </div>
        <div className="card-body colorUpdate">
       <form onSubmit={this.onSubmit}>
@@ -143,25 +143,42 @@ class SignUpFormBase  extends Component {
         />
         </div>
         <div className="form-group m-top">
-        <button disabled={visible} type="submit" className="btn signUp_btn">SignUp</button>
+        <button disabled={visible} type="submit" className="btn signUp_btn">Sign Up</button>
         </div>
+        
       </form>
+ 
       </div>
+
           <div className="card-footer colorUpdate">
+
                  <div className="d-flex justify-content-center">
-              
-          {error && <Alert variant="danger" onClose={() => this.setState({ error:null, username: '', email: '', passwordOne: '', passwordTwo: '' })} dismissible>
-                        <Alert.Heading></Alert.Heading>
-                           
-                                {error.message}
-                           
-                      </Alert>}
-                  </div>
-          </div>
-      </div>
-      </div>
-      </div>
+ 
+                    <div>
+    
+                      <span>Already a member?</span> &nbsp; <span><Link to={ROUTES.SIGN_IN} style={{color:'#489848'}}>Sign In</Link></span>
+                      {error &&
+      <Alert variant="danger" onClose={() => this.setState({ error:null, username: '', email: '', passwordOne: '', passwordTwo: '' })}>
+      
+      <Alert.Heading>sadsad</Alert.Heading>
+                        <p>
+                            {error.message}
+                        </p>
+                  </Alert>}
+                    </div>
      
+         
+                </div>
+        </div>
+
+      </div>
+
+     </div>
+     
+     </div>
+    
+
+                    
     );
   }
 }
