@@ -13,12 +13,16 @@ background-repeat: no-repeat;
 height: 100%;
 font-family: 'Numans', sans-serif;
 }
+
 .card{
-height: 440px;
 margin-top: auto;
 margin-bottom: auto;
 width: 400px;
 /* background-color: rgba(0,0,0,0.5) !important; */
+}
+
+.card-signUp {
+height: 456px;
 }
 
 .card h3 {
@@ -36,7 +40,6 @@ width: 400px;
 input:focus{
 outline: 0 0 0 0  !important;
 box-shadow: 0 0 0 0 !important;
-
 }
 
 .remember{
@@ -52,21 +55,21 @@ margin-right: 5px;
 }
 
 .signUp_btn{
-color: black;
-background-color:  rgb(28, 183, 28);
-width: 100px;
+color: white;
+background-color: #1c981c;
+width: 100%;
 margin-bottom: 10px;
-
 }
 
 .signUp_btn:hover{
-color: black;
-background-color: white;
+    color: white;
+    background-color: #4eb54e;
 }
-
-
 
 .errorMessage {
     color: red;
 }
 
+.m-top {
+    margin-top: 25px;
+}

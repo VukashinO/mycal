@@ -1,20 +1,19 @@
 .formStyle {
-    width: 65%;
-    margin: 20px auto;
-    border: 2px solid 888888;
-    padding: 20px;
-    box-shadow:  0 0 1px 1px rgba(50, 50, 50, 0.1);
-    background-color: white;
-   
-}
-
-.formHeader {
-    height: 77px;
+width: 63%;
+margin: 20px auto;
+border: 2px solid 888888;
+padding: 20px;
+box-shadow: 0 0 1px 1px rgba(50, 50, 50, 0.1);
+background-color: white;
 }
 
 h1 {
 color: orange;
 font-style: italic;
+}
+
+.formHeader {
+    padding-bottom: 25px;
 }
 
 h3 {
@@ -28,8 +27,8 @@ h3 {
 
 .radioStyle {
 
-    color: green;
-    font-size: 22px;
+    color: #149D56;
+    font-size: 1rem;
 }
 
 .activity {
@@ -45,14 +44,8 @@ h3 {
 .labelText {
      color: whitesmoke;
      margin: auto; 
-   
 }
 
-
-
-.form-group {
-    text-align: center;
-}
 
 .mymodal {
     background-color: red;
@@ -65,9 +58,14 @@ h3 {
 }
 
 .genderHeight {
-    height: 77px;
+    padding-bottom: 25px;
 }
 
-.text-muted-left {
-    width: 50%;
+.divRadio {
+    padding: 20px;
+}
+
+.divRadio h4 {
+    font-size: 1rem;
+    color: #149D56;
 }

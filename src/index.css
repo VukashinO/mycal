@@ -14,15 +14,15 @@ body {
 
 header
 {
-  height: 9vh;
+  height: 7vh;
 }
 
 .main-section
 {
-  min-height: 82vh;
+  min-height: 86vh;
 }
 
 footer
 {
-  height: 9vh;
+  height: 7vh;
 }

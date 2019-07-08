@@ -63,7 +63,7 @@ class SignInBase extends Component {
             </div>
             <div className="card-body colorUpdate">
               <form onSubmit={this.onSubmit}>
-                <div className="input-group form-group">
+                <div className="input-group form-group m-top">
                   <div className="input-group-prepend">
                     <span className="input-group-text"><i className="fas fa-user"></i></span>
                   </div>
@@ -76,7 +76,7 @@ class SignInBase extends Component {
                     placeholder="Your E-mail" />
 
                 </div>
-                <div className="input-group form-group">
+                <div className="input-group form-group m-top">
                   <div className="input-group-prepend">
                     <span className="input-group-text"><i className="fas fa-key"></i></span>
                   </div>
@@ -89,7 +89,7 @@ class SignInBase extends Component {
                     placeholder="password" />
                 </div>
 
-                <div className="form-group text-right">
+                <div className="form-group text-right m-top">
                   <button disabled={visible} type="submit" className="btn login_btn">Sign In</button>
                 </div>
                 {/* old one

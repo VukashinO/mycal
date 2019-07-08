@@ -48,7 +48,7 @@ class SignUpFormBase  extends Component {
       let userObj = {name: username, email}
       localStorage.setItem('user', JSON.stringify(userObj));
       console.log(this.props.firebase);
-        this.props.history.push( ROUTES.BMR );
+        this.props.history.push( ROUTES.SETUP );
         
     })
     .catch(error => {
@@ -82,11 +82,13 @@ class SignUpFormBase  extends Component {
       // m-5
     <div className="cont">
         <div className="d-flex justify-content-center h-100">
-            <div className="card">
-        <div className="card-body">
-        <h3>SignUp</h3>
+            <div className="card card-signUp">
+        <div className="card-header colorUpdate">
+          <h3>SignUp</h3>
+        </div>
+       <div className="card-body colorUpdate">
       <form onSubmit={this.onSubmit}>
-      <div className="input-group form-group">
+       <div className="input-group form-group m-top">
       <div className="input-group-prepend">
         <span className="input-group-text"><i className="fas fa-user"></i></span>
       </div>
@@ -99,8 +101,8 @@ class SignUpFormBase  extends Component {
         placeholder="Full Name" 
         />
        
-      </div>
-      <div className="input-group form-group">
+      </div> 
+      <div className="input-group form-group m-top">
       <div className="input-group-prepend">
         <span className="input-group-text"><i className="fas fa-user"></i></span>
       </div>
@@ -114,7 +116,7 @@ class SignUpFormBase  extends Component {
       
         />
         </div>
-        <div className="input-group form-group">
+        <div className="input-group form-group m-top">
         <div className="input-group-prepend">
             <span className="input-group-text"><i className="fas fa-key"></i></span>
         </div>
@@ -127,7 +129,7 @@ class SignUpFormBase  extends Component {
         placeholder="Password"
         />
         </div>
-        <div className="input-group form-group">
+        <div className="input-group form-group m-top">
         <div className="input-group-prepend">
             <span className="input-group-text"><i className="fas fa-key"></i></span>
         </div>
@@ -140,18 +142,26 @@ class SignUpFormBase  extends Component {
         placeholder="Confirm Password"
         />
         </div>
+        <div className="form-group m-top">
         <button disabled={visible} type="submit" className="btn signUp_btn">SignUp</button>
-        {error && <Alert variant="danger" onClose={() => this.setState({ error:null, username: '', email: '', passwordOne: '', passwordTwo: '' })} dismissible>
-                        <Alert.Heading></Alert.Heading>
-                            <p>
-                                {error.message}
-                            </p>
-                      </Alert>}
+        </div>
       </form>
       </div>
+          <div className="card-footer colorUpdate">
+                 <div className="d-flex justify-content-center">
+              
+          {error && <Alert variant="danger" onClose={() => this.setState({ error:null, username: '', email: '', passwordOne: '', passwordTwo: '' })} dismissible>
+                        <Alert.Heading></Alert.Heading>
+                           
+                                {error.message}
+                           
+                      </Alert>}
+                  </div>
+          </div>
       </div>
       </div>
       </div>
+     
     );
   }
 }

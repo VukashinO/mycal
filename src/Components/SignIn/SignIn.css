@@ -14,7 +14,7 @@ font-family: 'Numans', sans-serif;
 }
 
 .card {
-height: 440px;
+height: 390px;
 margin-top: auto;
 margin-bottom: auto;
 width: 400px;
@@ -78,8 +78,8 @@ margin-right: 5px;
 
 .login_btn{
 color: white;
-/* background-color: #4eb54e; */
 background-color: #1c981c;
+width: 100%;
 }
 
 .login_btn:hover{
@@ -101,3 +101,7 @@ color: white;
 /* .buttonTextRight {
     text-align: right;
 } */
+
+.m-top {
+    margin-top: 25px;
+}

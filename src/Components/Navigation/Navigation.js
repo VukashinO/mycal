@@ -1,10 +1,12 @@
 import React from 'react';
 import * as ROUTES from '../../Constants/Routes';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import SignOutButton from '../SignOut/SignOut';
 import { AuthUserContext } from '../Hoc/Hoc';
 import Logo from '../../Components/Logo/Logo';
-
+import './Navigation.css';
+import { Dropdown, ButtonGroup, DropdownButton, Button } from 'react-bootstrap';
+// import MyProfile from '../../Components/MyProfile/MyProfile';
 const Navigation = () => (
     <div>
         <AuthUserContext.Consumer>
@@ -17,7 +19,7 @@ const Navigation = () => (
 );
 
 const NavigationAuth = () => (
-    <header className="navbar navbar-expand-sm bg-dark navbar-dark">
+    <header className="navbar navbar-expand-sm bg-light navbar-light">
         <div className="container">
             <div className="row justify-content-between flex-grow-1">
                 <div style={{ width: '50px', marginLeft: '15px' }}>
@@ -34,17 +36,27 @@ const NavigationAuth = () => (
                     <ul className="navbar-nav text-right">
 
                         <li className="nav-item active">
-                            <Link className="nav-link" to={ROUTES.DIET}>Diet</Link>
+                            <NavLink className="nav-link" activeClassName="activeLink" to={ROUTES.DIET}>Diet</NavLink>
                         </li>
                         <li className="nav-item active">
-                            <Link className="nav-link" to={ROUTES.MYCALENDAR}>My Calendar</Link>
+                            <NavLink className="nav-link" activeClassName="activeLink" to={ROUTES.MYCALENDAR}>My Calendar</NavLink>
                         </li>
                         <li className="nav-item active">
-                            <Link className="nav-link" to={ROUTES.MYPROFILE}>My Profile</Link>
+                            <NavLink className="nav-link" activeClassName="activeLink" to={ROUTES.MYPROFILE}>My Profile</NavLink>
                         </li>
-                        <li className="nav-item active">
+                        <li>
+                        <li>
                             <SignOutButton />
                         </li>
+                    </li>
+     
+     
+   
+ 
+                      
+                        {/* <li className="nav-item active">
+                            <SignOutButton />
+                        </li> */}
                     </ul>
                 </div>
             </div>
@@ -53,7 +65,7 @@ const NavigationAuth = () => (
 );
 const NavigationNonAuth = () => (
 
-    <header className="navbar navbar-expand-sm bg-dark navbar-dark">
+    <header className="navbar navbar-expand-sm bg-light navbar-light">
         <div className="container">
             <div className="row justify-content-between flex-grow-1">
                 <div style={{ width: '50px', marginLeft: '15px' }}>
@@ -69,7 +81,7 @@ const NavigationNonAuth = () => (
 
                     <ul className="navbar-nav text-right">
                         <li className="nav-item active">
-                            <Link className="nav-link" to={ROUTES.SIGN_IN}>Sign In</Link>
+                            <NavLink className="nav-link" activeClassName="activeLink" to={ROUTES.SIGN_IN}>Sign In</NavLink>
                         </li>
 
                     </ul>

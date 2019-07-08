@@ -33,7 +33,7 @@ const NutritionSummary = (props) => {
                     <label htmlFor="inputText" className="col-sm-2 col-form-label"><b>Quantity</b></label>
                     <div className="col-sm-8">
                         {props.servingError && <p style={{ color: 'red' }}>{props.servingError}</p>}
-                        <input type="text" placeholder="enter intiger from 1 to 5"
+                        <input type="text" placeholder="mesure from 1 to 5"
                             className={`${props.servingError ? 'error' : ''} form-control`}
                             name="serving" value={props.inputServing}
                             onChange={props.handleInput}
