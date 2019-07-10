@@ -1,44 +1,14 @@
-/* .landing {
-    background-color: white;
-    height: 601px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    align-content: center;
-    position: relative;
-}
-
-.landing img {
-    height: 100%;
-    width: 100%;
-} */
-/* 
-.landing h2 {
-    width: 206px;
-    height: 40px;
-    position: absolute;
-    top: 60%;
-    left: 70%;
-    font-size: 14pt;
-    text-align: center;
-    background-color: #cbf2ff;
-    color: #190f0f;
-    font-weight: bold;
-} */
-
 .headerHome {
     text-align: center;
     margin:auto;
     margin-top: 150px;
     padding: 10px;
-
 }
 
 div img {
     width: 100%;
     height: 100%;
 }
-
-
 
 .divWrapper {
     
@@ -56,9 +26,3 @@ div img {
     font-size: 20px;
     line-height: 1.5;
 }
-
-
-/* .marginElements {
-    margin-top:20px;
-    color: #1e7a7a;
-} */

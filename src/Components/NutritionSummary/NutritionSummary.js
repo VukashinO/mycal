@@ -19,21 +19,15 @@ const NutritionSummary = (props) => {
         }
         return string.toUpperCase();
     }
-    //  console.log(op)
-    // hard coded options
-    // let options =  props.select.map(opt => <option key={opt}>{opt}</option>)
     return (
         <Auxiliary>
             <h3 style={{color: '#56d37c', textAlign:'center'}}>Food name:{ firstLetterUppercase( props.name )}</h3>
             <div style={{ padding: '10px' }}>
-
-                {/* <h4>how much?</h4> */}
-
                 <div className="row m-2">
                     <label htmlFor="inputText" className="col-sm-2 col-form-label"><b>Quantity</b></label>
                     <div className="col-sm-8">
                         {props.servingError && <p style={{ color: 'red' }}>{props.servingError}</p>}
-                        <input type="text" placeholder="mesure from 1 to 5"
+                        <input type="text" placeholder="Quantity from 1 to 5"
                             className={`${props.servingError ? 'error' : ''} form-control`}
                             name="serving" value={props.inputServing}
                             onChange={props.handleInput}
@@ -46,10 +40,8 @@ const NutritionSummary = (props) => {
                     <label htmlFor="selectMesure" className="col-sm-2 col-form-label"><b>Mesure</b></label>
                     <div className="col-sm-8">
                         <select id="selectMesure" className="form-control" value={props.value} onChange={props.handleChange}>
-                            {/* {options}  */}
                             <option>Select mesure</option>
-
-                            {op}
+                                {op}
                         </select>
                     </div>
                 </div>

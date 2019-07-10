@@ -3,10 +3,6 @@
 .calendar-header,
 td,
 tr {
-    /* position: relative;
-    margin: auto;
-    width: 250px; */
-    
     padding: 0;
     margin: 0;
     font-size: 25px;

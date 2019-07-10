@@ -83,76 +83,74 @@ class SignUpFormBase  extends Component {
     <div className="cont">
         <div className="d-flex justify-content-center h-100">
             <div className="card card-signUp">
-        <div className="card-header colorUpdate">
-          <h3>Sign Up</h3>
-        </div>
+                <div className="card-header colorUpdate">
+                  <h3>Sign Up</h3>
+                </div>
        <div className="card-body colorUpdate">
-      <form onSubmit={this.onSubmit}>
-       <div className="input-group form-group m-top">
-      <div className="input-group-prepend">
-        <span className="input-group-text"><i className="fas fa-user"></i></span>
-      </div>
-        <input 
-       className="form-control" 
-        name="username"
-        value={username}
-        onChange={this.onChange}
-        type="text"
-        placeholder="Full Name" 
-        />
-       
-      </div> 
-      <div className="input-group form-group m-top">
-      <div className="input-group-prepend">
-        <span className="input-group-text"><i className="fas fa-user"></i></span>
-      </div>
-        <input
-        className="form-control" 
-        name="email"
-        value={email}
-        onChange={this.onChange}
-        type="email"
-        placeholder="Your E-mail"
-      
-        />
-        </div>
-        <div className="input-group form-group m-top">
-        <div className="input-group-prepend">
-            <span className="input-group-text"><i className="fas fa-key"></i></span>
-        </div>
-        <input
-        className="form-control" 
-        name="passwordOne"
-        value={passwordOne}
-        onChange={this.onChange}
-        type="password"
-        placeholder="Password"
-        />
-        </div>
-        <div className="input-group form-group m-top">
-        <div className="input-group-prepend">
-            <span className="input-group-text"><i className="fas fa-key"></i></span>
-        </div>
-        <input
-        className="form-control" 
-        name="passwordTwo"
-        value={passwordTwo}
-        onChange={this.onChange}
-        type="password"
-        placeholder="Confirm Password"
-        />
-        </div>
-        <div className="form-group m-top">
-        <button disabled={visible} type="submit" className="btn signUp_btn">Sign Up</button>
-        </div>
-        
-      </form>
+          <form onSubmit={this.onSubmit}>
+                    <div className="input-group form-group m-top">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text"><i className="fas fa-user"></i></span>
+                          </div>
+                                <input 
+                                className="form-control" 
+                                name="username"
+                                value={username}
+                                onChange={this.onChange}
+                                type="text"
+                                placeholder="Full Name" 
+                                />
+                    
+                    </div> 
+                        <div className="input-group form-group m-top">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text"><i className="fas fa-user"></i></span>
+                          </div>
+                                <input
+                                className="form-control" 
+                                name="email"
+                                value={email}
+                                onChange={this.onChange}
+                                type="email"
+                                placeholder="Your E-mail"
+                                />
+                          </div>
+                        <div className="input-group form-group m-top">
+                          <div className="input-group-prepend">
+                              <span className="input-group-text"><i className="fas fa-key"></i></span>
+                          </div>
+                              <input
+                              className="form-control" 
+                              name="passwordOne"
+                              value={passwordOne}
+                              onChange={this.onChange}
+                              type="password"
+                              placeholder="Password"
+                              />
+                        </div>
+                        <div className="input-group form-group m-top">
+                          <div className="input-group-prepend">
+                              <span className="input-group-text"><i className="fas fa-key"></i></span>
+                          </div>
+                              <input
+                              className="form-control" 
+                              name="passwordTwo"
+                              value={passwordTwo}
+                              onChange={this.onChange}
+                              type="password"
+                              placeholder="Confirm Password"
+                              />
+                        </div>
+                              <div className="form-group m-top">
+                              <button disabled={visible} type="submit" className="btn signUp_btn">Sign Up</button>
+                              </div>
+            
+          </form>
  
       </div>
 
           <div className="card-footer colorUpdate">
-
-                 <div className="d-flex justify-content-center">
+              <div className="d-flex justify-content-center">
  
                     <div>
     
@@ -160,25 +158,17 @@ class SignUpFormBase  extends Component {
                       {error &&
       <Alert variant="danger" onClose={() => this.setState({ error:null, username: '', email: '', passwordOne: '', passwordTwo: '' })}>
       
-      <Alert.Heading>sadsad</Alert.Heading>
+      <Alert.Heading></Alert.Heading>
                         <p>
                             {error.message}
                         </p>
                   </Alert>}
                     </div>
-     
-         
-                </div>
-        </div>
-
-      </div>
-
+                        </div>
+                  </div>
+              </div>
+          </div>
      </div>
-     
-     </div>
-    
-
-                    
     );
   }
 }

@@ -122,7 +122,7 @@ class MyProfile extends Component {
     if (this.formValidation(this.state.formErrors) && this.state.gender) {
       if (gender && weightkl && heightcm && age && life) {
         if (gender === "male") {
-          bmr = 10 * weightkl + 6.25 * heightcm - 5 * age + 5; // funkcija da bide refactor
+          bmr = 10 * weightkl + 6.25 * heightcm - 5 * age + 5; 
         } else if (gender === "female") {
           bmr = 10 * weightkl + 6.25 * heightcm - 5 * age - 161;
         }
@@ -131,7 +131,6 @@ class MyProfile extends Component {
     else {
       this.setState({ isFormValid: true })
       return;
-      // return window.alert("Please fill in everything correctly");
     }
 
     let calories = this.state.calories;
@@ -149,7 +148,7 @@ class MyProfile extends Component {
     this.setState({ result: bmr, calories: calories })
     const retriveObj = JSON.parse(localStorage.getItem('user'));
     const post = {
-      user: retriveObj.name,
+      // user: retriveObj.name,
       email: retriveObj.email,
        
           bmr: bmr.toFixed(0),
@@ -279,7 +278,7 @@ class MyProfile extends Component {
               onChange={e => this.change(e)}
               className={`${formErrors.age ? 'is-invalid' : ''} form-control`}
               id="age"
-              placeholder="your Age"
+              placeholder="Age"
             />
             <small className="form-text text-muted text-muted-left">Age from 12 to 75</small>
             {formErrors.age && <div className='invalid-feedback'>{formErrors.age}</div>}
@@ -299,7 +298,7 @@ class MyProfile extends Component {
               onChange={e => this.change(e)}
               className={`${formErrors.heightcm ? 'is-invalid' : ''} form-control`}
               id="heightcm"
-              placeholder="height in cm"
+              placeholder="Height"
             />
             <small className="form-text text-muted text-muted-left">Height from 120 to 210</small>
             {formErrors.heightcm && <div className='invalid-feedback'>{formErrors.heightcm}</div>}
@@ -319,7 +318,7 @@ class MyProfile extends Component {
           onChange={e => this.change(e)}
           className={`${formErrors.weightkl ? 'is-invalid' : ''} form-control`}
           id="weightkl"
-          placeholder="weight in kgs"               
+          placeholder="Weight"               
         />
         <small className="form-text text-muted text-muted-left">Weight from 50 to 140</small>
         {formErrors.weightkl && <div className='invalid-feedback'>{formErrors.weightkl}</div>}

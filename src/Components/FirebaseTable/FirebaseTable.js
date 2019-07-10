@@ -3,7 +3,6 @@ import './FirebaseTable.css';
 
 
 const FirebaseTable = props => {
-    console.log(props.dietFromFirebase)
     let table = null;
     if (props.objForRenderingFirebaseTable) {
      const {
@@ -50,10 +49,7 @@ const FirebaseTable = props => {
         </table>
     }
 
-
-
-    return (
-
+     return (
         <div className="divDinamicTable">
             {table}
         </div>

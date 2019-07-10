@@ -47,8 +47,6 @@ class SignInBase extends Component {
   };
 
   render() {
-    
-    console.log(this.state.email)
     const { email, password, error } = this.state;
     const visible = password === '' ||
       email === '';
@@ -86,14 +84,12 @@ class SignInBase extends Component {
                     value={password}
                     type="password"
                     className="form-control"
-                    placeholder="password" />
+                    placeholder="Password" />
                 </div>
 
                 <div className="form-group text-right m-top">
                   <button disabled={visible} type="submit" className="btn login_btn">Sign In</button>
                 </div>
-                {/* old one
-                {error && <p className="errorMessage">{error.message}</p>} */}
                 {error && <Alert variant="danger" onClose={() => this.setState({ error:null, email: '', password: '' })} dismissible>
                         <Alert.Heading></Alert.Heading>
                             <p>

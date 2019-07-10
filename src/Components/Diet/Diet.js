@@ -33,7 +33,6 @@ class Diet extends Component {
     itemsPerPage: 4,
 
     individualCalorie: null,
-    //measuresObj: ['choose serving:', 'Cup', 'Gram', 'Ounce', 'Serving', 'Pound', 'Kilogram'],
     foodName: '',
 
     value: 'Choose serving',

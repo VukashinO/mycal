@@ -38,6 +38,3 @@ const Tbody = props => {
 export default Tbody;
 
 
-// select // let arr = props.obj.measures.map((measure,i) => {
-//     return <p key={measure.label + i}>{measure.label}</p>
-// }) mesures ...

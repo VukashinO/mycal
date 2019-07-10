@@ -3,13 +3,10 @@ import './MyModal.css';
 
 const MyModal = (props) => {
     return ( 
-      
-          <div className="Modal">
+        <div className="Modal">
               {props.children}
-          </div>
-        
-       
-     );
+        </div>
+    );
 }
  
 export default MyModal;

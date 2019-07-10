@@ -5,8 +5,7 @@ import SignOutButton from '../SignOut/SignOut';
 import { AuthUserContext } from '../Hoc/Hoc';
 import Logo from '../../Components/Logo/Logo';
 import './Navigation.css';
-// import { Dropdown, ButtonGroup, DropdownButton, Button } from 'react-bootstrap';
-// import MyProfile from '../../Components/MyProfile/MyProfile';
+
 const Navigation = () => (
     <div>
         <AuthUserContext.Consumer>
@@ -44,34 +43,22 @@ const NavigationAuth = () => (
                         <li className="nav-item active">
                             <NavLink className="nav-link" activeClassName="activeLink" to={ROUTES.MYPROFILE}>My Profile</NavLink>
                         </li>
-                        <li>
-                        <li>
-                            <SignOutButton />
-                        </li>
-                    </li>
-     
-     
-   
- 
-                      
-                        {/* <li className="nav-item active">
-                            <SignOutButton />
-                        </li> */}
+                            <li>
+                             <SignOutButton />
+                            </li>
                     </ul>
                 </div>
             </div>
         </div>
     </header>
 );
-const NavigationNonAuth = (props) => (
-    
-    <header className="navbar navbar-expand-sm bg-whitesmoke navbar-light">
+
+const NavigationNonAuth = () => {
+    return (
+       
+        <header className="navbar navbar-expand-sm bg-whitesmoke navbar-light">
         <div className="container">
             <div className="row justify-content-between flex-grow-1">
-                {/* <div style={{ width: '50px', marginLeft: '15px' }}>
-                    <Link to={ROUTES.Landing}> <Logo />
-                    </Link>
-                </div> */}
                    <div style={{ marginLeft: '15px', paddingTop:'9px' }}>
                    <Link to={ROUTES.Landing}> <Logo />
                     </Link>
@@ -88,15 +75,17 @@ const NavigationNonAuth = (props) => (
                         <li className="nav-item active">
                             <NavLink className="nav-link" activeClassName="activeLink" to={ROUTES.SIGN_IN}>Sign In</NavLink>
                         </li>
-                        <li className="nav-item active">
+                        {/* <li className="nav-item active">
                             <NavLink className="btn btn-success nav-link"  to={ROUTES.SIGN_UP} style={{color:'white'}}>Get started</NavLink>
-                        </li>
+                        </li> */}
                         
                     </ul>
                 </div>
             </div>
         </div>
     </header>
-);
+    )
+}
+    
 
 export default Navigation;

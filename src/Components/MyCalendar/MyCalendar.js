@@ -16,10 +16,8 @@ class Calendar extends Component {
         showMonthPopup: false,
         selectedDay: null,
         dietFromFirebase: null,
-
         isDietSaved: false,
         user: JSON.parse(localStorage.getItem('user')),
-
         selectDayObj: null
     }
 
@@ -45,16 +43,10 @@ class Calendar extends Component {
                         id: key
                     })
                 }
-                // const checkDate = `${this.year()}-${moment().month(`${this.month()}`).format("MM")}-${this.currentDay()}`;
                 const filteredArr = arr.filter(diet => diet.user === this.state.user.email);
                 const initialDietFromFirebase = filteredArr.find(diet => diet.date.split("-")[2] == this.currentDay());
-                console.log(filteredArr)
-                console.log(initialDietFromFirebase)
-                console.log(this.month())
                 if (filteredArr.length === 0) {
                     this.setState({ isDietSaved: true })
-                    console.log("you haven't save diet for this user!")
-
                     return;
                 }
                 this.setState({ 
@@ -79,7 +71,6 @@ class Calendar extends Component {
         return this.state.dateContext.daysInMonth();
     }
     currentDate = () => {
-        console.log("currentDate: ", this.state.dateContext.get("date"));
         return this.state.dateContext.get("date");
     }
     currentDay = () => {
@@ -104,9 +95,8 @@ class Calendar extends Component {
 
     onSelectChange = (e, data) => {
         this.setMonth(data);
-        //this.props.onMonthChange && this.props.onMonthChange();
-
     }
+
     SelectList = (props) => {
         let popup = props.data.map((data) => {
             return (
@@ -151,32 +141,7 @@ class Calendar extends Component {
         );
     }
 
-// ------------------ Ne mi treba use eden povik do Firebase.... ???????!!!!!!!!!!!!?????????????
-    // onDayClick = (e, day) => {
-    //     this.setState({
-    //         selectedDay: day
-    //     }, () => {
-    //         axios.get(`${getDataFromFirebase}/.json`)
-    //             .then(responce => {
-                    
-    //                 let arr = []
-    //                 for (let key in responce.data.diet) {
-    //                     arr.push({
-    //                         ...responce.data.diet[key],
-    //                         id: key
-    //                     })
-    //                 }
-    //                 const checkDate = `${this.year()}-${moment().month(`${this.month()}`).format("MM")}-${this.state.selectedDay}`;
-    //                 const filteredArr = arr.filter(diet => diet.user === this.state.user.email && diet.date === checkDate)
-    //                 console.log(filteredArr)
-    //                 if (filteredArr.length === 0) {
-    //                     this.setState({ isDietSaved: true })
-    //                     return;
-    //                 }
-    //                 this.setState({ dietFromFirebase: filteredArr })
-    //             })
-    //     });
-    // }
+
     onDayClick = (e, day) => {
         this.setState({
             selectedDay: day
@@ -200,9 +165,6 @@ class Calendar extends Component {
         this.setState({ isDietSaved: false })
     }
 
-    // handleDivClick = () => {
-    //     this.setState({ onDivClick: false })
-    // }
     render() {
         // Map the weekdays i.e Sun, Mon, Tue etc as <td>
         let weekdays = this.weekdaysShort.map((day) => {
