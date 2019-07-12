@@ -25,12 +25,11 @@ class Calendar extends Component {
         super(props);
         this.width = props.width || "285px";
         this.style = props.style || {};
-        this.style.width = this.width; // add this
+        this.style.width = this.width;
     }
 
     // OnLoad always go to fireBase and get data
     componentDidMount() {
-
         this.getDataFromFireBase();
     }
     getDataFromFireBase = () => {
@@ -217,8 +216,7 @@ class Calendar extends Component {
             }
             if (i === totalSlots.length - 1) {
                 let insertRow = cells.slice();
-                rows.push(insertRow);
-                // rows.push(cells)
+                rows.push(insertRow);              
             }
         });
 
@@ -230,7 +228,8 @@ class Calendar extends Component {
             );
         })
 
-        // render if no diet save 
+        // render if no diet save
+
         let savedDiet = null;
         if (this.state.isDietSaved) {
             savedDiet = <div>
@@ -278,8 +277,7 @@ class Calendar extends Component {
                 </div>
                 <div className="col-4 m-5">
                     <FirebaseTable
-                        handleDivClick={this.handleDivClick}
-                        // dietFromFirebase={this.state.dietFromFirebase}
+                        handleDivClick={this.handleDivClick}                      
                         objForRenderingFirebaseTable={this.state.selectDayObj}
                     />
                 </div>

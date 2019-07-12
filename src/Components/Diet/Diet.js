@@ -14,7 +14,8 @@ import Messures from '../../Components/MesuresEnum/MesuresEnum';
 import { Modal, Button } from 'react-bootstrap';
 
 //Api's here :
-
+const API = 'https://api.edamam.com/api/food-database/parser?nutrition-type=logging&ingr=';
+const API_KEY = '&app_id=ec5bc123&app_key=7bdb51e00e617d9d25545d840d03fa0b';
 
 // ---------------- URL to firebase
 const getDataFromFirebase = 'https://my-fitness-app-81de2.firebaseio.com';
@@ -76,17 +77,16 @@ class Diet extends Component {
         for (let key in responce.data.users) {
           users.push({ ...responce.data.users[key], id: key })
         }
-        console.log(users)
-        console.log(this.state.user.email)
+    
         const userFirebase = users.find(user => user.email === this.state.user.email);
-        console.log(userFirebase)
+      
         this.setState({
           bmr: userFirebase.bmr,
           calories: userFirebase.calories,
           showCalories: userFirebase.calories,
           usersFromFirebase: users,
         })
-        console.log(this.state.user)
+     
       })
       .catch(err => console.log(err))
   }
@@ -124,7 +124,7 @@ class Diet extends Component {
           })
 
         })
-        .catch(err => console.log(`something went wrong ${err}`))
+        .catch(err => err)
     }
 
   };
@@ -197,7 +197,6 @@ class Diet extends Component {
   // ------------------- Update the state if Modal is correct or show error message
   handleSubmitModal = () => {
     
-    
     let cup = this.state.cup;
     let gram = this.state.gram;
     let defaultGram = this.state.defaultGram;
@@ -230,7 +229,6 @@ class Diet extends Component {
     }
 
     if (dietCalories < 1000) {
-      // old custom modal : saveError: true
       this.setState({ show: true })
       return;
     }
@@ -238,22 +236,16 @@ class Diet extends Component {
     this.setState({ loading: true })
     axios.post(`${getDataFromFirebase}/diet.json`, post)
       .then(responce => {
-        console.log(responce)
         this.setState({ dietData: [], calories: this.state.showCalories, loading: false, searchFood: false, isDietSaved: true })
       })
-      .catch(err => console.log(err))
+      .catch(err => err)
   }
 
   //----------------- Delete Food on the dinamic table
   handleDelete = (ind, calories) => {
     const index = this.state.dietData.findIndex(diet => diet.id === ind)
-    console.log(index)
     const dietData = [...this.state.dietData]
     dietData.splice(index, 1)
-    // code for count from max to zero
-    //const cal = this.state.calories 
-    //this.setState({ dietData, calories: cal + calories })
-    // code for zero to max
     const cal = this.state.startCount;
     this.setState({ dietData, startCount: cal - calories })
   }
@@ -267,7 +259,6 @@ class Diet extends Component {
   }
 
   onIsDietSaveHandle = () => {
-    // this.setState({ isDietSaved:false })
     this.props.history.push(ROUTES.MYCALENDAR);
   }
 
@@ -279,10 +270,8 @@ class Diet extends Component {
 
   render() {
  
-
+    this.state.dietData.forEach((diet, i) => { diet.id = i });
     //--------------------Pagination --------------------------------
-    
-    this.state.dietData.forEach((diet, i) => { diet.id = i })
     const pageNumbers = [];
     if (this.state.foodData) {
       for (let i = 1; i <= Math.ceil(this.state.foodData.length / this.state.itemsPerPage); i++) {
@@ -420,43 +409,41 @@ class Diet extends Component {
     }
 
     return (
-      <Auxiliary>
+    <Auxiliary>
         {modalInfo}
-        <div className="row justify-content-between">
+      <div className="row justify-content-between">
           {isModalCorrect}
-          <div className="col-7">
-            <Search
-              handleSubmit={e => {
-                e.preventDefault();
-                this.handleSubmit()
-              }}
-              onChange={(e) => this.onChange(e.target.value)}
-              value={this.state.searchText}
-            />
-            {
-              !this.state.foodData &&
-              <div className="headerInstructions">
-                <h4 >
-                  Search our food database!
-                  </h4>
-              </div>
-            }
-
+        <div className="col-7">
+              <Search
+                handleSubmit={e => {
+                  e.preventDefault();
+                  this.handleSubmit()
+                }}
+                onChange={(e) => this.onChange(e.target.value)}
+                value={this.state.searchText}
+              />
+              {
+                !this.state.foodData &&
+                <div className="headerInstructions">
+                  <h4 >
+                    Search our food database!
+                    </h4>
+                </div>
+              }
             {loader}
             {errorMessage}
-          </div>
+        </div>
           <div className="col-5">
-
-            <div className="marginTop">
-              <div>
-                <p className="leftColParagrafs">Based on your bmr: <b>{this.state.bmr}, </b>
-                  you will need <b>{this.state.showCalories}</b> calories
-                  to maintain your weight.
-                </p>
-                <h3>Goal:<span className="dailyGoal">
-                  {this.state.calories}</span> /<span className={this.state.startCount === 0 ||
-                    this.state.startCount > this.state.calories ? 'dangerZone' : 'dailyGoal'}> {this.state.startCount}</span> calories</h3>
-              </div>
+             <div className="marginTop">
+                  <div>
+                    <p className="leftColParagrafs">Based on your bmr: <b>{this.state.bmr}, </b>
+                      you will need <b>{this.state.showCalories}</b> calories
+                      to maintain your weight.
+                    </p>
+                    <h3>Goal:<span className="dailyGoal">
+                      {this.state.calories}</span> /<span className={this.state.startCount === 0 ||
+                        this.state.startCount > this.state.calories ? 'dangerZone' : 'dailyGoal'}> {this.state.startCount}</span> calories</h3>
+                  </div>
             </div>
             <div className="marginTop">
               <div style={{ padding: '10px' }}>
@@ -476,36 +463,32 @@ class Diet extends Component {
                   </tfoot>
 
                 </table>
-                {dietSaveMessage}
-                <Modal
-                  show={this.state.show} onHide={this.handleClose}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>
-                      Friendly advice for safe fat loss
-            </Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <p style={{ color: 'red' }}>
-                      Based on your total calories consumed for today, you are likely not eating enough.
-                      For safe weight loss, the National Institutes of Health recommends no less than 1000-1200 calories for women and 1200-1500 calories for men.
-            </p>
-                    <p>
-                      Even during weight loss, it's important to meet your body's basic nutrient and energy needs. Over time, not eating enough can lead to nutrient deficiencies, unpleasant side effects & other serious health problems.
-            </p>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={this.handleClose}>Close</Button>
-                  </Modal.Footer>
-                </Modal>
+                    {dietSaveMessage}
+                    <Modal
+                      show={this.state.show} onHide={this.handleClose}>
+                      <Modal.Header closeButton>
+                        <Modal.Title>
+                          Friendly advice for safe fat loss
+                </Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <p style={{ color: 'red' }}>
+                          Based on your total calories consumed for today, you are likely not eating enough.
+                          For safe weight loss, the National Institutes of Health recommends no less than 1000-1200 calories for women and 1200-1500 calories for men.
+                        </p>
+                        <p>
+                          Even during weight loss, it's important to meet your body's basic nutrient and energy needs. Over time, not eating enough can lead to nutrient deficiencies, unpleasant side effects & other serious health problems.
+                        </p>
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button variant="secondary" onClick={this.handleClose}>Close</Button>
+                      </Modal.Footer>
+                    </Modal>
               </div>
             </div>
           </div>
-        </div>
-
-      </Auxiliary>
-
-
-
+      </div>
+    </Auxiliary>
     );
   }
 }

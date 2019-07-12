@@ -26,10 +26,10 @@ const FirebaseTable = props => {
         table = <table className="firebaseTable">
             <thead>
                 <tr>
-                    <th>date:{date}</th>
+                    <th>Date:{date}</th>
                 </tr>
                 <tr>
-                    <th>total Calories: {totalCalories} calories</th>
+                    <th>total Calories: {totalCalories} Calories</th>
                 </tr>
             </thead>
             <tbody>

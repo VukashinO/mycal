@@ -94,7 +94,6 @@ class MyProfile extends Component {
 
   //-------------------- Handle radio buttons ---------------------------
   onRadioChange = value => {
-    console.log("radio change");
     this.setState({
       gender: value,
       life: value
@@ -112,7 +111,6 @@ class MyProfile extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    //console.log(this.state);
     let bmr = this.state.result;
     let gender = this.state.gender;
     let age = this.state.age;
@@ -269,8 +267,6 @@ class MyProfile extends Component {
       <div className="row m-2">
       <label htmlFor="age" className="col-sm-2 labelField">Age</label>
         <div className="col-sm-10 form-group">
-         
-            
             <input
               type="text"
               name="age"
@@ -282,8 +278,6 @@ class MyProfile extends Component {
             />
             <small className="form-text text-muted text-muted-left">Age from 12 to 75</small>
             {formErrors.age && <div className='invalid-feedback'>{formErrors.age}</div>}
-
-        
         </div>
         </div>
         <div className="row m-2">

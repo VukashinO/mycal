@@ -14,7 +14,7 @@ font-family: 'Numans', sans-serif;
 }
 
 .card {
-height: 390px;
+height: fit-content;
 margin-top: auto;
 margin-bottom: auto;
 width: 400px;
@@ -27,7 +27,7 @@ box-shadow: 0 0 1px 1px rgba(50, 50, 50, 0.1);
     -webkit-flex: 1 1 auto;
     flex: 1 1 auto;
     padding: 1.25rem;
-    height: 0px;
+    height: inherit;
 }
 .social_icon span{
 font-size: 60px;

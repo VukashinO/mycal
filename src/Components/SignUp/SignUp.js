@@ -43,8 +43,6 @@ class SignUpFormBase  extends Component {
     .doCreateUserWithEmailAndPassword(email, passwordOne)
     .then(authUser => {
         this.setState({...this.state});
-      
-      // localStorage.setItem('user', this.state.email);
       let userObj = {name: username, email}
       localStorage.setItem('user', JSON.stringify(userObj));
       console.log(this.props.firebase);
@@ -144,26 +142,19 @@ class SignUpFormBase  extends Component {
                               <div className="form-group m-top">
                               <button disabled={visible} type="submit" className="btn signUp_btn">Sign Up</button>
                               </div>
-            
-          </form>
- 
-      </div>
-
-          <div className="card-footer colorUpdate">
+                              {error && <Alert variant="danger" onClose={() => this.setState({ error:null, email: '', password: '' })} dismissible>
+                        <Alert.Heading></Alert.Heading>
+                            <p>
+                                {error.message}
+                            </p>
+                      </Alert>}
+            </form>
+            </div>
+        <div className="card-footer colorUpdate">
               <div className="d-flex justify-content-center">
- 
-                    <div>
-    
-                      <span>Already a member?</span> &nbsp; <span><Link to={ROUTES.SIGN_IN} style={{color:'#489848'}}>Sign In</Link></span>
-                      {error &&
-      <Alert variant="danger" onClose={() => this.setState({ error:null, username: '', email: '', passwordOne: '', passwordTwo: '' })}>
-      
-      <Alert.Heading></Alert.Heading>
-                        <p>
-                            {error.message}
-                        </p>
-                  </Alert>}
-                    </div>
+                <div>
+                <span>Already a member?</span> &nbsp; <span><Link to={ROUTES.SIGN_IN} style={{color:'#489848'}}>Sign In</Link></span>
+                </div>
                         </div>
                   </div>
               </div>
@@ -173,6 +164,11 @@ class SignUpFormBase  extends Component {
   }
 }
 
+const SignUpForm = withRouter(withFirebase(SignUpFormBase));
+
+
+export default SignUp;
+export { SignUpForm };
 
 
 //  Any component that goes in the withRouter() higher-order component 
@@ -181,10 +177,3 @@ class SignUpFormBase  extends Component {
 // it has access to the props of the router. The relevant property from the
 // router props is the history object, because it allows us to redirect a user
 // to another page by pushing a route to it.
-
-const SignUpForm = withRouter(withFirebase(SignUpFormBase));
-
-
-export default SignUp;
-export { SignUpForm };
-

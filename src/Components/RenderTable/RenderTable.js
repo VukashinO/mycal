@@ -10,11 +10,11 @@ const RenderTable = props => {
             <table className="containerTable">
                 <thead>
                     <tr>
-                        <th><h1>food name</h1></th>
-                        <th><h1>food brand</h1></th>
-                        <th><h1>calories</h1><span style={{ color: '#449ac1' }}>(per 100g)</span></th>
-                        <th><h1>proteins</h1></th>
-                        <th><h1>fat</h1></th>
+                        <th><h1>food Name</h1></th>
+                        <th><h1>Brand</h1></th>
+                        <th><h1>Calories</h1><span style={{ color: '#bae0bd' }}>(per 100g)</span></th>
+                        <th><h1>Proteins</h1></th>
+                        <th><h1>Fat</h1></th>
                     </tr>
                 </thead>
                 <tbody>

@@ -1,5 +1,4 @@
 import React from 'react';
-// import './Tbody.css';
 
 const Tbody = props => {
 

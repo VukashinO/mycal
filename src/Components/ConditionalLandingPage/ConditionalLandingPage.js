@@ -4,7 +4,6 @@ import './ConditionalLandingPage.css';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../Constants/Routes';
 import { AuthUserContext } from '../Hoc/Hoc';
-// import { withRouter } from 'react-router-dom';
 
 const ConditionalLandingPage = () => (
     <div>
