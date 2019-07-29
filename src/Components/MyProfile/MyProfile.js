@@ -148,16 +148,11 @@ class MyProfile extends Component {
     this.setState({ result: bmr, calories: calories })
     const retriveObj = JSON.parse(localStorage.getItem('user'));
     const post = {
-      // user: retriveObj.name,
-      email: retriveObj.email,
-       
-          bmr: bmr.toFixed(0),
-          calories: calories.toFixed(0),
-          age,
-          heightcm,
-          weightkl,
-          life,
-          gender
+        age,
+        height: heightcm,
+        weight: weightkl,
+        activity: life,
+        gender
       }
       if(this.props.location.pathname === '/myprofile')
       {
@@ -166,10 +161,10 @@ class MyProfile extends Component {
         this.handleTimeout();
         return;
       }
-               
-    axios.post(`${firebaseURL}/users.json`, post)
+          const token = JSON.parse(localStorage.getItem('token'));
+          console.log(token)   
+      axios.put("http://localhost:55494/api/user/edit", post, {headers:{"Authorization": `Bearer ${token}`}})
       .then(res => {
-        this.setState( { showMessage: true } )
         this.handleTimeout();
       })
 
@@ -423,8 +418,9 @@ class MyProfile extends Component {
   }
 }
 
-const condition = authUser => authUser !== null;
-
-export default WithAuthorization(condition)(MyProfile);
+//const condition = authUser => authUser !== null;
+const condition = localStorage.getItem('token') !== null;
+//export default WithAuthorization(condition)(MyProfile);
+export default MyProfile;
 
 

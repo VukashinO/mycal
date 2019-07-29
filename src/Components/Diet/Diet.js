@@ -70,25 +70,16 @@ class Diet extends Component {
 
     this.setState({ isFetched: true })
 
-    axios.get(`${getDataFromFirebase}/.json`)
-      .then(responce => {
-        const users = [];
-        for (let key in responce.data.users) {
-          users.push({ ...responce.data.users[key], id: key })
-        }
-        console.log(users)
-        console.log(this.state.user.email)
-        const userFirebase = users.find(user => user.email === this.state.user.email);
-        console.log(userFirebase)
-        this.setState({
-          bmr: userFirebase.bmr,
-          calories: userFirebase.calories,
-          showCalories: userFirebase.calories,
-          usersFromFirebase: users,
-        })
-        console.log(this.state.user)
+    const token = JSON.parse(localStorage.getItem('token'));
+    console.log(token)   
+    axios.get("http://localhost:55494/api/health/totalcalories",  {headers:{"Authorization": `Bearer ${token}`}})
+    .then(res => {
+      this.setState({
+        bmr: res.data.bmr,
+        calories: res.data.totalCalories.toFixed(0),
+        showCalories: res.data.totalCalories.toFixed(0),
       })
-      .catch(err => console.log(err))
+    });
   }
 
   // ------------ Function for Get Current Date to save in Firebase --------------------
@@ -209,6 +200,16 @@ class Diet extends Component {
 
       this.handleMesures();
       this.setState({ cup, gram, defaultGram, ounce, pound, kilo })
+      const post = {
+        dateCreated: "2019-7-25",
+        name: this.state.foodName,
+        calories: this.state.individualCalorie,
+        mealType: this.state.valueMeal
+      }
+      const token = JSON.parse(localStorage.getItem('token'));
+      console.log(token) 
+      axios.post("http://localhost:55494/api/meal/create", post, {headers:{"Authorization": `Bearer ${token}`}})
+      .then(res => console.log(res));
       this.handleCancelModal();
     }
     else {
@@ -234,7 +235,7 @@ class Diet extends Component {
       this.setState({ show: true })
       return;
     }
-
+    
     this.setState({ loading: true })
     axios.post(`${getDataFromFirebase}/diet.json`, post)
       .then(responce => {
@@ -509,6 +510,8 @@ class Diet extends Component {
     );
   }
 }
-const condition = authUser => authUser !== null;
+// const condition = authUser => authUser !== null;
 
-export default withRouter(WithAuthorization(condition)(Diet));
+// export default withRouter(WithAuthorization(condition)(Diet));
+
+export default Diet;

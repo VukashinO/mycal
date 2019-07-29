@@ -34,28 +34,29 @@ class SignUpFormBase  extends Component {
 
     // which will pass all the form data to the Firebase authentication API via your 
     // authentication interface in the Firebase class:
-
   // ----------------- Fetch user from input, save to local storage for compare later ----------------------------------------
-  onSubmit = event => {
-    
-    const { username, email, passwordOne } = this.state;
 
-    this.props.firebase
-    .doCreateUserWithEmailAndPassword(email, passwordOne)
-    .then(authUser => {
-        this.setState({...this.state});
-      
-      // localStorage.setItem('user', this.state.email);
-      let userObj = {name: username, email}
-      localStorage.setItem('user', JSON.stringify(userObj));
-      console.log(this.props.firebase);
-        this.props.history.push( ROUTES.SETUP );
-        
-    })
-    .catch(error => {
-        this.setState({ error })
-    })
+  onSubmit = event => {
     event.preventDefault();
+       // confirmpassword: "teamodenA10!"
+        const { username, email, passwordOne, passwordTwo } = this.state;
+
+    var user = 
+      {
+        firstname: username,
+        lastname: "obradovikj",
+        email,
+        password: passwordOne,
+        confirmPassword : passwordTwo
+        
+      }
+    axios.post("http://localhost:55494/api/user/register", user)
+    .then(responce => {
+      localStorage.setItem('token', JSON.stringify(responce.data.token));
+      this.props.history.push( ROUTES.SETUP );
+
+    })
+    
   }
 
   onChange = event => {
@@ -112,7 +113,7 @@ class SignUpFormBase  extends Component {
                                 name="email"
                                 value={email}
                                 onChange={this.onChange}
-                                type="email"
+                                type="text"
                                 placeholder="Your E-mail"
                                 />
                           </div>
@@ -161,7 +162,7 @@ class SignUpFormBase  extends Component {
       
       <Alert.Heading></Alert.Heading>
                         <p>
-                            {error.message}
+                            {error}
                         </p>
                   </Alert>}
                     </div>
