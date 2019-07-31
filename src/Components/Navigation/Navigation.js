@@ -1,21 +1,40 @@
-import React from 'react';
+import React, { Component } from 'react';
 import * as ROUTES from '../../Constants/Routes';
 import { Link, NavLink } from 'react-router-dom';
 import SignOutButton from '../SignOut/SignOut';
-import { AuthUserContext } from '../Hoc/Hoc';
+import { withRouter } from 'react-router-dom';
 import Logo from '../../Components/Logo/Logo';
 import './Navigation.css';
 
-const Navigation = () => (
-    <div>
-        <AuthUserContext.Consumer>
-            {authUser =>
-                authUser ? <NavigationAuth /> : <NavigationNonAuth />
-            }
-        </AuthUserContext.Consumer>
-    </div>
 
-);
+class Navigation extends Component {
+    state = {
+        isAuth: false
+    }
+    componentDidMount() {
+        if(JSON.parse(localStorage.getItem('token')))
+        {
+            this.setState({isAuth: true})
+        }
+    }
+
+    render() {
+        return(
+            <div>
+            {/* {this.state.isAuth ? <NavigationAuth /> : <NavigationNonAuth /> } */}
+            {this.props.location.pathname === ROUTES.SIGN_UP 
+                ||
+                this.props.location.pathname === ROUTES.SIGN_IN
+                ||
+                this.props.location.pathname == ROUTES.Landing
+                ||
+                this.props.location.pathname == ROUTES.SETUP
+                 ? <NavigationNonAuth /> :<NavigationAuth /> }
+            </div>
+        )
+    }
+}
+
 
 const NavigationAuth = () => (
     <header className="navbar navbar-expand-sm bg-whitesmoke navbar-light">
@@ -88,4 +107,4 @@ const NavigationNonAuth = () => {
 }
     
 
-export default Navigation;
+export default withRouter(Navigation);

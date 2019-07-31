@@ -3,8 +3,6 @@ import './SignIn.css';
 import { Link, withRouter } from 'react-router-dom';
 import * as ROUTES from '../../Constants/Routes';
 import { Alert } from 'react-bootstrap';
-// passing firebase instance to the SignUpForm
-import { withFirebase } from '../Firebase';
 
 
 const SignIn = () => {
@@ -117,7 +115,7 @@ class SignInBase extends Component {
 }
 
 
-const SignInForm = withRouter(withFirebase(SignInBase));
+const SignInForm = withRouter(SignInBase);
 
 
 export default SignIn;

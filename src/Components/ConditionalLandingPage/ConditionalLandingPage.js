@@ -3,20 +3,15 @@ import fitnesImg from '../../Components/Assets/images/landing-page-img.png';
 import './ConditionalLandingPage.css';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../Constants/Routes';
-import { AuthUserContext } from '../Hoc/Hoc';
 // import { withRouter } from 'react-router-dom';
 
 const ConditionalLandingPage = () => (
     <div>
-        <AuthUserContext.Consumer>
-            {authUser =>
-                authUser ? <AuthLandingPage /> : <LandingPage />
-            }
-        </AuthUserContext.Consumer>
+        { JSON.parse(localStorage.getItem('token')) ? <AuthLandingPage /> : <LandingPage /> }
+        
     </div>
 
 );
-
 
 const LandingPage = () => {
     return (
@@ -44,7 +39,7 @@ const LandingPage = () => {
 
 
 const AuthLandingPage = () => {
-   
+   console.log(JSON.parse(localStorage.getItem('token')))
     return (
         <div className="row">
             <div className="col headerHome">

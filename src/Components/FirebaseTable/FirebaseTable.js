@@ -7,29 +7,28 @@ const FirebaseTable = props => {
     if (props.objForRenderingFirebaseTable) {
      const {
             date,
-            dietInfo,
+            meals,
             totalCalories
         } = props.objForRenderingFirebaseTable || {};
-
-        const breakFast = dietInfo.filter(diet => diet.meal === 'Breakfast')
-            .map((meal, i) => <tr key={meal.foodName + i}><td><span className="dinamicTableTd">{meal.foodName}: {meal.calories} calories</span>
+        const breakFast = meals.filter(meal => meal.mealType === 0)
+            .map((meal, i) => <tr key={meal.name + i}><td><span className="dinamicTableTd">{meal.name}: {meal.calories} calories</span>
             </td></tr>);
 
-        const lunch = dietInfo.filter(diet => diet.meal === 'Lunch')
-            .map((meal, i) => <tr key={meal.foodName + i}><td><span className="dinamicTableTd">{meal.foodName}: {meal.calories} calories</span>
+        const lunch = meals.filter(meal => meal.mealType === 1)
+            .map((meal, i) => <tr key={meal.name + i}><td><span className="dinamicTableTd">{meal.name}: {meal.calories} calories</span>
             </td></tr>);
 
-        const dinner = dietInfo.filter(diet => diet.meal === 'Dinner')
-            .map((meal, i) => <tr key={meal.foodName + i}><td><span className="dinamicTableTd">{meal.foodName}: {meal.calories} calories</span>
+        const dinner = meals.filter(meal => meal.mealType === 2)
+            .map((meal, i) => <tr key={meal.name + i}><td><span className="dinamicTableTd">{meal.name}: {meal.calories} calories</span>
             </td></tr>);
 
         table = <table className="firebaseTable">
             <thead>
                 <tr>
-                    <th>date:{date}</th>
+                    <th>date:{date.substring(0, 10)}</th>
                 </tr>
                 <tr>
-                    <th>total Calories: {totalCalories} calories</th>
+                    <th>total Calories: {totalCalories} </th>
                 </tr>
             </thead>
             <tbody>

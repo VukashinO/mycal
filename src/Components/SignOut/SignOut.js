@@ -1,11 +1,19 @@
-import React from 'react';
-import { withFirebase } from '../Firebase';
+import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
+import * as ROUTES from '../../Constants/Routes';
+import { withRouter } from 'react-router-dom';
+class SignOutButton extends Component {
+  render() {
+    return (
+      <Button variant="success" onClick={() => {
+        localStorage.removeItem('token')
+        this.props.history.push(ROUTES.SIGN_IN);
+      }}>
+      Sign Out
+    </Button>
+    )
+  }
+}
 
-const SignOutButton = ({ firebase }) => (
-  <Button variant="success" onClick={firebase.doSignOut}>
-    Sign Out
-  </Button>
-);
 
-export default withFirebase(SignOutButton);
+export default withRouter(SignOutButton);

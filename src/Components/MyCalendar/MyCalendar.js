@@ -3,11 +3,7 @@ import moment from 'moment';
 import './MyCalendar.css';
 import axios from 'axios';
 import FirebaseTable from '../../Components/FirebaseTable/FirebaseTable';
-import { withRouter } from 'react-router-dom';
-import { WithAuthorization } from '../../Components/Hoc/Hoc';
-
 // ---------------- URL to firebase
-const getDataFromFirebase = 'https://my-fitness-app-81de2.firebaseio.com';
 
 class Calendar extends Component {
     state = {
@@ -18,7 +14,8 @@ class Calendar extends Component {
         dietFromFirebase: null,
         isDietSaved: false,
         user: JSON.parse(localStorage.getItem('user')),
-        selectDayObj: null
+        selectDayObj: null,
+        arrForCalendar : null
     }
 
     constructor(props) {
@@ -34,25 +31,23 @@ class Calendar extends Component {
         this.getDataFromFireBase();
     }
     getDataFromFireBase = () => {
-        axios.get(`${getDataFromFirebase}/.json`)
+        const token = JSON.parse(localStorage.getItem('token'));
+        axios.get("http://localhost:55494/api/meal/calendar",{headers:{"Authorization": `Bearer ${token}`}})
+        .then(responce => this.setState({ arrForCalendar: responce.data }))
+        .catch(err => console.log(err))
+        let year = this.year();
+        let month = this.state.dateContext.format("M");
+        
+        axios.get(`http://localhost:55494/api/meal/calendar/${year}-${month}-${this.currentDay()}`, {headers:{"Authorization": `Bearer ${token}`}})
             .then(responce => {
-                let arr = []
-                for (let key in responce.data.diet) {
-                    arr.push({
-                        ...responce.data.diet[key],
-                        id: key
-                    })
-                }
-                const filteredArr = arr.filter(diet => diet.user === this.state.user.email);
-                const initialDietFromFirebase = filteredArr.find(diet => diet.date.split("-")[2] == this.currentDay());
-                if (filteredArr.length === 0) {
+                if(responce.data.meals.length === 0 ) {
                     this.setState({ isDietSaved: true })
                     return;
                 }
-                this.setState({ 
-                    dietFromFirebase: filteredArr, 
+                  this.setState({ 
+                    dietFromFirebase: responce.data.date, 
                     selectedDay: this.currentDay(), 
-                    selectDayObj: initialDietFromFirebase 
+                    selectDayObj: responce.data
                     })
             });
     }
@@ -146,19 +141,23 @@ class Calendar extends Component {
         this.setState({
             selectedDay: day
         }, () => {
-
-          const selectDayObj = this.state.dietFromFirebase.find(diet => diet.date.split("-")[2] === day.toString());
-          if(selectDayObj)
-          {
-            this.setState({ selectDayObj, isDietSaved: false }); 
-          }
-          else
-          {
-            this.setState({ isDietSaved: true, selectDayObj: null });
-          }
-         
+         let year = this.year();
+         let month = this.state.dateContext.format("M");
+         const token = JSON.parse(localStorage.getItem('token'));
+            axios.get(`http://localhost:55494/api/meal/calendar/${year}-${month}-${day}`, {headers:{"Authorization": `Bearer ${token}`}})
+            .then(responce => {
+                if(responce.data.meals.length === 0 ) {
+                    this.setState({ isDietSaved: true, selectDayObj: null });
+                    return;
+                }
+                  this.setState({ 
+                    dietFromFirebase: responce.data.date, 
+                    selectedDay: this.currentDay(), 
+                    selectDayObj: responce.data,
+                    isDietSaved: false
+                    })
+            });
         })
-            
     }
     
     handleNodiet = () => {
@@ -180,18 +179,18 @@ class Calendar extends Component {
             </td>
             );
         }
-        let dietDays = null;
-        if (this.state.dietFromFirebase) {
-            dietDays = this.state.dietFromFirebase
-        }
 
+        let dietDays = null;
+       if(this.state.arrForCalendar)
+        {
+            dietDays = this.state.arrForCalendar
+        }
 
         let daysInMonth = [];
         for (let d = 1; d <= this.daysInMonth(); d++) {
             let className = (d == this.currentDay() ? "day current-day" : "day");
             let selectedClass = (d == this.state.selectedDay ? " selected-day " : "");
-            // let dietDayClass = (d == dietDay ? "dietDayColor" : "");
-            let dietDayClass = dietDays ? dietDays.find(obj =>  obj.date.split("-")[2] == d) ? " diet-day" : "" : null;
+            let dietDayClass = dietDays ? dietDays.find(obj => obj.dateCreated.substring(0, 10).split("-")[2] == d) ? " diet-day" : "" : null;
             daysInMonth.push(
                 <td key={d} className={className + selectedClass + dietDayClass} >
                     <span onClick={(e) => { this.onDayClick(e, d) }}>{d}</span>
@@ -218,7 +217,6 @@ class Calendar extends Component {
             if (i === totalSlots.length - 1) {
                 let insertRow = cells.slice();
                 rows.push(insertRow);
-                // rows.push(cells)
             }
         });
 
@@ -240,7 +238,6 @@ class Calendar extends Component {
             </div>
         }
         return (
-          
             <div className="row">
                 <div className="col-4 m-5">
 
@@ -280,7 +277,8 @@ class Calendar extends Component {
                     <FirebaseTable
                         handleDivClick={this.handleDivClick}
                         // dietFromFirebase={this.state.dietFromFirebase}
-                        objForRenderingFirebaseTable={this.state.selectDayObj}
+                       // objForRenderingFirebaseTable={this.state.selectDayObj}
+                       objForRenderingFirebaseTable={this.state.selectDayObj}
                     />
                 </div>
             </div>
@@ -289,6 +287,7 @@ class Calendar extends Component {
 }
 
 
-const condition = authUser => authUser !== null;
+// const condition = authUser => authUser !== null;
 
-export default withRouter(WithAuthorization(condition)(Calendar));
+// export default withRouter(WithAuthorization(condition)(Calendar));
+   export default Calendar;

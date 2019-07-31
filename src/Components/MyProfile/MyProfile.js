@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import { WithAuthorization } from '../Hoc/Hoc';
 import './MyProfile.css';
 import * as ROUTES from '../../Constants/Routes';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
 
 // firebaseURL
-const firebaseURL = 'https://my-fitness-app-81de2.firebaseio.com';
-const getDataFromFirebase = 'https://my-fitness-app-81de2.firebaseio.com';
 
 class MyProfile extends Component {
 
@@ -34,33 +31,20 @@ class MyProfile extends Component {
   //  ------------------------- Check if Route is BMR or EDIT -----------------------------
   componentDidMount() {
       if(this.props.location.pathname === "/setup") return;
-      
-      axios.get(`${getDataFromFirebase}/.json`)
-      .then(responce => {
-          const arr = [];
-          for(let prop in responce.data.users)
-          {
-              arr.push({
-                  id: prop,
-                  ...responce.data.users[prop]
-              })
-          }
-          const user = arr.find(user => user.email === JSON.parse(localStorage.getItem('user')).email);
-          this.setState( { age: user.age,
-               heightcm: user.heightcm , 
-               weightkl: user.weightkl,
-               life : user.life,
-               gender: user.gender,
-               formErrors: { age: null,
-                heightcm: null,
-                weightkl: null },
-                user
-               });
-            })
+      const token = JSON.parse(localStorage.getItem('token'));
+      axios.get("http://localhost:55494/api/user/myprofile", {headers:{"Authorization": `Bearer ${token}`}})
+      .then(responce => 
+         this.setState({ 
+        age : responce.data.age, 
+        heightcm:responce.data.height, 
+        weightkl: responce.data.weight,
+        life: responce.data.activity,
+        gender: responce.data.gender  
+      }))
       .catch(err => console.log(err));
-    
-
-}
+      console.log(this.state.life);
+      console.log(this.state.gender);
+    }
 
   //------------------------ Cheking the values if true or false -------------------
   formValidation = formErrors => {
@@ -107,7 +91,7 @@ class MyProfile extends Component {
   handleTimeout = () => {
     setTimeout(() => {
       this.props.history.push(ROUTES.DIET);
-     }, 3000);
+     }, 6000);
   }
 
   onSubmit = e => {
@@ -119,56 +103,52 @@ class MyProfile extends Component {
     let heightcm = this.state.heightcm;
     let weightkl = this.state.weightkl;
     let life = this.state.life;
-    if (this.formValidation(this.state.formErrors) && this.state.gender) {
-      if (gender && weightkl && heightcm && age && life) {
-        if (gender === "male") {
-          bmr = 10 * weightkl + 6.25 * heightcm - 5 * age + 5; 
-        } else if (gender === "female") {
-          bmr = 10 * weightkl + 6.25 * heightcm - 5 * age - 161;
-        }
-      }
-    }
-    else {
-      this.setState({ isFormValid: true })
-      return;
-    }
-
-    let calories = this.state.calories;
-
-    if (life === "sedentary") {
-      calories = bmr * 1.53;
-    } 
-    if (life === "moderate") { // i ova u funkcija 
-      calories = bmr * 1.76;
-    } 
-    if (life === "vigorous") {
-      calories = bmr * 2.25;
-    }
-
-    this.setState({ result: bmr, calories: calories })
-    const retriveObj = JSON.parse(localStorage.getItem('user'));
-    const post = {
+    if(this.props.location.pathname === '/myprofile')
+    {
+      const post = {
         age,
         height: heightcm,
         weight: weightkl,
         activity: life,
         gender
       }
-      if(this.props.location.pathname === '/myprofile')
-      {
-        this.props.firebase.dbfromFirebase(this.state.user.id).update(post); // update user on firebase
-        this.setState( { show : true} );
-        this.handleTimeout();
-        return;
+      console.log(age)
+      console.log(this.state.activity)
+      console.log(this.state.gender)
+      const token = JSON.parse(localStorage.getItem('token'));
+      console.log(token)   
+       axios.put("http://localhost:55494/api/user/edit", post, {headers:{"Authorization": `Bearer ${token}`}})
+      .then(res => 
+      this.props.history.push(ROUTES.DIET)
+  )
+   .catch(err => console.log(err))
+      this.setState( { show : true} );
+      this.handleTimeout();
+      return;
+    }
+    if (this.formValidation(this.state.formErrors) && this.state.gender) {
+      
+      const post = {
+        age,
+        height: heightcm,
+        weight: weightkl,
+        activity: life,
+        gender
       }
+
           const token = JSON.parse(localStorage.getItem('token'));
           console.log(token)   
       axios.put("http://localhost:55494/api/user/edit", post, {headers:{"Authorization": `Bearer ${token}`}})
-      .then(res => {
-        this.handleTimeout();
-      })
-
-  };
+      .then(res => 
+        this.props.history.push(ROUTES.DIET)
+      )
+       .catch(err => console.log(err))
+    }
+    else {
+      this.setState({ isFormValid: true })
+      return;
+    }
+      };
 
   clearhtmlForm = () => {
     this.setState({
@@ -239,7 +219,7 @@ class MyProfile extends Component {
             type="radio"
             name="gender"
             value="male"
-            checked={this.state.gender === "male"}
+            checked={this.state.gender === "male" || this.state.gender === 0}
             onChange={e => this.change(e)}
             id="male"
           />
@@ -252,7 +232,7 @@ class MyProfile extends Component {
             type="radio"
             name="gender"
             value="female"
-            checked={this.state.gender === "female"}
+            checked={this.state.gender === "female" || this.state.gender === 1}
             onChange={e => this.change(e)}
             id="female"
           />
@@ -329,7 +309,7 @@ class MyProfile extends Component {
                   name="life"
                   id="low"
                   value="sedentary"
-                  checked={this.state.life === "sedentary"}
+                  checked={this.state.life === "sedentary" || this.state.life === 0}
                   onChange={e => this.change(e)}
                 />
                 <label htmlFor="low" className="form-check-label ">
@@ -351,7 +331,7 @@ class MyProfile extends Component {
                   name="life"
                   id="med"
                   value="moderate"
-                  checked={this.state.life === "moderate"}
+                  checked={this.state.life === "moderate" || this.state.life === 1}
                   onChange={e => this.change(e)}
                 />
                 <label htmlFor="med" className="form-check-label">
@@ -371,7 +351,7 @@ class MyProfile extends Component {
                   name="life"
                   id="high"
                   value="vigorous"
-                  checked={this.state.life === "vigorous"}
+                  checked={this.state.life === "vigorous" || this.state.life === 2}
                   onChange={e => this.change(e)}
                 />
                 <label htmlFor="high" className="form-check-label activity">

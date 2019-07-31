@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { WithAuthorization } from '../Hoc/Hoc';
 import axios from 'axios';
 import Spiner from '../../Components/UI/Spiner/Spiner';
 import RenderTable from '../../Components/RenderTable/RenderTable';
@@ -16,8 +15,8 @@ import { Modal, Button } from 'react-bootstrap';
 //Api's here :
 
 
+
 // ---------------- URL to firebase
-const getDataFromFirebase = 'https://my-fitness-app-81de2.firebaseio.com';
 
 class Diet extends Component {
   state = {
@@ -60,13 +59,13 @@ class Diet extends Component {
     userFirebase: null,
 
     show: false,
+    uniqueId: null,
   }
-
-
 
   // ------------ Load data from FireBase -------------------
 
   componentDidMount() {
+    if(!JSON.parse(localStorage.getItem("token"))) this.props.history.push( ROUTES.SIGN_IN );
 
     this.setState({ isFetched: true })
 
@@ -174,7 +173,6 @@ class Diet extends Component {
           nutritionFacts: false
         })
     }
-
     this.setState((prevState) => ({
       startCount: prevState.startCount + calculateMesure,
       dietData: prevState.dietData.concat({
@@ -183,6 +181,7 @@ class Diet extends Component {
         calories: calculateMesure
       }), nutritionFacts: false
     }))
+    return calculateMesure;
   };
 
   // ------------------- Update the state if Modal is correct or show error message
@@ -198,18 +197,19 @@ class Diet extends Component {
 
     if (this.state.servingError === null && this.state.value !== 'Choose serving') {
 
-      this.handleMesures();
+      let foodCalorieCalculation = this.handleMesures();
       this.setState({ cup, gram, defaultGram, ounce, pound, kilo })
+      console.log(this.state.foodCalorieCalculation)
       const post = {
-        dateCreated: "2019-7-25",
+        dateCreated: this.getCurrentDate(),
         name: this.state.foodName,
-        calories: this.state.individualCalorie,
+        calories:foodCalorieCalculation,
         mealType: this.state.valueMeal
       }
       const token = JSON.parse(localStorage.getItem('token'));
       console.log(token) 
       axios.post("http://localhost:55494/api/meal/create", post, {headers:{"Authorization": `Bearer ${token}`}})
-      .then(res => console.log(res));
+      .then(res => this.setState({ uniqueId:res.data }));
       this.handleCancelModal();
     }
     else {
@@ -219,30 +219,28 @@ class Diet extends Component {
 
   // ------------------------- Saving Diet to Firebase
   saveDiet = () => {
-    let dietCalories = this.state.dietData.map(diet => diet.calories)
-      .reduce((acc, curr) => {
-        return acc + curr
-      }, 0)
-    const post = {
-      date: this.getCurrentDate(),
-      user: this.state.user.email,
-      dietInfo: this.state.dietData,
-      totalCalories: dietCalories
-    }
-
-    if (dietCalories < 1000) {
-      // old custom modal : saveError: true
-      this.setState({ show: true })
-      return;
-    }
-    
-    this.setState({ loading: true })
-    axios.post(`${getDataFromFirebase}/diet.json`, post)
-      .then(responce => {
-        console.log(responce)
-        this.setState({ dietData: [], calories: this.state.showCalories, loading: false, searchFood: false, isDietSaved: true })
-      })
-      .catch(err => console.log(err))
+  //   let dietCalories = this.state.dietData.map(diet => diet.calories)
+  //   .reduce((acc, curr) => {
+  //     return acc + curr
+  //   }, 0)
+  // const post = {
+  //   date: this.getCurrentDate(),
+  //   user: this.state.user.email,
+  //   dietInfo: this.state.dietData,
+  //   totalCalories: dietCalories
+  // }
+  //   axios.ge
+  // if (dietCalories < 1000) {
+  //   this.setState({ show: true })
+  //   return;
+  // }
+  //this.setState({ dietData: [], calories: this.state.showCalories, loading: false, searchFood: false, isDietSaved: true })
+  // this.setState({ loading: true })
+  // axios.post(`${getDataFromFirebase}/diet.json`, post)
+  //   .then(responce => {
+  //     this.setState({ dietData: [], calories: this.state.showCalories, loading: false, searchFood: false, isDietSaved: true })
+  //   })
+  //   .catch(err => err)
   }
 
   //----------------- Delete Food on the dinamic table
@@ -257,6 +255,9 @@ class Diet extends Component {
     // code for zero to max
     const cal = this.state.startCount;
     this.setState({ dietData, startCount: cal - calories })
+    const token = JSON.parse(localStorage.getItem('token'));
+    axios.delete(`http://localhost:55494/api/meal/delete/${this.state.uniqueId}`, {headers:{"Authorization": `Bearer ${token}`}})
+    .then(responce => console.log(responce))
   }
 
   handleChangeError = () => {
@@ -279,7 +280,6 @@ class Diet extends Component {
 
 
   render() {
- 
 
     //--------------------Pagination --------------------------------
     
@@ -473,7 +473,7 @@ class Diet extends Component {
                     {dinner}
                   </tbody>
                   <tfoot>
-                    <tr><td><button className="btn btn-success" onClick={this.saveDiet}>Save diet</button></td></tr>
+                    {/* <tr><td><button className="btn btn-success" onClick={this.saveDiet}>Check Calendar</button></td></tr> */}
                   </tfoot>
 
                 </table>
@@ -514,4 +514,4 @@ class Diet extends Component {
 
 // export default withRouter(WithAuthorization(condition)(Diet));
 
-export default Diet;
+export default withRouter(Diet);

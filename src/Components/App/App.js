@@ -8,7 +8,6 @@ import SignIn from '../SignIn/SignIn';
 import SignUp from '../SignUp/SignUp';
 import MyProfile from '../../Components/MyProfile/MyProfile';
 import Diet from '../Diet/Diet';
-import { WithAuthentication } from '../Hoc/Hoc';
 import Footer from '../../Components/Footer/Footer';
 import MyCalendar from '../../Components/MyCalendar/MyCalendar';
 
@@ -32,4 +31,4 @@ const App = () => {
 
 
 
-export default WithAuthentication(App);
+export default App;

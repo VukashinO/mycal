@@ -4,8 +4,6 @@ import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
 import * as ROUTES from '../../Constants/Routes';
 import { Alert } from 'react-bootstrap';
-// passing firebase instance to the SignUpForm
-import { withFirebase } from '../Firebase';
 
 const SignUp = () => (
   <div className="wrapper">
@@ -14,14 +12,6 @@ const SignUp = () => (
   </div>
 );
 
-// Now, instead of using the Firebase Context directly in the SignUpPage,
-//  which doesn’t need to know about the Firebase instance, 
-//  use the higher-order component to wrap your SignUpForm.
-//   Afterward, the SignUpForm has access to the Firebase
-//    instance via the higher-order component. 
-//    It’s also possible to use the SignUpForm as standalone without the
-//     SignUpPage, because 
-// it is responsible to get the Firebase instance via the higher-order component.
 class SignUpFormBase  extends Component {
   
     state = {
@@ -32,8 +22,7 @@ class SignUpFormBase  extends Component {
         error: null
     };
 
-    // which will pass all the form data to the Firebase authentication API via your 
-    // authentication interface in the Firebase class:
+
   // ----------------- Fetch user from input, save to local storage for compare later ----------------------------------------
 
   onSubmit = event => {
@@ -48,17 +37,21 @@ class SignUpFormBase  extends Component {
         email,
         password: passwordOne,
         confirmPassword : passwordTwo
-        
       }
     axios.post("http://localhost:55494/api/user/register", user)
     .then(responce => {
-      localStorage.setItem('token', JSON.stringify(responce.data.token));
+      if(responce.data.token)
+      {
+      localStorage.setItem('token', JSON.stringify(responce.data.token))
       this.props.history.push( ROUTES.SETUP );
-
+      } 
+      else {
+        this.setState({error: responce.data})
+      }
     })
-    
   }
-
+  
+     
   onChange = event => {
     this.setState({ [event.target.name] : event.target.value })
   };
@@ -78,7 +71,6 @@ class SignUpFormBase  extends Component {
      passwordOne === '' ||
      email === '' ||
      username === ''
-
 
     return (
     
@@ -175,16 +167,7 @@ class SignUpFormBase  extends Component {
   }
 }
 
-
-
-//  Any component that goes in the withRouter() higher-order component 
-// gains access to all the properties of the router, so when passing the 
-// enhanced SignUpFormBase component to the withRouter() higher-order component, 
-// it has access to the props of the router. The relevant property from the
-// router props is the history object, because it allows us to redirect a user
-// to another page by pushing a route to it.
-
-const SignUpForm = withRouter(withFirebase(SignUpFormBase));
+const SignUpForm = withRouter(SignUpFormBase);
 
 
 export default SignUp;
