@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './MyProfile.css';
-import * as ROUTES from '../../Constants/Routes';
 import axios from 'axios';
+import * as ROUTES from '../../Constants/Routes';
 import { Modal, Button } from 'react-bootstrap';
+import * as API from '../../ApiController/api';
 
-// firebaseURL
 
 class MyProfile extends Component {
 
@@ -112,12 +112,10 @@ class MyProfile extends Component {
         activity: life,
         gender
       }
-      console.log(age)
-      console.log(this.state.activity)
-      console.log(this.state.gender)
       const token = JSON.parse(localStorage.getItem('token'));
-      console.log(token)   
-       axios.put("http://localhost:55494/api/user/edit", post, {headers:{"Authorization": `Bearer ${token}`}})
+      console.log(token)
+      API.editUser(post, token)     
+       //axios.put("http://localhost:55494/api/user/edit", post, {headers:{"Authorization": `Bearer ${token}`}})
       .then(res => 
       this.props.history.push(ROUTES.DIET)
   )
@@ -137,8 +135,8 @@ class MyProfile extends Component {
       }
 
           const token = JSON.parse(localStorage.getItem('token'));
-          console.log(token)   
-      axios.put("http://localhost:55494/api/user/edit", post, {headers:{"Authorization": `Bearer ${token}`}})
+          API.editUser(post, token)  
+      //axios.put("http://localhost:55494/api/user/edit", post, {headers:{"Authorization": `Bearer ${token}`}})
       .then(res => 
         this.props.history.push(ROUTES.DIET)
       )

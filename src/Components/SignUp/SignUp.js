@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import './SignUp.css';
-import axios from 'axios';
+// import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
 import * as ROUTES from '../../Constants/Routes';
 import { Alert } from 'react-bootstrap';
+import * as API from '../../ApiController/api';
 
 const SignUp = () => (
   <div className="wrapper">
@@ -38,7 +39,7 @@ class SignUpFormBase  extends Component {
         password: passwordOne,
         confirmPassword : passwordTwo
       }
-    axios.post("http://localhost:55494/api/user/register", user)
+    API.registerUser(user)
     .then(responce => {
       if(responce.data.token)
       {
@@ -55,8 +56,9 @@ class SignUpFormBase  extends Component {
   onChange = event => {
     this.setState({ [event.target.name] : event.target.value })
   };
-
   render() {
+  
+
      const {
         username,
         email,
