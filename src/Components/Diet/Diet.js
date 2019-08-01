@@ -11,6 +11,7 @@ import NutritionSummary from '../../Components/NutritionSummary/NutritionSummary
 import * as ROUTES from '../../Constants/Routes';
 import Messures from '../../Components/MesuresEnum/MesuresEnum';
 import { Modal, Button } from 'react-bootstrap';
+import * as API from '../../ApiController/api';
 
 //Api's here :
 
@@ -70,8 +71,9 @@ class Diet extends Component {
     this.setState({ isFetched: true })
 
     const token = JSON.parse(localStorage.getItem('token'));
-    console.log(token)   
-    axios.get("http://localhost:55494/api/health/totalcalories",  {headers:{"Authorization": `Bearer ${token}`}})
+    console.log(token)
+    API.getTotalCalories(token)
+    //axios.get("http://localhost:55494/api/health/totalcalories",  {headers:{"Authorization": `Bearer ${token}`}})
     .then(res => {
       this.setState({
         bmr: res.data.bmr,
@@ -105,7 +107,7 @@ class Diet extends Component {
   handleSubmit = () => {
     if (this.state.searchText) {
       this.setState({ loading: true })
-      axios.get(`${API}${this.state.searchText}${API_KEY}`)
+      axios.get(`${API_EDAMAM}${this.state.searchText}${API_KEY}`)
         .then(responce => {
           let uniq = {};
           this.setState({
@@ -207,8 +209,9 @@ class Diet extends Component {
         mealType: this.state.valueMeal
       }
       const token = JSON.parse(localStorage.getItem('token'));
-      console.log(token) 
-      axios.post("http://localhost:55494/api/meal/create", post, {headers:{"Authorization": `Bearer ${token}`}})
+      console.log(token)
+      API.createMeal(post, token) 
+      //axios.post("http://localhost:55494/api/meal/create", post, {headers:{"Authorization": `Bearer ${token}`}})
       .then(res => this.setState({ uniqueId:res.data }));
       this.handleCancelModal();
     }
@@ -249,14 +252,11 @@ class Diet extends Component {
     console.log(index)
     const dietData = [...this.state.dietData]
     dietData.splice(index, 1)
-    // code for count from max to zero
-    //const cal = this.state.calories 
-    //this.setState({ dietData, calories: cal + calories })
-    // code for zero to max
     const cal = this.state.startCount;
     this.setState({ dietData, startCount: cal - calories })
     const token = JSON.parse(localStorage.getItem('token'));
-    axios.delete(`http://localhost:55494/api/meal/delete/${this.state.uniqueId}`, {headers:{"Authorization": `Bearer ${token}`}})
+    API.deleteMeal(this.state.uniq, token)
+    //axios.delete(`http://localhost:55494/api/meal/delete/${this.state.uniqueId}`, {headers:{"Authorization": `Bearer ${token}`}})
     .then(responce => console.log(responce))
   }
 
@@ -502,16 +502,9 @@ class Diet extends Component {
             </div>
           </div>
         </div>
-
       </Auxiliary>
-
-
-
     );
   }
 }
-// const condition = authUser => authUser !== null;
-
-// export default withRouter(WithAuthorization(condition)(Diet));
 
 export default withRouter(Diet);

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './MyProfile.css';
-import axios from 'axios';
 import * as ROUTES from '../../Constants/Routes';
 import { Modal, Button } from 'react-bootstrap';
 import * as API from '../../ApiController/api';
@@ -32,7 +31,8 @@ class MyProfile extends Component {
   componentDidMount() {
       if(this.props.location.pathname === "/setup") return;
       const token = JSON.parse(localStorage.getItem('token'));
-      axios.get("http://localhost:55494/api/user/myprofile", {headers:{"Authorization": `Bearer ${token}`}})
+      API.getUserProfile(token)
+      //axios.get("http://localhost:55494/api/user/myprofile", {headers:{"Authorization": `Bearer ${token}`}})
       .then(responce => 
          this.setState({ 
         age : responce.data.age, 
@@ -96,8 +96,6 @@ class MyProfile extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    //console.log(this.state);
-    let bmr = this.state.result;
     let gender = this.state.gender;
     let age = this.state.age;
     let heightcm = this.state.heightcm;
@@ -115,7 +113,6 @@ class MyProfile extends Component {
       const token = JSON.parse(localStorage.getItem('token'));
       console.log(token)
       API.editUser(post, token)     
-       //axios.put("http://localhost:55494/api/user/edit", post, {headers:{"Authorization": `Bearer ${token}`}})
       .then(res => 
       this.props.history.push(ROUTES.DIET)
   )
@@ -136,7 +133,6 @@ class MyProfile extends Component {
 
           const token = JSON.parse(localStorage.getItem('token'));
           API.editUser(post, token)  
-      //axios.put("http://localhost:55494/api/user/edit", post, {headers:{"Authorization": `Bearer ${token}`}})
       .then(res => 
         this.props.history.push(ROUTES.DIET)
       )
@@ -396,9 +392,6 @@ class MyProfile extends Component {
   }
 }
 
-//const condition = authUser => authUser !== null;
-const condition = localStorage.getItem('token') !== null;
-//export default WithAuthorization(condition)(MyProfile);
 export default MyProfile;
 
 

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './SignUp.css';
-// import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
 import * as ROUTES from '../../Constants/Routes';
 import { Alert } from 'react-bootstrap';
@@ -12,7 +11,6 @@ const SignUp = () => (
     <SignUpForm />
   </div>
 );
-
 class SignUpFormBase  extends Component {
   
     state = {
@@ -57,8 +55,6 @@ class SignUpFormBase  extends Component {
     this.setState({ [event.target.name] : event.target.value })
   };
   render() {
-  
-
      const {
         username,
         email,

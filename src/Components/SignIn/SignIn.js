@@ -3,7 +3,7 @@ import './SignIn.css';
 import { Link, withRouter } from 'react-router-dom';
 import * as ROUTES from '../../Constants/Routes';
 import { Alert } from 'react-bootstrap';
-
+import * as API from '../../ApiController/api';
 
 const SignIn = () => {
   return (
@@ -21,23 +21,28 @@ class SignInBase extends Component {
   };
 
   onSubmit = event => {
-    const { email, password } = this.state;
-
-    this.props.firebase
-      .doSignInWithEmailAndPassword(email, password)
-      .then(() => {
-        this.setState({ ...this.state });
-        let userObj = { name: "fake", email }
-        localStorage.setItem('user', JSON.stringify(userObj));
-        
-        this.props.history.push(ROUTES.DIET);
-        
-      })
-      .catch(error => {
-        this.setState({ error });
-      });
-
     event.preventDefault();
+
+    const { email, password } = this.state;
+    var user = 
+      {
+        email,
+        password 
+      }
+    API.logUser(user)
+    .then(responce => {
+      if(responce.data.token)
+      {
+      localStorage.setItem('token', JSON.stringify(responce.data.token))
+      this.props.history.push( ROUTES.DIET );
+      } 
+      else {
+        console.log(responce.data)
+        this.setState({error: responce})
+      }
+    })
+    .catch(err => console.log(err));
+
   };
 
   onChange = event => {
