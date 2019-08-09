@@ -9,6 +9,7 @@ export const post = (url, body, token) => {
         return axios.post(`${API}${url}`, body, {headers:{"Authorization": `Bearer ${token}`}});
     }
     catch (error) {
+        
          return error;
     }
 } 

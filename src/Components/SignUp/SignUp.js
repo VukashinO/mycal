@@ -136,20 +136,12 @@ class SignUpFormBase  extends Component {
                               <div className="form-group m-top">
                               <button disabled={visible} type="submit" className="btn signUp_btn">Sign Up</button>
                               </div>
-            
-          </form>
- 
-      </div>
-
-          <div className="card-footer colorUpdate">
+                              <div className="card-footer colorUpdate">
               <div className="d-flex justify-content-center">
- 
                     <div>
-    
                       <span>Already a member?</span> &nbsp; <span><Link to={ROUTES.SIGN_IN} style={{color:'#489848'}}>Sign In</Link></span>
                       {error &&
       <Alert variant="danger" onClose={() => this.setState({ error:null, username: '', email: '', passwordOne: '', passwordTwo: '' })}>
-      
       <Alert.Heading></Alert.Heading>
                         <p>
                             {error}
@@ -158,6 +150,11 @@ class SignUpFormBase  extends Component {
                     </div>
                         </div>
                   </div>
+          </form>
+
+      </div>
+
+
               </div>
           </div>
      </div>

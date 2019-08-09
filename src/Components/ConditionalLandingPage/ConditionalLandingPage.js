@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { Component } from 'react';
 import fitnesImg from '../../Components/Assets/images/landing-page-img.png';
 import './ConditionalLandingPage.css';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../Constants/Routes';
-// import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
-const ConditionalLandingPage = () => (
-    <div>
-        { JSON.parse(localStorage.getItem('token')) ? <AuthLandingPage /> : <LandingPage /> }
-        
-    </div>
-
-);
+class ConditionalLandingPage extends Component {
+    render() {
+        return(
+            <div>
+            {this.props.location.pathname === ROUTES.SIGN_UP 
+                ||
+                this.props.location.pathname === ROUTES.SIGN_IN
+                ||
+                this.props.location.pathname == ROUTES.Landing
+                ||
+                this.props.location.pathname == ROUTES.SETUP
+                 ? <AuthLandingPage /> :<LandingPage /> }
+            </div>
+        )
+    }
+}
 
 const LandingPage = () => {
     return (
@@ -39,7 +48,6 @@ const LandingPage = () => {
 
 
 const AuthLandingPage = () => {
-   console.log(JSON.parse(localStorage.getItem('token')))
     return (
         <div className="row">
             <div className="col headerHome">
@@ -49,7 +57,6 @@ const AuthLandingPage = () => {
                     <p>Track and calculate your food.</p>
                     <p>Make an account if you do not have one. </p>
                 </div>
-  
             </div>
             <div className="col" style={{marginTop:'110px'}}>
                 <img src={fitnesImg} alt="fitnessImg" />
@@ -58,4 +65,4 @@ const AuthLandingPage = () => {
     );
 }
 
-export default ConditionalLandingPage;
+export default withRouter(ConditionalLandingPage);

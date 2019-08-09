@@ -255,7 +255,7 @@ class Diet extends Component {
     const cal = this.state.startCount;
     this.setState({ dietData, startCount: cal - calories })
     const token = JSON.parse(localStorage.getItem('token'));
-    API.deleteMeal(this.state.uniq, token)
+    API.deleteMeal(this.state.uniqueId, token)
     //axios.delete(`http://localhost:55494/api/meal/delete/${this.state.uniqueId}`, {headers:{"Authorization": `Bearer ${token}`}})
     .then(responce => console.log(responce))
   }

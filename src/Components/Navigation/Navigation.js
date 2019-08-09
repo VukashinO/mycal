@@ -21,7 +21,6 @@ class Navigation extends Component {
     render() {
         return(
             <div>
-            {/* {this.state.isAuth ? <NavigationAuth /> : <NavigationNonAuth /> } */}
             {this.props.location.pathname === ROUTES.SIGN_UP 
                 ||
                 this.props.location.pathname === ROUTES.SIGN_IN
